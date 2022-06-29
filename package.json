@@ -1,7 +1,11 @@
 {
   "name": "decent-web",
+  "description": "Implementation of a social media platform for learning purposes",
+  "repository": "https://github.com/e-dreyer/decent-apollo.git",
+  "author": "erik.dreyer@protonmail.com",
+  "license": "CC0",
+  "private": false,
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
