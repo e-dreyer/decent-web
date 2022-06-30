@@ -1,33 +1,55 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BlogComment } from "../types";
+import { NexusGenObjects } from "../../generated/nexus-typegen";
+import { gql } from "graphql-request";
 
-// Define a service using a base URL and expected endpoints
+/* API for BlogComment related queries and Mutations*/
 export const blogCommentApi = createApi({
   reducerPath: "blogCommentApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/api/" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://decent-web.herokuapp.com/api/graphql",
+  }),
   tagTypes: ["BlogComment"],
-
   endpoints: (builder) => ({
-    getBlogCommentById: builder.query<BlogComment, string>({
-      query: (id) => `blogComments/${id}`,
-      transformResponse: (
-        response: { blogComment: BlogComment },
-        meta,
-        arg
-      ) => {
-        return response["blogComment"];
-      },
+    /* Get BlogComment by ID*/
+    getBlogCommentById: builder.query<NexusGenObjects["BlogComment"], string>({
+      query: (id) => ({
+        url: "",
+        method: "POST",
+        body: {
+          query: gql`
+          query blogComment($id:ID!) {
+            blogComment(id: ${id}) {
+              id
+            }
+          }`,
+        },
+      }),
+
+      providesTags: ["BlogComment"],
     }),
 
-    getAllBlogComments: builder.query<BlogComment[], void>({
-      query: () => "blogComments",
+    getAllBlogComments: builder.query<NexusGenObjects["BlogComment"][], void>({
+      query: () => ({
+        url: "",
+        method: "POST",
+        body: {
+          query: gql`
+            query {
+              blogComments {
+                id
+              }
+            }
+          `,
+        },
+      }),
       transformResponse: (
-        response: { blogComments: BlogComment[] },
+        response: { data: { blogComments: NexusGenObjects["BlogComment"][] } },
         meta,
         arg
       ) => {
-        return response["blogComments"];
+        return response.data.blogComments;
       },
+
       providesTags: ["BlogComment"],
     }),
   }),
@@ -35,5 +57,4 @@ export const blogCommentApi = createApi({
 
 // Export hooks for usage in function components, which are
 // auto-generated based on the defined endpoints
-export const { useGetBlogCommentByIdQuery, useGetAllBlogCommentsQuery } =
-  blogCommentApi;
+export const { useGetBlogCommentByIdQuery, useGetAllBlogCommentsQuery } = blogCommentApi;

@@ -17,6 +17,8 @@ model User {
   blogs        Blog[]
   blogPosts    BlogPost[]
   blogComments BlogComment[]
+
+  @@map("user")
 }
 
 model Profile {
@@ -26,6 +28,8 @@ model Profile {
   user      User     @relation(fields: [userId], references: [id])
   userId    Int      @unique
   bio       String   @default("") @db.VarChar(1024)
+
+  @@map("profile")
 }
 
 model Blog {
@@ -37,6 +41,8 @@ model Blog {
   name        String     @db.VarChar(255)
   description String?
   blogPosts   BlogPost[]
+
+  @@map("blog")
 }
 
 model BlogPost {
@@ -51,6 +57,8 @@ model BlogPost {
   blog         Blog          @relation(fields: [blogId], references: [id])
   blogId       Int
   blogComments BlogComment[]
+
+  @@map("blogPost")
 }
 
 model BlogComment {
@@ -65,4 +73,6 @@ model BlogComment {
   parentId     Int?
   parent       BlogComment?  @relation("Parent", fields: [parentId], references: [id])
   blogComments BlogComment[] @relation("Parent")
+
+  @@map("blogComment")
 }

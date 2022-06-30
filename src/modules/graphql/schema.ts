@@ -1,4 +1,4 @@
-import { makeSchema } from "nexus";
+import { makeSchema, declarativeWrappingPlugin } from "nexus";
 import { join } from "path";
 import * as types from "./types";
 
@@ -12,6 +12,15 @@ const schema = makeSchema({
     schema: join(process.cwd(), "./generated/schema.graphql"),
     typegen: join(process.cwd(), "./generated/nexus-typegen.d.ts"),
   },
+  sourceTypes: {
+    modules: [
+      {
+        module: "@prisma/client",
+        alias: "db",
+      },
+    ],
+  },
+  plugins: [declarativeWrappingPlugin()],
 });
 
 export { schema };

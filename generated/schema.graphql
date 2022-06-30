@@ -4,13 +4,13 @@
 
 type Blog {
   author: User
-  authorId: Int
+  authorId: Int!
   blogPosts: [BlogPost]
-  createdAt: String!
+  createdAt: DateTime
   description: String
-  id: ID!
+  id: Int!
   name: String
-  updatedAt: String!
+  updatedAt: DateTime
 }
 
 type BlogComment {
@@ -19,12 +19,12 @@ type BlogComment {
   blogComments: [BlogComment]
   blogPost: BlogPost
   blogPostId: Int!
-  content: String!
-  createdAt: String!
-  id: ID!
+  content: String
+  createdAt: DateTime
+  id: Int!
   parent: BlogComment
-  parentId: Int!
-  updatedAt: String!
+  parentId: Int
+  updatedAt: DateTime
 }
 
 type BlogPost {
@@ -33,21 +33,26 @@ type BlogPost {
   blog: Blog
   blogComments: [BlogComment]
   blogId: Int!
-  content: String!
-  createdAt: String!
-  id: ID!
-  published: Boolean!
-  title: String!
-  updatedAt: String!
+  content: String
+  createdAt: DateTime
+  id: Int!
+  published: Boolean
+  title: String
+  updatedAt: DateTime
 }
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
 
 type Profile {
   bio: String
-  createdAt: String!
-  id: ID!
-  updatedAt: String!
+  createdAt: DateTime
+  id: Int!
+  updatedAt: DateTime
   user: User
-  userId: Int
+  userId: Int!
 }
 
 type Query {
@@ -59,13 +64,13 @@ type Query {
 }
 
 type User {
-  blogComments: [BlogComment]
+  blogComments: [BlogComment!]
   blogPosts: [BlogPost]
   blogs: [Blog]
-  createdAt: String!
+  createdAt: DateTime
   email: String!
-  id: ID!
+  id: Int!
   profile: Profile
-  updatedAt: String!
+  updatedAt: DateTime
   username: String!
 }

@@ -1,46 +1,60 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Profile } from "../types";
+import { NexusGenObjects } from "../../generated/nexus-typegen";
+import { gql } from "graphql-request";
 
-// Define a service using a base URL and expected endpoints
+/* API for Profile related queries and Mutations*/
 export const profileApi = createApi({
   reducerPath: "profileApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/api/" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://decent-web.herokuapp.com/api/graphql",
+  }),
   tagTypes: ["Profile"],
   endpoints: (builder) => ({
-    getProfileById: builder.query<Profile, string>({
-      query: (id) => `profiles/${id}`,
-      providesTags: ["Profile"],
-      transformResponse: (response: { profile: Profile }, meta, arg) => {
-        return response["profile"];
-      },
-    }),
-
-    getAllProfiles: builder.query<Profile[], void>({
-      query: () => "profiles",
-      transformResponse: (response: { profiles: Profile[] }, meta, arg) => {
-        return Object.values(response["profiles"]);
-      },
-      providesTags: ["Profile"],
-    }),
-
-    updateProfile: builder.mutation<
-      Profile,
-      Partial<Profile> & Pick<Profile, "id">
-    >({
-      query: ({ id, ...patch }) => ({
-        url: `profiles/${id}`,
-        method: "PATCH",
-        body: { id, ...patch },
+    /* Get Profile by ID*/
+    getProfileById: builder.query<NexusGenObjects["Profile"], string>({
+      query: (id) => ({
+        url: "",
+        method: "POST",
+        body: {
+          query: gql`
+          query profile($id:ID!) {
+            profile(id: ${id}) {
+              id
+            }
+          }`,
+        },
       }),
-      invalidatesTags: ["Profile"],
+
+      providesTags: ["Profile"],
+    }),
+
+    getAllProfiles: builder.query<NexusGenObjects["Profile"][], void>({
+      query: () => ({
+        url: "",
+        method: "POST",
+        body: {
+          query: gql`
+            query {
+              profiles {
+                id
+              }
+            }
+          `,
+        },
+      }),
+      transformResponse: (
+        response: { data: { profiles: NexusGenObjects["Profile"][] } },
+        meta,
+        arg
+      ) => {
+        return response.data.profiles;
+      },
+
+      providesTags: ["Profile"],
     }),
   }),
 });
 
 // Export hooks for usage in function components, which are
 // auto-generated based on the defined endpoints
-export const {
-  useGetProfileByIdQuery,
-  useGetAllProfilesQuery,
-  useUpdateProfileMutation,
-} = profileApi;
+export const { useGetProfileByIdQuery, useGetAllProfilesQuery } = profileApi;

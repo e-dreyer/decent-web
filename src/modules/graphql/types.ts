@@ -1,17 +1,22 @@
-import { extendType, nonNull, objectType } from "nexus";
+import {
+  extendType,
+  nonNull,
+  objectType,
+  nullable,
+  asNexusMethod,
+} from "nexus";
+import { DateTimeResolver } from "graphql-scalars";
+
+export const DateTime = asNexusMethod(DateTimeResolver, "DateTime");
 
 export const User = objectType({
   name: "User",
   definition(t) {
     t.field("id", {
-      type: nonNull("ID"),
+      type: nonNull("Int"),
     });
-    t.field("createdAt", {
-      type: nonNull("String"),
-    });
-    t.field("updatedAt", {
-      type: nonNull("String"),
-    });
+    t.field("createdAt", { type: "DateTime" });
+    t.field("updatedAt", { type: "DateTime" });
     t.field("username", {
       type: nonNull("String"),
     });
@@ -51,7 +56,7 @@ export const User = objectType({
         return blogPosts;
       },
     });
-    t.list.field("blogComments", {
+    t.list.nonNull.field("blogComments", {
       type: BlogComment,
       resolve: async (root, args, { prisma }) => {
         const blogComments = await prisma.blogComment.findMany({
@@ -69,14 +74,10 @@ export const Profile = objectType({
   name: "Profile",
   definition(t) {
     t.field("id", {
-      type: nonNull("ID"),
+      type: nonNull("Int"),
     });
-    t.field("createdAt", {
-      type: nonNull("String"),
-    });
-    t.field("updatedAt", {
-      type: nonNull("String"),
-    });
+    t.field("createdAt", { type: "DateTime" });
+    t.field("updatedAt", { type: "DateTime" });
     t.field("user", {
       type: User,
       resolve: async (root, args, { prisma }) => {
@@ -88,7 +89,9 @@ export const Profile = objectType({
         return user;
       },
     });
-    t.int("userId");
+    t.field("userId", {
+      type: nonNull("Int"),
+    });
     t.string("bio");
   },
 });
@@ -97,14 +100,10 @@ export const Blog = objectType({
   name: "Blog",
   definition(t) {
     t.field("id", {
-      type: nonNull("ID"),
+      type: nonNull("Int"),
     });
-    t.field("createdAt", {
-      type: nonNull("String"),
-    });
-    t.field("updatedAt", {
-      type: nonNull("String"),
-    });
+    t.field("createdAt", { type: "DateTime" });
+    t.field("updatedAt", { type: "DateTime" });
     t.field("author", {
       type: User,
       resolve: async (root, args, { prisma }) => {
@@ -116,8 +115,12 @@ export const Blog = objectType({
         return user;
       },
     });
-    t.int("authorId");
-    t.string("name");
+    t.field("authorId", {
+      type: nonNull("Int"),
+    });
+    t.field("name", {
+      type: "String",
+    });
     t.string("description");
     t.list.field("blogPosts", {
       type: BlogPost,
@@ -137,14 +140,10 @@ export const BlogPost = objectType({
   name: "BlogPost",
   definition(t) {
     t.field("id", {
-      type: nonNull("ID"),
+      type: nonNull("Int"),
     });
-    t.field("createdAt", {
-      type: nonNull("String"),
-    });
-    t.field("updatedAt", {
-      type: nonNull("String"),
-    });
+    t.field("createdAt", { type: "DateTime" });
+    t.field("updatedAt", { type: "DateTime" });
     t.field("author", {
       type: User,
       resolve: async (root, args, { prisma }) => {
@@ -160,13 +159,13 @@ export const BlogPost = objectType({
       type: nonNull("Int"),
     });
     t.field("title", {
-      type: nonNull("String"),
+      type: "String",
     });
     t.field("content", {
-      type: nonNull("String"),
+      type: "String",
     });
     t.field("published", {
-      type: nonNull("Boolean"),
+      type: "Boolean",
     });
     t.field("blog", {
       type: Blog,
@@ -184,6 +183,14 @@ export const BlogPost = objectType({
     });
     t.list.field("blogComments", {
       type: BlogComment,
+      resolve: async (root, args, { prisma }) => {
+        const blogComments = await prisma.blogComment.findMany({
+          where: {
+            blogPostId: root.id,
+          },
+        });
+        return blogComments;
+      },
     });
   },
 });
@@ -192,14 +199,10 @@ export const BlogComment = objectType({
   name: "BlogComment",
   definition(t) {
     t.field("id", {
-      type: nonNull("ID"),
+      type: nonNull("Int"),
     });
-    t.field("createdAt", {
-      type: nonNull("String"),
-    });
-    t.field("updatedAt", {
-      type: nonNull("String"),
-    });
+    t.field("createdAt", { type: "DateTime" });
+    t.field("updatedAt", { type: "DateTime" });
     t.field("author", {
       type: User,
       resolve: async (root, args, { prisma }) => {
@@ -217,33 +220,38 @@ export const BlogComment = objectType({
     t.field("blogPost", {
       type: BlogPost,
       resolve: async (root, args, { prisma }) => {
-        const blogPosts = await prisma.blogPosts.findMany({
+        const blogPost = await prisma.blogPost.findFirst({
           where: {
             id: root.blogPostId,
           },
         });
-        return blogPosts;
+        return blogPost;
       },
     });
     t.field("blogPostId", {
       type: nonNull("Int"),
     });
     t.field("content", {
-      type: nonNull("String"),
+      type: "String",
     });
-    t.field("parent", {
+    t.nullable.field("parent", {
       type: BlogComment,
+      nullable: true,
       resolve: async (root, args, { prisma }) => {
-        const blogComment = await prisma.blogComment.findFirst({
-          where: {
-            id: root.parentId,
-          },
-        });
-        return blogComment;
+        if (root.parentId) {
+          const blogComment = await prisma.blogComment.findFirst({
+            where: {
+              id: root.parentId,
+            },
+          });
+          return blogComment;
+        } else {
+          return null;
+        }
       },
     });
-    t.field("parentId", {
-      type: nonNull("Int"),
+    t.nullable.field("parentId", {
+      type: "Int",
     });
     t.list.field("blogComments", {
       type: BlogComment,

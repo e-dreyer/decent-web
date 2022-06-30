@@ -1,25 +1,55 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { BlogPost } from "../types";
+import { NexusGenObjects } from "../../generated/nexus-typegen";
+import { gql } from "graphql-request";
 
-// Define a service using a base URL and expected endpoints
+/* API for BlogPost related queries and Mutations*/
 export const blogPostApi = createApi({
   reducerPath: "blogPostApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/api/" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://decent-web.herokuapp.com/api/graphql",
+  }),
   tagTypes: ["BlogPost"],
-
   endpoints: (builder) => ({
-    getBlogPostById: builder.query<BlogPost, string>({
-      query: (id) => `blogPosts/${id}`,
-      transformResponse: (response: { blogPost: BlogPost }, meta, arg) => {
-        return response["blogPost"];
-      },
+    /* Get BlogPost by ID*/
+    getBlogPostById: builder.query<NexusGenObjects["BlogPost"], string>({
+      query: (id) => ({
+        url: "",
+        method: "POST",
+        body: {
+          query: gql`
+          query blogPost($id:ID!) {
+            blogPost(id: ${id}) {
+              id
+            }
+          }`,
+        },
+      }),
+
       providesTags: ["BlogPost"],
     }),
-    getAllBlogPosts: builder.query<BlogPost[], void>({
-      query: () => "blogPosts",
-      transformResponse: (response: { blogPosts: BlogPost[] }, meta, arg) => {
-        return response["blogPosts"];
+
+    getAllBlogPosts: builder.query<NexusGenObjects["BlogPost"][], void>({
+      query: () => ({
+        url: "",
+        method: "POST",
+        body: {
+          query: gql`
+            query {
+              blogPosts {
+                id
+              }
+            }
+          `,
+        },
+      }),
+      transformResponse: (
+        response: { data: { blogPosts: NexusGenObjects["BlogPost"][] } },
+        meta,
+        arg
+      ) => {
+        return response.data.blogPosts;
       },
+
       providesTags: ["BlogPost"],
     }),
   }),

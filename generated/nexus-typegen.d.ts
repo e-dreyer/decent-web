@@ -5,8 +5,23 @@
 
 
 import type { Context } from "./../src/types/Context"
-
-
+import type { core } from "nexus"
+declare global {
+  interface NexusGenCustomInputMethods<TypeName extends string> {
+    /**
+     * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+     */
+    DateTime<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "DateTime";
+  }
+}
+declare global {
+  interface NexusGenCustomOutputMethods<TypeName extends string> {
+    /**
+     * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+     */
+    DateTime<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "DateTime";
+  }
+}
 
 
 declare global {
@@ -25,50 +40,50 @@ export interface NexusGenScalars {
   Float: number
   Boolean: boolean
   ID: string
+  DateTime: any
 }
 
 export interface NexusGenObjects {
   Blog: { // root type
-    authorId?: number | null; // Int
-    createdAt: string; // String!
+    authorId: number; // Int!
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     description?: string | null; // String
-    id: string; // ID!
+    id: number; // Int!
     name?: string | null; // String
-    updatedAt: string; // String!
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
   }
   BlogComment: { // root type
     authorId: number; // Int!
     blogPostId: number; // Int!
-    content: string; // String!
-    createdAt: string; // String!
-    id: string; // ID!
-    parentId: number; // Int!
-    updatedAt: string; // String!
+    content?: string | null; // String
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    id: number; // Int!
+    parentId?: number | null; // Int
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
   }
   BlogPost: { // root type
     authorId: number; // Int!
-    blogComments?: Array<NexusGenRootTypes['BlogComment'] | null> | null; // [BlogComment]
     blogId: number; // Int!
-    content: string; // String!
-    createdAt: string; // String!
-    id: string; // ID!
-    published: boolean; // Boolean!
-    title: string; // String!
-    updatedAt: string; // String!
+    content?: string | null; // String
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    id: number; // Int!
+    published?: boolean | null; // Boolean
+    title?: string | null; // String
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
   }
   Profile: { // root type
     bio?: string | null; // String
-    createdAt: string; // String!
-    id: string; // ID!
-    updatedAt: string; // String!
-    userId?: number | null; // Int
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    id: number; // Int!
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    userId: number; // Int!
   }
   Query: {};
   User: { // root type
-    createdAt: string; // String!
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
     email: string; // String!
-    id: string; // ID!
-    updatedAt: string; // String!
+    id: number; // Int!
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
     username: string; // String!
   }
 }
@@ -86,13 +101,13 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 export interface NexusGenFieldTypes {
   Blog: { // field return type
     author: NexusGenRootTypes['User'] | null; // User
-    authorId: number | null; // Int
+    authorId: number; // Int!
     blogPosts: Array<NexusGenRootTypes['BlogPost'] | null> | null; // [BlogPost]
-    createdAt: string; // String!
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     description: string | null; // String
-    id: string; // ID!
+    id: number; // Int!
     name: string | null; // String
-    updatedAt: string; // String!
+    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
   }
   BlogComment: { // field return type
     author: NexusGenRootTypes['User'] | null; // User
@@ -100,12 +115,12 @@ export interface NexusGenFieldTypes {
     blogComments: Array<NexusGenRootTypes['BlogComment'] | null> | null; // [BlogComment]
     blogPost: NexusGenRootTypes['BlogPost'] | null; // BlogPost
     blogPostId: number; // Int!
-    content: string; // String!
-    createdAt: string; // String!
-    id: string; // ID!
+    content: string | null; // String
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    id: number; // Int!
     parent: NexusGenRootTypes['BlogComment'] | null; // BlogComment
-    parentId: number; // Int!
-    updatedAt: string; // String!
+    parentId: number | null; // Int
+    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
   }
   BlogPost: { // field return type
     author: NexusGenRootTypes['User'] | null; // User
@@ -113,20 +128,20 @@ export interface NexusGenFieldTypes {
     blog: NexusGenRootTypes['Blog'] | null; // Blog
     blogComments: Array<NexusGenRootTypes['BlogComment'] | null> | null; // [BlogComment]
     blogId: number; // Int!
-    content: string; // String!
-    createdAt: string; // String!
-    id: string; // ID!
-    published: boolean; // Boolean!
-    title: string; // String!
-    updatedAt: string; // String!
+    content: string | null; // String
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    id: number; // Int!
+    published: boolean | null; // Boolean
+    title: string | null; // String
+    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
   }
   Profile: { // field return type
     bio: string | null; // String
-    createdAt: string; // String!
-    id: string; // ID!
-    updatedAt: string; // String!
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    id: number; // Int!
+    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
     user: NexusGenRootTypes['User'] | null; // User
-    userId: number | null; // Int
+    userId: number; // Int!
   }
   Query: { // field return type
     blogComments: Array<NexusGenRootTypes['BlogComment'] | null> | null; // [BlogComment]
@@ -136,14 +151,14 @@ export interface NexusGenFieldTypes {
     users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
   }
   User: { // field return type
-    blogComments: Array<NexusGenRootTypes['BlogComment'] | null> | null; // [BlogComment]
+    blogComments: NexusGenRootTypes['BlogComment'][] | null; // [BlogComment!]
     blogPosts: Array<NexusGenRootTypes['BlogPost'] | null> | null; // [BlogPost]
     blogs: Array<NexusGenRootTypes['Blog'] | null> | null; // [Blog]
-    createdAt: string; // String!
+    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
     email: string; // String!
-    id: string; // ID!
+    id: number; // Int!
     profile: NexusGenRootTypes['Profile'] | null; // Profile
-    updatedAt: string; // String!
+    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
     username: string; // String!
   }
 }
@@ -153,11 +168,11 @@ export interface NexusGenFieldTypeNames {
     author: 'User'
     authorId: 'Int'
     blogPosts: 'BlogPost'
-    createdAt: 'String'
+    createdAt: 'DateTime'
     description: 'String'
-    id: 'ID'
+    id: 'Int'
     name: 'String'
-    updatedAt: 'String'
+    updatedAt: 'DateTime'
   }
   BlogComment: { // field return type name
     author: 'User'
@@ -166,11 +181,11 @@ export interface NexusGenFieldTypeNames {
     blogPost: 'BlogPost'
     blogPostId: 'Int'
     content: 'String'
-    createdAt: 'String'
-    id: 'ID'
+    createdAt: 'DateTime'
+    id: 'Int'
     parent: 'BlogComment'
     parentId: 'Int'
-    updatedAt: 'String'
+    updatedAt: 'DateTime'
   }
   BlogPost: { // field return type name
     author: 'User'
@@ -179,17 +194,17 @@ export interface NexusGenFieldTypeNames {
     blogComments: 'BlogComment'
     blogId: 'Int'
     content: 'String'
-    createdAt: 'String'
-    id: 'ID'
+    createdAt: 'DateTime'
+    id: 'Int'
     published: 'Boolean'
     title: 'String'
-    updatedAt: 'String'
+    updatedAt: 'DateTime'
   }
   Profile: { // field return type name
     bio: 'String'
-    createdAt: 'String'
-    id: 'ID'
-    updatedAt: 'String'
+    createdAt: 'DateTime'
+    id: 'Int'
+    updatedAt: 'DateTime'
     user: 'User'
     userId: 'Int'
   }
@@ -204,11 +219,11 @@ export interface NexusGenFieldTypeNames {
     blogComments: 'BlogComment'
     blogPosts: 'BlogPost'
     blogs: 'Blog'
-    createdAt: 'String'
+    createdAt: 'DateTime'
     email: 'String'
-    id: 'ID'
+    id: 'Int'
     profile: 'Profile'
-    updatedAt: 'String'
+    updatedAt: 'DateTime'
     username: 'String'
   }
 }
@@ -279,11 +294,71 @@ declare global {
   interface NexusGenPluginInputTypeConfig<TypeName extends string> {
   }
   interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {
+    /**
+     * Whether the type can be null
+     * @default (depends on whether nullability is configured in type or schema)
+     * @see declarativeWrappingPlugin
+     */
+    nullable?: boolean
+    /**
+     * Whether the type is list of values, or just a single value.
+     * If list is true, we assume the type is a list. If list is an array,
+     * we'll assume that it's a list with the depth. The boolean indicates whether
+     * the type is required (non-null), where true = nonNull, false = nullable.
+     * @see declarativeWrappingPlugin
+     */
+    list?: true | boolean[]
+    /**
+     * Whether the type should be non null, `required: true` = `nullable: false`
+     * @default (depends on whether nullability is configured in type or schema)
+     * @see declarativeWrappingPlugin
+     */
+    required?: boolean
   }
   interface NexusGenPluginInputFieldConfig<TypeName extends string, FieldName extends string> {
+    /**
+     * Whether the type can be null
+     * @default (depends on whether nullability is configured in type or schema)
+     * @see declarativeWrappingPlugin
+     */
+    nullable?: boolean
+    /**
+     * Whether the type is list of values, or just a single value.
+     * If list is true, we assume the type is a list. If list is an array,
+     * we'll assume that it's a list with the depth. The boolean indicates whether
+     * the type is required (non-null), where true = nonNull, false = nullable.
+     * @see declarativeWrappingPlugin
+     */
+    list?: true | boolean[]
+    /**
+     * Whether the type should be non null, `required: true` = `nullable: false`
+     * @default (depends on whether nullability is configured in type or schema)
+     * @see declarativeWrappingPlugin
+     */
+    required?: boolean
   }
   interface NexusGenPluginSchemaConfig {
   }
   interface NexusGenPluginArgConfig {
+    /**
+     * Whether the type can be null
+     * @default (depends on whether nullability is configured in type or schema)
+     * @see declarativeWrappingPlugin
+     */
+    nullable?: boolean
+    /**
+     * Whether the type is list of values, or just a single value.
+     * If list is true, we assume the type is a list. If list is an array,
+     * we'll assume that it's a list with the depth. The boolean indicates whether
+     * the type is required (non-null), where true = nonNull, false = nullable.
+     * @see declarativeWrappingPlugin
+     */
+    list?: true | boolean[]
+    /**
+     * Whether the type should be non null, `required: true` = `nullable: false`
+     * @default (depends on whether nullability is configured in type or schema)
+     * @see declarativeWrappingPlugin
+     */
+    required?: boolean
   }
 }

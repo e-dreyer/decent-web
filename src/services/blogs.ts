@@ -1,24 +1,55 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Blog } from "../types";
+import { NexusGenObjects } from "../../generated/nexus-typegen";
+import { gql } from "graphql-request";
 
-// Define a service using a base URL and expected endpoints
+/* API for Blog related queries and Mutations*/
 export const blogApi = createApi({
   reducerPath: "blogApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/api/" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://decent-web.herokuapp.com/api/graphql",
+  }),
   tagTypes: ["Blog"],
   endpoints: (builder) => ({
-    getBlogById: builder.query<Blog, string>({
-      query: (id) => `blogs/${id}`,
-      transformResponse: (response: { blog: Blog }, meta, arg) => {
-        return response["blog"];
-      },
+    /* Get Blog by ID*/
+    getBlogById: builder.query<NexusGenObjects["Blog"], string>({
+      query: (id) => ({
+        url: "",
+        method: "POST",
+        body: {
+          query: gql`
+          query blog($id:ID!) {
+            blog(id: ${id}) {
+              id
+            }
+          }`,
+        },
+      }),
+
       providesTags: ["Blog"],
     }),
-    getAllBlogs: builder.query<Blog[], void>({
-      query: () => "blogs",
-      transformResponse: (response: { blogs: Blog[] }, meta, arg) => {
-        return Object.values(response["blogs"]);
+
+    getAllBlogs: builder.query<NexusGenObjects["Blog"][], void>({
+      query: () => ({
+        url: "",
+        method: "POST",
+        body: {
+          query: gql`
+            query {
+              blogs {
+                id
+              }
+            }
+          `,
+        },
+      }),
+      transformResponse: (
+        response: { data: { blogs: NexusGenObjects["Blog"][] } },
+        meta,
+        arg
+      ) => {
+        return response.data.blogs;
       },
+
       providesTags: ["Blog"],
     }),
   }),
