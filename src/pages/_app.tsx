@@ -10,6 +10,9 @@ import CssBaseline from "@mui/material/CssBaseline";
 
 import Layout from "../components/layout";
 
+import { ApolloProvider } from "@apollo/client";
+import { useApollo } from "../lib/apolloClient";
+
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
@@ -19,14 +22,18 @@ type AppPropsWithLayout = AppProps & {
 };
 
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+  const apolloClient = useApollo(pageProps);
+
   return (
     <>
-      <Provider store={store}>
-        <CssBaseline />
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </Provider>
+      <ApolloProvider client={apolloClient}>
+        <Provider store={store}>
+          <CssBaseline />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </Provider>
+      </ApolloProvider>
     </>
   );
 }

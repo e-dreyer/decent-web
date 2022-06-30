@@ -6,8 +6,6 @@ import { blogApi } from "../services/blogs";
 import { blogPostApi } from "../services/blogPosts";
 import { blogCommentApi } from "../services/blogComments";
 
-import sessionReducer from "../features/session/sessionSlice";
-
 export const store = configureStore({
   reducer: {
     [userApi.reducerPath]: userApi.reducer,
@@ -15,7 +13,6 @@ export const store = configureStore({
     [blogApi.reducerPath]: blogApi.reducer,
     [blogPostApi.reducerPath]: blogPostApi.reducer,
     [blogCommentApi.reducerPath]: blogCommentApi.reducer,
-    session: sessionReducer,
   },
 
   middleware: (getDefaultMiddleware) =>
