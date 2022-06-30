@@ -13,9 +13,18 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.9.3",
+    "@emotion/styled": "^11.9.3",
+    "@mui/icons-material": "^5.8.4",
+    "@mui/material": "^5.8.6",
+    "@reduxjs/toolkit": "^1.8.2",
+    "axios": "^0.27.2",
     "next": "12.2.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.33.0",
+    "react-redux": "^8.0.2",
+    "zod": "^3.17.3"
   },
   "devDependencies": {
     "@types/node": "18.0.0",
