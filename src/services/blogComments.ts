@@ -1,17 +1,18 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { NexusGenObjects } from "../../generated/nexus-typegen";
+import { NexusGenFieldTypes } from "../../generated/nexus-typegen";
 import { gql } from "graphql-request";
 
 /* API for BlogComment related queries and Mutations*/
 export const blogCommentApi = createApi({
   reducerPath: "blogCommentApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://decent-web.herokuapp.com/api/graphql",
+    
+    baseUrl: process.env.NEXT_PUBLIC_GRAPHQL_DATABASE,
   }),
   tagTypes: ["BlogComment"],
   endpoints: (builder) => ({
     /* Get BlogComment by ID*/
-    getBlogCommentById: builder.query<NexusGenObjects["BlogComment"], string>({
+    getBlogCommentById: builder.query<NexusGenFieldTypes["BlogComment"], string>({
       query: (id) => ({
         url: "",
         method: "POST",
@@ -28,7 +29,7 @@ export const blogCommentApi = createApi({
       providesTags: ["BlogComment"],
     }),
 
-    getAllBlogComments: builder.query<NexusGenObjects["BlogComment"][], void>({
+    getAllBlogComments: builder.query<NexusGenFieldTypes["BlogComment"][], void>({
       query: () => ({
         url: "",
         method: "POST",
@@ -43,7 +44,7 @@ export const blogCommentApi = createApi({
         },
       }),
       transformResponse: (
-        response: { data: { blogComments: NexusGenObjects["BlogComment"][] } },
+        response: { data: { blogComments: NexusGenFieldTypes["BlogComment"][] } },
         meta,
         arg
       ) => {

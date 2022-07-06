@@ -1,17 +1,17 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { NexusGenObjects } from "../../generated/nexus-typegen";
+import { NexusGenFieldTypes } from "../../generated/nexus-typegen";
 import { gql } from "graphql-request";
 
 /* API for Blog related queries and Mutations*/
 export const blogApi = createApi({
   reducerPath: "blogApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://decent-web.herokuapp.com/api/graphql",
+    baseUrl: process.env.NEXT_PUBLIC_GRAPHQL_DATABASE,
   }),
   tagTypes: ["Blog"],
   endpoints: (builder) => ({
     /* Get Blog by ID*/
-    getBlogById: builder.query<NexusGenObjects["Blog"], string>({
+    getBlogById: builder.query<NexusGenFieldTypes ["Blog"], string>({
       query: (id) => ({
         url: "",
         method: "POST",
@@ -20,6 +20,14 @@ export const blogApi = createApi({
           query blog($id:ID!) {
             blog(id: ${id}) {
               id
+              createdAt
+              updatedAt
+              author {
+                username
+              }
+              authorId
+              name
+              description
             }
           }`,
         },
@@ -28,7 +36,7 @@ export const blogApi = createApi({
       providesTags: ["Blog"],
     }),
 
-    getAllBlogs: builder.query<NexusGenObjects["Blog"][], void>({
+    getAllBlogs: builder.query<NexusGenFieldTypes["Blog"][], void>({
       query: () => ({
         url: "",
         method: "POST",
@@ -37,13 +45,22 @@ export const blogApi = createApi({
             query {
               blogs {
                 id
+                createdAt
+                updatedAt
+                author {
+                  username
+                  id
+                }
+                name
+                description
+
               }
             }
           `,
         },
       }),
       transformResponse: (
-        response: { data: { blogs: NexusGenObjects["Blog"][] } },
+        response: { data: { blogs: NexusGenFieldTypes["Blog"][] } },
         meta,
         arg
       ) => {

@@ -1,17 +1,18 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { NexusGenObjects } from "../../generated/nexus-typegen";
+import { NexusGenFieldTypes } from "../../generated/nexus-typegen";
 import { gql } from "graphql-request";
 
 /* API for User related queries and Mutations*/
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://decent-web.herokuapp.com/api/graphql",
+    
+    baseUrl: process.env.NEXT_PUBLIC_GRAPHQL_DATABASE,
   }),
   tagTypes: ["User"],
   endpoints: (builder) => ({
     /* Get User by ID*/
-    getUserById: builder.query<NexusGenObjects["User"], string>({
+    getUserById: builder.query<NexusGenFieldTypes["User"], string>({
       query: (id) => ({
         url: "",
         method: "POST",
@@ -28,7 +29,7 @@ export const userApi = createApi({
       providesTags: ["User"],
     }),
 
-    getAllUsers: builder.query<NexusGenObjects["User"][], void>({
+    getAllUsers: builder.query<NexusGenFieldTypes["User"][], void>({
       query: () => ({
         url: "",
         method: "POST",
@@ -43,7 +44,7 @@ export const userApi = createApi({
         },
       }),
       transformResponse: (
-        response: { data: { users: NexusGenObjects["User"][] } },
+        response: { data: { users: NexusGenFieldTypes["User"][] } },
         meta,
         arg
       ) => {

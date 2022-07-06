@@ -27,7 +27,7 @@ function createIsomorphicLink(ctx?: SchemaContext) {
     });
   }
   const httpLink = new HttpLink({
-    uri: "https://decent-web.herokuapp.com/api/graphql",
+    uri: process.env.NEXT_PUBLIC_GRAPHQL_DATABASE,
     credentials: "same-origin",
   });
   return from([httpLink]);

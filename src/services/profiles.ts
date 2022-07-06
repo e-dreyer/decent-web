@@ -1,17 +1,18 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { NexusGenObjects } from "../../generated/nexus-typegen";
+import { NexusGenFieldTypes } from "../../generated/nexus-typegen";
 import { gql } from "graphql-request";
 
 /* API for Profile related queries and Mutations*/
 export const profileApi = createApi({
   reducerPath: "profileApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://decent-web.herokuapp.com/api/graphql",
+    
+    baseUrl: process.env.NEXT_PUBLIC_GRAPHQL_DATABASE,
   }),
   tagTypes: ["Profile"],
   endpoints: (builder) => ({
     /* Get Profile by ID*/
-    getProfileById: builder.query<NexusGenObjects["Profile"], string>({
+    getProfileById: builder.query<NexusGenFieldTypes["Profile"], string>({
       query: (id) => ({
         url: "",
         method: "POST",
@@ -28,7 +29,7 @@ export const profileApi = createApi({
       providesTags: ["Profile"],
     }),
 
-    getAllProfiles: builder.query<NexusGenObjects["Profile"][], void>({
+    getAllProfiles: builder.query<NexusGenFieldTypes["Profile"][], void>({
       query: () => ({
         url: "",
         method: "POST",
@@ -37,13 +38,18 @@ export const profileApi = createApi({
             query {
               profiles {
                 id
+                bio
+                user {
+                  id
+                  username
+                }
               }
             }
           `,
         },
       }),
       transformResponse: (
-        response: { data: { profiles: NexusGenObjects["Profile"][] } },
+        response: { data: { profiles: NexusGenFieldTypes["Profile"][] } },
         meta,
         arg
       ) => {
