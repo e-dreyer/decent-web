@@ -3,7 +3,7 @@ import { Button, Box, CardContent, Typography } from "@mui/material";
 
 import CardWrapper from "../CardWrapper/CardWrapper";
 
-import { NexusGenFieldTypes } from "../../../generated/nexus-typegen";
+import { NexusGenFieldTypes } from "../../types/types";
 import Link from "next/link";
 
 type BlogCardProps = {

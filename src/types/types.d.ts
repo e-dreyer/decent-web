@@ -3,8 +3,8 @@
  * Do not make changes to this file directly
  */
 
-
-import type { Context } from "./../src/types/Context"
+import type * as PrismaClient from ".prisma/client"
+import type { Context } from "./../src/context"
 import type { core } from "nexus"
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
@@ -44,48 +44,12 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
-  Blog: { // root type
-    authorId: number; // Int!
-    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
-    description?: string | null; // String
-    id: number; // Int!
-    name?: string | null; // String
-    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
-  }
-  BlogComment: { // root type
-    authorId: number; // Int!
-    blogPostId: number; // Int!
-    content?: string | null; // String
-    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
-    id: number; // Int!
-    parentId?: number | null; // Int
-    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
-  }
-  BlogPost: { // root type
-    authorId: number; // Int!
-    blogId: number; // Int!
-    content?: string | null; // String
-    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
-    id: number; // Int!
-    published?: boolean | null; // Boolean
-    title?: string | null; // String
-    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
-  }
-  Profile: { // root type
-    bio?: string | null; // String
-    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
-    id: number; // Int!
-    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
-    userId: number; // Int!
-  }
+  Blog: PrismaClient.Blog;
+  BlogComment: PrismaClient.BlogComment;
+  BlogPost: PrismaClient.BlogPost;
+  Profile: PrismaClient.Profile;
   Query: {};
-  User: { // root type
-    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
-    email: string; // String!
-    id: number; // Int!
-    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
-    username: string; // String!
-  }
+  User: PrismaClient.User;
 }
 
 export interface NexusGenInterfaces {
@@ -294,71 +258,11 @@ declare global {
   interface NexusGenPluginInputTypeConfig<TypeName extends string> {
   }
   interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {
-    /**
-     * Whether the type can be null
-     * @default (depends on whether nullability is configured in type or schema)
-     * @see declarativeWrappingPlugin
-     */
-    nullable?: boolean
-    /**
-     * Whether the type is list of values, or just a single value.
-     * If list is true, we assume the type is a list. If list is an array,
-     * we'll assume that it's a list with the depth. The boolean indicates whether
-     * the type is required (non-null), where true = nonNull, false = nullable.
-     * @see declarativeWrappingPlugin
-     */
-    list?: true | boolean[]
-    /**
-     * Whether the type should be non null, `required: true` = `nullable: false`
-     * @default (depends on whether nullability is configured in type or schema)
-     * @see declarativeWrappingPlugin
-     */
-    required?: boolean
   }
   interface NexusGenPluginInputFieldConfig<TypeName extends string, FieldName extends string> {
-    /**
-     * Whether the type can be null
-     * @default (depends on whether nullability is configured in type or schema)
-     * @see declarativeWrappingPlugin
-     */
-    nullable?: boolean
-    /**
-     * Whether the type is list of values, or just a single value.
-     * If list is true, we assume the type is a list. If list is an array,
-     * we'll assume that it's a list with the depth. The boolean indicates whether
-     * the type is required (non-null), where true = nonNull, false = nullable.
-     * @see declarativeWrappingPlugin
-     */
-    list?: true | boolean[]
-    /**
-     * Whether the type should be non null, `required: true` = `nullable: false`
-     * @default (depends on whether nullability is configured in type or schema)
-     * @see declarativeWrappingPlugin
-     */
-    required?: boolean
   }
   interface NexusGenPluginSchemaConfig {
   }
   interface NexusGenPluginArgConfig {
-    /**
-     * Whether the type can be null
-     * @default (depends on whether nullability is configured in type or schema)
-     * @see declarativeWrappingPlugin
-     */
-    nullable?: boolean
-    /**
-     * Whether the type is list of values, or just a single value.
-     * If list is true, we assume the type is a list. If list is an array,
-     * we'll assume that it's a list with the depth. The boolean indicates whether
-     * the type is required (non-null), where true = nonNull, false = nullable.
-     * @see declarativeWrappingPlugin
-     */
-    list?: true | boolean[]
-    /**
-     * Whether the type should be non null, `required: true` = `nullable: false`
-     * @default (depends on whether nullability is configured in type or schema)
-     * @see declarativeWrappingPlugin
-     */
-    required?: boolean
   }
 }

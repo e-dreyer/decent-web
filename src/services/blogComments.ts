@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { NexusGenFieldTypes } from "../../generated/nexus-typegen";
+import { NexusGenFieldTypes } from "../types/types";
 import { gql } from "graphql-request";
 
 /* API for BlogComment related queries and Mutations*/

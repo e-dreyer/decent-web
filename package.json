@@ -8,11 +8,9 @@
   "version": "0.1.0",
   "scripts": {
     "dev": "next dev",
-    "build:nexus-typegen": "ts-node --transpile-only src/modules/graphql/schema",
-    "build": "npm run build:nexus-typegen && next build",
+    "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "migrate": "npx prisma db push"
+    "lint": "next lint"
   },
   "dependencies": {
     "@apollo/client": "^3.6.9",
