@@ -43,7 +43,7 @@ export const blogApi = createApi({
         body: {
           query: gql`
             query {
-              blogs {
+              allBlogs {
                 id
                 createdAt
                 updatedAt
@@ -60,11 +60,11 @@ export const blogApi = createApi({
         },
       }),
       transformResponse: (
-        response: { data: { blogs: NexusGenFieldTypes["Blog"][] } },
+        response: { data: { allBlogs: NexusGenFieldTypes["Blog"][] } },
         meta,
         arg
       ) => {
-        return response.data.blogs;
+        return response.data.allBlogs;
       },
 
       providesTags: ["Blog"],

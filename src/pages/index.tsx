@@ -3,7 +3,7 @@ import { useGetAllUsersQuery } from "../services/users";
 
 const Home: NextPage = () => {
   const usersQuery = useGetAllUsersQuery();
-
+  
   return (
     <>
       {usersQuery.isLoading ? (

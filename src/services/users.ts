@@ -36,7 +36,7 @@ export const userApi = createApi({
         body: {
           query: gql`
             query {
-              users {
+              allUsers {
                 id
               }
             }
@@ -44,11 +44,11 @@ export const userApi = createApi({
         },
       }),
       transformResponse: (
-        response: { data: { users: NexusGenFieldTypes["User"][] } },
+        response: { data: { allUsers: NexusGenFieldTypes["User"][] }} ,
         meta,
         arg
       ) => {
-        return response.data.users;
+        return response.data.allUsers
       },
 
       providesTags: ["User"],

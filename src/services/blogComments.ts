@@ -36,7 +36,7 @@ export const blogCommentApi = createApi({
         body: {
           query: gql`
             query {
-              blogComments {
+              allBlogComments {
                 id
               }
             }
@@ -44,11 +44,11 @@ export const blogCommentApi = createApi({
         },
       }),
       transformResponse: (
-        response: { data: { blogComments: NexusGenFieldTypes["BlogComment"][] } },
+        response: { data: { allBlogComments: NexusGenFieldTypes["BlogComment"][] } },
         meta,
         arg
       ) => {
-        return response.data.blogComments;
+        return response.data.allBlogComments;
       },
 
       providesTags: ["BlogComment"],

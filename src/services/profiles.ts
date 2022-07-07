@@ -36,7 +36,7 @@ export const profileApi = createApi({
         body: {
           query: gql`
             query {
-              profiles {
+              allProfiles {
                 id
                 bio
                 user {
@@ -49,11 +49,11 @@ export const profileApi = createApi({
         },
       }),
       transformResponse: (
-        response: { data: { profiles: NexusGenFieldTypes["Profile"][] } },
+        response: { data: { allProfiles: NexusGenFieldTypes["Profile"][] } },
         meta,
         arg
       ) => {
-        return response.data.profiles;
+        return response.data.allProfiles;
       },
 
       providesTags: ["Profile"],

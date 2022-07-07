@@ -3,8 +3,8 @@
  * Do not make changes to this file directly
  */
 
-import type * as PrismaClient from ".prisma/client"
-import type { Context } from "./../src/context"
+
+import type { Context } from "./../context"
 import type { core } from "nexus"
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
@@ -29,9 +29,13 @@ declare global {
 }
 
 export interface NexusGenInputs {
+  PostOrderById: { // input type
+    id?: NexusGenEnums['SortOrder'] | null; // SortOrder
+  }
 }
 
 export interface NexusGenEnums {
+  SortOrder: "asc" | "desc"
 }
 
 export interface NexusGenScalars {
@@ -44,12 +48,48 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
-  Blog: PrismaClient.Blog;
-  BlogComment: PrismaClient.BlogComment;
-  BlogPost: PrismaClient.BlogPost;
-  Profile: PrismaClient.Profile;
+  Blog: { // root type
+    authorId: number; // Int!
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    description?: string | null; // String
+    id: number; // Int!
+    name?: string | null; // String
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+  }
+  BlogComment: { // root type
+    authorId: number; // Int!
+    blogPostId: number; // Int!
+    content?: string | null; // String
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    id: number; // Int!
+    parentId?: number | null; // Int
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+  }
+  BlogPost: { // root type
+    authorId: number; // Int!
+    blogId: number; // Int!
+    content?: string | null; // String
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    id: number; // Int!
+    published?: boolean | null; // Boolean
+    title?: string | null; // String
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+  }
+  Profile: { // root type
+    bio?: string | null; // String
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    id: number; // Int!
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    userId: number; // Int!
+  }
   Query: {};
-  User: PrismaClient.User;
+  User: { // root type
+    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    email: string; // String!
+    id: number; // Int!
+    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    username: string; // String!
+  }
 }
 
 export interface NexusGenInterfaces {
@@ -60,7 +100,7 @@ export interface NexusGenUnions {
 
 export type NexusGenRootTypes = NexusGenObjects
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
+export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
 
 export interface NexusGenFieldTypes {
   Blog: { // field return type
@@ -108,11 +148,11 @@ export interface NexusGenFieldTypes {
     userId: number; // Int!
   }
   Query: { // field return type
-    blogComments: Array<NexusGenRootTypes['BlogComment'] | null> | null; // [BlogComment]
-    blogPosts: Array<NexusGenRootTypes['BlogPost'] | null> | null; // [BlogPost]
-    blogs: Array<NexusGenRootTypes['Blog'] | null> | null; // [Blog]
-    profiles: Array<NexusGenRootTypes['Profile'] | null> | null; // [Profile]
-    users: Array<NexusGenRootTypes['User'] | null> | null; // [User]
+    allBlogComments: Array<NexusGenRootTypes['BlogComment'] | null> | null; // [BlogComment]
+    allBlogPosts: Array<NexusGenRootTypes['BlogPost'] | null> | null; // [BlogPost]
+    allBlogs: Array<NexusGenRootTypes['Blog'] | null> | null; // [Blog]
+    allProfiles: Array<NexusGenRootTypes['Profile'] | null> | null; // [Profile]
+    allUsers: Array<NexusGenRootTypes['User'] | null> | null; // [User]
   }
   User: { // field return type
     blogComments: NexusGenRootTypes['BlogComment'][] | null; // [BlogComment!]
@@ -173,11 +213,11 @@ export interface NexusGenFieldTypeNames {
     userId: 'Int'
   }
   Query: { // field return type name
-    blogComments: 'BlogComment'
-    blogPosts: 'BlogPost'
-    blogs: 'Blog'
-    profiles: 'Profile'
-    users: 'User'
+    allBlogComments: 'BlogComment'
+    allBlogPosts: 'BlogPost'
+    allBlogs: 'Blog'
+    allProfiles: 'Profile'
+    allUsers: 'User'
   }
   User: { // field return type name
     blogComments: 'BlogComment'
@@ -203,9 +243,9 @@ export interface NexusGenTypeInterfaces {
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
 
-export type NexusGenInputNames = never;
+export type NexusGenInputNames = keyof NexusGenInputs;
 
-export type NexusGenEnumNames = never;
+export type NexusGenEnumNames = keyof NexusGenEnums;
 
 export type NexusGenInterfaceNames = never;
 
