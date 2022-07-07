@@ -30,22 +30,40 @@ declare global {
 
 export interface NexusGenInputs {
   BlogByIdInput: { // input type
-    id?: number | null; // Int
+    id: number; // Int!
   }
   BlogCommentByIdInput: { // input type
-    id?: number | null; // Int
+    id: number; // Int!
+  }
+  BlogCommentsByParentCommentIdInput: { // input type
+    parentId: number; // Int!
+  }
+  BlogCommentsByPostIdInput: { // input type
+    postId: number; // Int!
+  }
+  BlogCommentsByUserIdInput: { // input type
+    userId: number; // Int!
   }
   BlogPostByIdInput: { // input type
-    id?: number | null; // Int
+    id: number; // Int!
+  }
+  BlogPostsByBlogIdInput: { // input type
+    blogId: number; // Int!
+  }
+  BlogPostsByUserIdInput: { // input type
+    userId: number; // Int!
+  }
+  BlogsByUserIdInput: { // input type
+    userId: number; // Int!
   }
   PostOrderById: { // input type
     id?: NexusGenEnums['SortOrder'] | null; // SortOrder
   }
   ProfileByIdInput: { // input type
-    id?: number | null; // Int
+    id: number; // Int!
   }
   UserByIdInput: { // input type
-    id?: number | null; // Int
+    id: number; // Int!
   }
 }
 
@@ -170,7 +188,13 @@ export interface NexusGenFieldTypes {
     allUsers: Array<NexusGenRootTypes['User'] | null> | null; // [User]
     blogById: NexusGenRootTypes['Blog'] | null; // Blog
     blogCommentById: NexusGenRootTypes['BlogComment'] | null; // BlogComment
+    blogCommentsByParentCommentId: Array<NexusGenRootTypes['BlogComment'] | null> | null; // [BlogComment]
+    blogCommentsByPostId: Array<NexusGenRootTypes['BlogComment'] | null> | null; // [BlogComment]
+    blogCommentsByUserId: Array<NexusGenRootTypes['BlogComment'] | null> | null; // [BlogComment]
     blogPostById: NexusGenRootTypes['BlogPost'] | null; // BlogPost
+    blogPostsByBlogId: Array<NexusGenRootTypes['BlogPost'] | null> | null; // [BlogPost]
+    blogPostsByUserId: Array<NexusGenRootTypes['BlogPost'] | null> | null; // [BlogPost]
+    blogsByUserId: Array<NexusGenRootTypes['Blog'] | null> | null; // [Blog]
     profileById: NexusGenRootTypes['Profile'] | null; // Profile
     userById: NexusGenRootTypes['User'] | null; // User
   }
@@ -240,7 +264,13 @@ export interface NexusGenFieldTypeNames {
     allUsers: 'User'
     blogById: 'Blog'
     blogCommentById: 'BlogComment'
+    blogCommentsByParentCommentId: 'BlogComment'
+    blogCommentsByPostId: 'BlogComment'
+    blogCommentsByUserId: 'BlogComment'
     blogPostById: 'BlogPost'
+    blogPostsByBlogId: 'BlogPost'
+    blogPostsByUserId: 'BlogPost'
+    blogsByUserId: 'Blog'
     profileById: 'Profile'
     userById: 'User'
   }
@@ -265,8 +295,26 @@ export interface NexusGenArgTypes {
     blogCommentById: { // args
       blogCommentByIdInput: NexusGenInputs['BlogCommentByIdInput']; // BlogCommentByIdInput!
     }
+    blogCommentsByParentCommentId: { // args
+      blogCommentsByParentCommentIdInput: NexusGenInputs['BlogCommentsByParentCommentIdInput']; // BlogCommentsByParentCommentIdInput!
+    }
+    blogCommentsByPostId: { // args
+      blogCommentsByPostIdInput: NexusGenInputs['BlogCommentsByPostIdInput']; // BlogCommentsByPostIdInput!
+    }
+    blogCommentsByUserId: { // args
+      blogCommentsByUserIdInput: NexusGenInputs['BlogCommentsByUserIdInput']; // BlogCommentsByUserIdInput!
+    }
     blogPostById: { // args
       blogPostByIdInput: NexusGenInputs['BlogPostByIdInput']; // BlogPostByIdInput!
+    }
+    blogPostsByBlogId: { // args
+      blogPostsByBlogIdInput: NexusGenInputs['BlogPostsByBlogIdInput']; // BlogPostsByBlogIdInput!
+    }
+    blogPostsByUserId: { // args
+      blogPostsByUserIdInput: NexusGenInputs['BlogPostsByUserIdInput']; // BlogPostsByUserIdInput!
+    }
+    blogsByUserId: { // args
+      blogsByUserIdInput: NexusGenInputs['BlogsByUserIdInput']; // BlogsByUserIdInput!
     }
     profileById: { // args
       profileByIdInput: NexusGenInputs['ProfileByIdInput']; // ProfileByIdInput!

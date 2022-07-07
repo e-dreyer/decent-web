@@ -13,6 +13,11 @@ type Blog {
   updatedAt: DateTime
 }
 
+"""Input arguments for quering Blogs by Id"""
+input BlogByIdInput {
+  id: Int!
+}
+
 type BlogComment {
   author: User
   authorId: Int!
@@ -25,6 +30,35 @@ type BlogComment {
   parent: BlogComment
   parentId: Int
   updatedAt: DateTime
+}
+
+"""Input arguments for quering Blogs by Id"""
+input BlogCommentByIdInput {
+  id: Int!
+}
+
+"""
+Input arguments for quering BlogComments by their Parent BlogComment Id. Search for the BlogComments that replied to a specific BlogComment
+"""
+input BlogCommentsByParentCommentIdInput {
+  """The Id of the Parent BlogComment of the BlogComment to search for"""
+  parentId: Int!
+}
+
+"""
+Input arguments for quering BlogComments by BlogPost Id. Search for the BlogComments of a specific BlogPost
+"""
+input BlogCommentsByPostIdInput {
+  """The Id of the BlogPost that the BlogComments belongs to"""
+  postId: Int!
+}
+
+"""
+Input arguments for quering BlogComments by User Id. Search for BlogComments of a specific User
+"""
+input BlogCommentsByUserIdInput {
+  """The Id of the User that the BlogComment belongs to"""
+  userId: Int!
 }
 
 type BlogPost {
@@ -41,10 +75,41 @@ type BlogPost {
   updatedAt: DateTime
 }
 
+"""Input arguments for quering BlogPosts by Id"""
+input BlogPostByIdInput {
+  id: Int!
+}
+
+"""Input arguments for quering all BlogPosts for a given Blog id"""
+input BlogPostsByBlogIdInput {
+  """The Id of the Blog that the BlogPost belongs to"""
+  blogId: Int!
+}
+
+"""
+Input arguments for quering BlogPosts by a User Id. Search for the BlogPosts of a specific User
+"""
+input BlogPostsByUserIdInput {
+  """The Id of the User that the Post belongs to"""
+  userId: Int!
+}
+
+"""
+Input arguments for quering Blogs by User Id. Search for the Blogs of a specific User
+"""
+input BlogsByUserIdInput {
+  """The Id of the User that the Blogs belongs to"""
+  userId: Int!
+}
+
 """
 A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
 """
 scalar DateTime
+
+input PostOrderById {
+  id: SortOrder
+}
 
 type Profile {
   bio: String
@@ -55,12 +120,66 @@ type Profile {
   userId: Int!
 }
 
+"""Input arguments for quering Profiles by Id"""
+input ProfileByIdInput {
+  id: Int!
+}
+
 type Query {
-  blogComments: [BlogComment]
-  blogPosts: [BlogPost]
-  blogs: [Blog]
-  profiles: [Profile]
-  users: [User]
+  """Query all BlogComments"""
+  allBlogComments: [BlogComment]
+
+  """Query all BlogPosts"""
+  allBlogPosts: [BlogPost]
+
+  """Query all Blogs"""
+  allBlogs: [Blog]
+
+  """Query all Profiles"""
+  allProfiles: [Profile]
+
+  """Query all Users"""
+  allUsers: [User]
+
+  """Query for a single Blog by Id"""
+  blogById(blogByIdInput: BlogByIdInput!): Blog
+
+  """Query for a single BlogComment by Id"""
+  blogCommentById(blogCommentByIdInput: BlogCommentByIdInput!): BlogComment
+
+  """
+  Query for all BlogComments that belong to a specific Parent BlogComment
+  """
+  blogCommentsByParentCommentId(blogCommentsByParentCommentIdInput: BlogCommentsByParentCommentIdInput!): [BlogComment]
+
+  """Query for all BlogComments that belong to a specific BlogPost"""
+  blogCommentsByPostId(blogCommentsByPostIdInput: BlogCommentsByPostIdInput!): [BlogComment]
+
+  """Query for all BlogComments that belong to a specific User"""
+  blogCommentsByUserId(blogCommentsByUserIdInput: BlogCommentsByUserIdInput!): [BlogComment]
+
+  """Query for a single BlogPost by Id"""
+  blogPostById(blogPostByIdInput: BlogPostByIdInput!): BlogPost
+
+  """Query for all BlogPosts that belong to a specific Blog"""
+  blogPostsByBlogId(blogPostsByBlogIdInput: BlogPostsByBlogIdInput!): [BlogPost]
+
+  """Query for all BlogPosts that belong to a specific User"""
+  blogPostsByUserId(blogPostsByUserIdInput: BlogPostsByUserIdInput!): [BlogPost]
+
+  """Query for all Blogs that belong to a specific User"""
+  blogsByUserId(blogsByUserIdInput: BlogsByUserIdInput!): [Blog]
+
+  """Query for a single Profile by Id"""
+  profileById(profileByIdInput: ProfileByIdInput!): Profile
+
+  """Query for a single User by Id"""
+  userById(userByIdInput: UserByIdInput!): User
+}
+
+enum SortOrder {
+  asc
+  desc
 }
 
 type User {
@@ -73,4 +192,9 @@ type User {
   profile: Profile
   updatedAt: DateTime
   username: String!
+}
+
+"""Input arguments for quering Users by Id"""
+input UserByIdInput {
+  id: Int!
 }
