@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { NexusGenFieldTypes } from "../types/types";
 import { gql } from "graphql-request";
+import {HYDRATE} from 'next-redux-wrapper'
+
+import { NexusGenFieldTypes } from "../types/types";
 
 /* API for Profile related queries and Mutations*/
 export const profileApi = createApi({
@@ -9,6 +11,11 @@ export const profileApi = createApi({
     
     baseUrl: process.env.NEXT_PUBLIC_GRAPHQL_DATABASE,
   }),
+  extractRehydrationInfo(action, {reducerPath}) {
+    if (action.type === HYDRATE) {
+      return action.payload[reducerPath]
+    }
+  },
   tagTypes: ["Profile"],
   endpoints: (builder) => ({
     /* Get Profile by ID*/
@@ -61,6 +68,6 @@ export const profileApi = createApi({
   }),
 });
 
-// Export hooks for usage in function components, which are
-// auto-generated based on the defined endpoints
-export const { useGetProfileByIdQuery, useGetAllProfilesQuery } = profileApi;
+
+export const { useGetProfileByIdQuery, useGetAllProfilesQuery, util: {getRunningOperationPromises} } = profileApi;
+export const {getAllProfiles, getProfileById} = profileApi.endpoints

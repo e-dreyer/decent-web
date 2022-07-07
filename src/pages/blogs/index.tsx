@@ -1,23 +1,29 @@
-import { Stack } from '@mui/material';
-import React from 'react'
+import React from "react";
+import { NextPage } from "next";
+import { wrapper } from "../../app/store";
+
+import { Stack } from "@mui/material";
+
 import BlogCard from '../../components/BlogCard/BlogCard';
-import { useGetAllBlogsQuery } from '../../services/blogs'
+import { useGetAllBlogsQuery, getAllBlogs, getRunningOperationPromises } from '../../services/blogs'
 
-function BlogsPage() {
-  const blogsQuery = useGetAllBlogsQuery();
+type PageProps = {};
 
-  if (blogsQuery.isLoading) {
+export const Page: NextPage = (props: PageProps) => {
+  const result = useGetAllBlogsQuery();
+
+  if (result.isLoading) {
     return <div>Loading Blogs...</div>;
   }
 
-  if (blogsQuery.error) {
+  if (result.error) {
     return <div>Error Loading Blogs...</div>;
   }
 
-  if (blogsQuery.data) {
+  if (result.data) {
     return (
       <Stack direction="column" gap={2} sx={{ width: "100%" }}>
-        {blogsQuery?.data.map((blog, blogIndex) => {
+        {result?.data.map((blog, blogIndex) => {
           return <BlogCard key={`blogCard-${blogIndex}`} blog={blog} />;
         })}
       </Stack>
@@ -28,4 +34,15 @@ function BlogsPage() {
 return null;
 }
 
-export default BlogsPage
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async (context) => {
+    store.dispatch(getAllBlogs.initiate());
+    await Promise.all(getRunningOperationPromises())
+
+    return {
+      props: {}
+    }
+  }
+)
+
+export default Page

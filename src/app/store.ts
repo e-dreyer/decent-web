@@ -1,34 +1,34 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { setupListeners } from "@reduxjs/toolkit/dist/query";
+import { createWrapper } from "next-redux-wrapper";
+
 import { userApi } from "../services/users";
 import { profileApi } from "../services/profiles";
 import { blogApi } from "../services/blogs";
 import { blogPostApi } from "../services/blogPosts";
 import { blogCommentApi } from "../services/blogComments";
 
-export const store = configureStore({
-  reducer: {
-    [userApi.reducerPath]: userApi.reducer,
-    [profileApi.reducerPath]: profileApi.reducer,
-    [blogApi.reducerPath]: blogApi.reducer,
-    [blogPostApi.reducerPath]: blogPostApi.reducer,
-    [blogCommentApi.reducerPath]: blogCommentApi.reducer,
-  },
+export const makeStore = () => 
+  configureStore({
+    reducer: {
+      [userApi.reducerPath]: userApi.reducer,
+      [profileApi.reducerPath]: profileApi.reducer,
+      [blogApi.reducerPath]: blogApi.reducer,
+      [blogPostApi.reducerPath]: blogPostApi.reducer,
+      [blogCommentApi.reducerPath]: blogCommentApi.reducer,
+    },
 
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware()
-      .concat(userApi.middleware)
-      .concat(profileApi.middleware)
-      .concat(blogApi.middleware)
-      .concat(blogPostApi.middleware)
-      .concat(blogCommentApi.middleware),
-});
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware()
+        .concat(userApi.middleware)
+        .concat(profileApi.middleware)
+        .concat(blogApi.middleware)
+        .concat(blogPostApi.middleware)
+        .concat(blogCommentApi.middleware),
+  });
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>;
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = typeof store.dispatch;
 
-// optional, but required for refetchOnFocus/refetchOnReconnect behaviors
-// see `setupListeners` docs - takes an optional callback as the 2nd arg for customization
-setupListeners(store.dispatch);
+export type AppStore = ReturnType<typeof makeStore>
+export type RootState = ReturnType<AppStore["getState"]>;
+export type AppDispatch = AppStore["dispatch"];
+
+export const wrapper = createWrapper<AppStore>(makeStore, { debug: true });

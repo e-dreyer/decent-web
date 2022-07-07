@@ -1,6 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { NexusGenFieldTypes } from "../types/types";
 import { gql } from "graphql-request";
+import {HYDRATE} from 'next-redux-wrapper'
+
+import { NexusGenFieldTypes } from "../types/types";
 
 /* API for BlogComment related queries and Mutations*/
 export const blogCommentApi = createApi({
@@ -9,6 +11,11 @@ export const blogCommentApi = createApi({
     
     baseUrl: process.env.NEXT_PUBLIC_GRAPHQL_DATABASE,
   }),
+  extractRehydrationInfo(action, {reducerPath}) {
+    if (action.type === HYDRATE) {
+      return action.payload[reducerPath]
+    }
+  },
   tagTypes: ["BlogComment"],
   endpoints: (builder) => ({
     /* Get BlogComment by ID*/
@@ -56,6 +63,5 @@ export const blogCommentApi = createApi({
   }),
 });
 
-// Export hooks for usage in function components, which are
-// auto-generated based on the defined endpoints
-export const { useGetBlogCommentByIdQuery, useGetAllBlogCommentsQuery } = blogCommentApi;
+export const { useGetBlogCommentByIdQuery, useGetAllBlogCommentsQuery, util: {getRunningOperationPromises}} = blogCommentApi;
+export const {getAllBlogComments, getBlogCommentById} = blogCommentApi.endpoints
