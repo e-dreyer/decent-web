@@ -15,7 +15,7 @@ function Header() {
             component="a"
             sx={{
               mr: 2,
-              display: { xs: "none", md: "flex" },
+              display: { xs: "flex" },
               fontFamily: "monospace",
               fontWeight: 900,
               letterSpacing: ".2rem",
