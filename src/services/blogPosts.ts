@@ -62,6 +62,60 @@ export const blogPostApi = createApi({
       providesTags: ["BlogPost"],
     }),
 
+    /* Get BlogPosts by User Id */
+    getBlogPostsByUserId: builder.query<
+      NexusGenFieldTypes["BlogPost"],
+      NexusGenInputs["BlogPostsByUserIdInput"]
+    >({
+      query: (
+        blogPostsByUserIdInput: NexusGenInputs["BlogPostsByUserIdInput"]
+      ) => ({
+        url: "/graphql",
+        method: "POST",
+        body: {
+          query: gql`
+            query BlogPostsByUserId(
+              $blogPostsByUserIdInput: BlogPostsByUserIdInput!
+            ) {
+              blogPostsByUserId(
+                blogPostsByUserIdInput: $blogPostsByUserIdInput
+              ) {
+                id
+                createdAt
+                updatedAt
+                author {
+                  id
+                  username
+                }
+                title
+                content
+                published
+                blog {
+                  id
+                  name
+                }
+              }
+            }
+          `,
+          variables: {
+            blogPostsByUserIdInput,
+          },
+        },
+      }),
+      transformResponse: (
+        response: {
+          data: { blogPostsByUserId: NexusGenFieldTypes["BlogPost"] };
+        },
+        meta,
+        arg
+      ) => {
+        return response.data.blogPostsByUserId;
+      },
+
+      providesTags: ["BlogPost"],
+    }),
+
+    /* Get All BlogPosts */
     getAllBlogPosts: builder.query<NexusGenFieldTypes["BlogPost"][], void>({
       query: () => ({
         url: "/graphql",
