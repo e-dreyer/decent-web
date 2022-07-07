@@ -28,11 +28,11 @@ const Page: NextPage = (props: PageProps) => {
   const result = useGetBlogByIdQuery(getQueryParameters(id));
 
   if (result.isLoading) {
-    return <div>Loading Profiles...</div>;
+    return <div>Loading Blog...</div>;
   }
 
   if (result.error) {
-    return <div>Error Loading Profiles</div>;
+    return <div>Error Loading Blog...</div>;
   }
 
   if (result.data) {
