@@ -1,30 +1,31 @@
-import { AppBar, Button, Stack, Toolbar, Typography } from '@mui/material'
-import { Box } from '@mui/system'
-import Link from 'next/link';
-import React from 'react'
+import { AppBar, Button, Stack, Toolbar, Typography } from "@mui/material";
+import { Box } from "@mui/system";
+import Link from "next/link";
+import React from "react";
 
 function Header() {
   return (
     <AppBar>
       <Toolbar>
         {/* Logo */}
-        <Typography
-          variant="h5"
-          noWrap
-          component="a"
-          href="/"
-          sx={{
-            mr: 2,
-            display: { xs: "none", md: "flex" },
-            fontFamily: "monospace",
-            fontWeight: 900,
-            letterSpacing: ".2rem",
-            color: "inherit",
-            textDecoration: "none",
-          }}
-        >
-          Decent
-        </Typography>
+        <Link href="/">
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            sx={{
+              mr: 2,
+              display: { xs: "none", md: "flex" },
+              fontFamily: "monospace",
+              fontWeight: 900,
+              letterSpacing: ".2rem",
+              color: "inherit",
+              textDecoration: "none",
+            }}
+          >
+            Decent
+          </Typography>
+        </Link>
 
         {/* Navigation buttons */}
         <Box component="nav" sx={{ ml: "auto" }}>
@@ -59,4 +60,4 @@ function Header() {
   );
 }
 
-export default Header
+export default Header;
