@@ -1,7 +1,62 @@
-import React from 'react'
+import React from "react";
+import { NextPage } from "next";
+import { useRouter } from "next/router";
 
-function BlogPage() {
-  return <div>BlogPage</div>;
-}
+import { wrapper } from "../../app/store";
 
-export default BlogPage;
+import { Stack } from "@mui/material";
+
+import BlogCard from "../../components/BlogCard/BlogCard";
+import {
+  useGetBlogByIdQuery,
+  getBlogById,
+  getRunningOperationPromises,
+} from "../../services/blogs";
+
+type PageProps = {};
+
+const getQueryParameters = (id: any) => {
+  return {
+    id: parseInt(id as string, 10),
+  };
+};
+
+const Page: NextPage = (props: PageProps) => {
+  const router = useRouter();
+  const { id } = router.query;
+
+  const result = useGetBlogByIdQuery(getQueryParameters(id));
+
+  if (result.isLoading) {
+    return <div>Loading Profiles...</div>;
+  }
+
+  if (result.error) {
+    return <div>Error Loading Profiles</div>;
+  }
+
+  if (result.data) {
+    return (
+      <Stack direction="column" gap={2} sx={{ width: "100%" }}>
+        <BlogCard key={`blogCard`} blog={result.data} />
+      </Stack>
+    );
+  }
+
+  return null;
+};
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async (context) => {
+    store.dispatch(
+      getBlogById.initiate(getQueryParameters(context.params?.id))
+    );
+    await Promise.all(getRunningOperationPromises());
+
+    return {
+      props: {},
+    };
+  }
+);
+
+export default Page;
