@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Box, CardContent, Typography } from "@mui/material";
+import { Box, CardContent, Typography } from "@mui/material";
 
 import CardWrapper from "../CardWrapper/CardWrapper";
 
