@@ -2,41 +2,72 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { gql } from "graphql-request";
 import {HYDRATE} from 'next-redux-wrapper'
 
-import { NexusGenFieldTypes } from "../types/types";
+import { NexusGenFieldTypes, NexusGenInputs} from "../types/types";
 
 /* API for BlogComment related queries and Mutations*/
 export const blogCommentApi = createApi({
   reducerPath: "blogCommentApi",
   baseQuery: fetchBaseQuery({
-    
     baseUrl: process.env.NEXT_PUBLIC_GRAPHQL_DATABASE,
   }),
-  extractRehydrationInfo(action, {reducerPath}) {
+  extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
-      return action.payload[reducerPath]
+      return action.payload[reducerPath];
     }
   },
   tagTypes: ["BlogComment"],
   endpoints: (builder) => ({
     /* Get BlogComment by ID*/
-    getBlogCommentById: builder.query<NexusGenFieldTypes["BlogComment"], string>({
-      query: (id) => ({
+    getBlogCommentById: builder.query<
+      NexusGenFieldTypes["BlogComment"],
+      NexusGenInputs["BlogCommentByIdInput"]
+    >({
+      query: (
+        blogCommentByIdInput: NexusGenInputs["BlogCommentByIdInput"]
+      ) => ({
         url: "/graphql",
         method: "POST",
         body: {
           query: gql`
-          query blogComment($id:ID!) {
-            blogComment(id: ${id}) {
-              id
+            query BlogCommentById($blogCommentByIdInput: BlogCommentByIdInput!) {
+              blogCommentById(blogCommentByIdInput: $blogCommentByIdInput) {
+                id
+                createdAt
+                updatedAt
+                author {
+                  id
+                  username
+                }
+                blogPost {
+                  id
+                }
+                content
+                parent {
+                  id
+                }
+              }
             }
-          }`,
+          `,
+          variables: {
+            blogCommentByIdInput
+          }
         },
       }),
+      transformResponse: (
+        response: { data: { blogCommentById: NexusGenFieldTypes["BlogComment"] } },
+        meta,
+        arg
+      ) => {
+        return response.data.blogCommentById;
+      },
 
       providesTags: ["BlogComment"],
     }),
 
-    getAllBlogComments: builder.query<NexusGenFieldTypes["BlogComment"][], void>({
+    getAllBlogComments: builder.query<
+      NexusGenFieldTypes["BlogComment"][],
+      void
+    >({
       query: () => ({
         url: "/graphql",
         method: "POST",
@@ -51,7 +82,9 @@ export const blogCommentApi = createApi({
         },
       }),
       transformResponse: (
-        response: { data: { allBlogComments: NexusGenFieldTypes["BlogComment"][] } },
+        response: {
+          data: { allBlogComments: NexusGenFieldTypes["BlogComment"][] };
+        },
         meta,
         arg
       ) => {
