@@ -21,7 +21,7 @@ export const userApi = createApi({
     /* Get User by ID*/
     getUserById: builder.query<NexusGenFieldTypes["User"], string>({
       query: (id) => ({
-        url: "",
+        url: "/graphql",
         method: "POST",
         body: {
           query: gql`
@@ -38,7 +38,7 @@ export const userApi = createApi({
 
     getAllUsers: builder.query<NexusGenFieldTypes["User"][], void>({
       query: () => ({
-        url: "",
+        url: "/graphql",
         method: "POST",
         body: {
           query: gql`

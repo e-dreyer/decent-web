@@ -21,7 +21,7 @@ export const blogCommentApi = createApi({
     /* Get BlogComment by ID*/
     getBlogCommentById: builder.query<NexusGenFieldTypes["BlogComment"], string>({
       query: (id) => ({
-        url: "",
+        url: "/graphql",
         method: "POST",
         body: {
           query: gql`
@@ -38,7 +38,7 @@ export const blogCommentApi = createApi({
 
     getAllBlogComments: builder.query<NexusGenFieldTypes["BlogComment"][], void>({
       query: () => ({
-        url: "",
+        url: "/graphql",
         method: "POST",
         body: {
           query: gql`
