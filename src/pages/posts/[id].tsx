@@ -36,9 +36,7 @@ const Page: NextPage = (props: PageProps) => {
 
   if (result.data) {
     return (
-      <Stack direction="column" gap={2} sx={{width: "100%"}}>
         <PostCard key={`postCard`} post={result.data}/>
-      </Stack>
     )
   }
 

@@ -37,9 +37,7 @@ const Page: NextPage = (props: PageProps) => {
 
   if (result.data) {
     return (
-      <Stack direction="column" gap={2} sx={{ width: "100%" }}>
         <BlogCard key={`blogCard`} blog={result.data} />
-      </Stack>
     );
   }
 
