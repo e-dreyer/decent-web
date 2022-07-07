@@ -32,10 +32,11 @@ export const profileApi = createApi({
                 id
                 createdAt
                 updatedAt
+                bio
                 user {
                   id
+                  username
                 }
-                bio
               }
             }
           `,
@@ -65,6 +66,8 @@ export const profileApi = createApi({
             query {
               allProfiles {
                 id
+                createdAt
+                updatedAt
                 bio
                 user {
                   id

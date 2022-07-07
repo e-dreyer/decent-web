@@ -32,13 +32,13 @@ export const blogPostApi = createApi({
                 id
                 createdAt
                 updatedAt
+                title
+                content
+                published
                 author {
                   id
                   username
                 }
-                title
-                content
-                published
                 blog {
                   id
                   name
@@ -73,12 +73,13 @@ export const blogPostApi = createApi({
                 id
                 createdAt
                 updatedAt
+                title
+                content
+                published
                 author {
                   id
                   username
                 }
-                title
-                content
                 blog {
                   id
                   name

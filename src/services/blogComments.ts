@@ -29,11 +29,14 @@ export const blogCommentApi = createApi({
         method: "POST",
         body: {
           query: gql`
-            query BlogCommentById($blogCommentByIdInput: BlogCommentByIdInput!) {
+            query BlogCommentById(
+              $blogCommentByIdInput: BlogCommentByIdInput!
+            ) {
               blogCommentById(blogCommentByIdInput: $blogCommentByIdInput) {
                 id
                 createdAt
                 updatedAt
+                content
                 author {
                   id
                   username
@@ -41,7 +44,6 @@ export const blogCommentApi = createApi({
                 blogPost {
                   id
                 }
-                content
                 parent {
                   id
                 }
@@ -49,12 +51,14 @@ export const blogCommentApi = createApi({
             }
           `,
           variables: {
-            blogCommentByIdInput
-          }
+            blogCommentByIdInput,
+          },
         },
       }),
       transformResponse: (
-        response: { data: { blogCommentById: NexusGenFieldTypes["BlogComment"] } },
+        response: {
+          data: { blogCommentById: NexusGenFieldTypes["BlogComment"] };
+        },
         meta,
         arg
       ) => {
@@ -76,6 +80,19 @@ export const blogCommentApi = createApi({
             query {
               allBlogComments {
                 id
+                createdAt
+                updatedAt
+                content
+                author {
+                  id
+                  username
+                }
+                blogPost {
+                  id
+                }
+                parent {
+                  id
+                }
               }
             }
           `,

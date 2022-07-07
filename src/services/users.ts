@@ -63,6 +63,12 @@ export const userApi = createApi({
             query {
               allUsers {
                 id
+                createdAt
+                updatedAt
+                username
+                profile {
+                  id
+                }
               }
             }
           `,

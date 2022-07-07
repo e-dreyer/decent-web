@@ -32,12 +32,12 @@ export const blogApi = createApi({
                 id
                 createdAt
                 updatedAt
+                name
+                description
                 author {
                   id
                   username
                 }
-                name
-                description
               }
             }
           `,
@@ -68,12 +68,12 @@ export const blogApi = createApi({
                 id
                 createdAt
                 updatedAt
-                author {
-                  username
-                  id
-                }
                 name
                 description
+                author {
+                  id
+                  username
+                }
               }
             }
           `,
