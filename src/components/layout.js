@@ -5,7 +5,7 @@ export default function Layout({ children }) {
   return (
     <>
       <Box>
-        <Header/>
+        <Header />
         {/* Wrap the entire app in a box */}
         <Box
           sx={{

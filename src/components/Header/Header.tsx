@@ -3,13 +3,13 @@ import React from "react";
 
 import { Box } from "@mui/system";
 import { AppBar, Button, Stack, Toolbar, Typography } from "@mui/material";
-import LoadingButton from '@mui/lab/LoadingButton';
+import LoadingButton from "@mui/lab/LoadingButton";
 
-import { useSession, signIn, signOut } from "next-auth/react"
+import { useSession, signIn, signOut } from "next-auth/react";
 
 function Header() {
-  const { data, status } = useSession()
-  
+  const { data, status } = useSession();
+
   return (
     <AppBar>
       <Toolbar>
