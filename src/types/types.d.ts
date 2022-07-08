@@ -83,44 +83,44 @@ export interface NexusGenScalars {
 export interface NexusGenObjects {
   Blog: { // root type
     authorId: number; // Int!
-    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     description?: string | null; // String
     id: number; // Int!
-    name?: string | null; // String
-    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    name: string; // String!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   BlogComment: { // root type
     authorId: number; // Int!
     blogPostId: number; // Int!
     content?: string | null; // String
-    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: number; // Int!
     parentId?: number | null; // Int
-    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   BlogPost: { // root type
     authorId: number; // Int!
     blogId: number; // Int!
     content?: string | null; // String
-    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: number; // Int!
-    published?: boolean | null; // Boolean
-    title?: string | null; // String
-    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    published: boolean; // Boolean!
+    title: string; // String!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   Profile: { // root type
-    bio?: string | null; // String
-    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    bio: string; // String!
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: number; // Int!
-    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
     userId: number; // Int!
   }
   Query: {};
   User: { // root type
-    createdAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     email: string; // String!
     id: number; // Int!
-    updatedAt?: NexusGenScalars['DateTime'] | null; // DateTime
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
     username: string; // String!
   }
 }
@@ -139,44 +139,44 @@ export interface NexusGenFieldTypes {
   Blog: { // field return type
     author: NexusGenRootTypes['User'] | null; // User
     authorId: number; // Int!
-    blogPosts: Array<NexusGenRootTypes['BlogPost'] | null> | null; // [BlogPost]
-    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    blogPosts: Array<NexusGenRootTypes['BlogPost'] | null>; // [BlogPost]!
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     description: string | null; // String
     id: number; // Int!
-    name: string | null; // String
-    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
+    name: string; // String!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   BlogComment: { // field return type
     author: NexusGenRootTypes['User'] | null; // User
     authorId: number; // Int!
-    blogComments: Array<NexusGenRootTypes['BlogComment'] | null> | null; // [BlogComment]
+    blogComments: Array<NexusGenRootTypes['BlogComment'] | null>; // [BlogComment]!
     blogPost: NexusGenRootTypes['BlogPost'] | null; // BlogPost
     blogPostId: number; // Int!
     content: string | null; // String
-    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: number; // Int!
     parent: NexusGenRootTypes['BlogComment'] | null; // BlogComment
     parentId: number | null; // Int
-    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   BlogPost: { // field return type
     author: NexusGenRootTypes['User'] | null; // User
     authorId: number; // Int!
     blog: NexusGenRootTypes['Blog'] | null; // Blog
-    blogComments: Array<NexusGenRootTypes['BlogComment'] | null> | null; // [BlogComment]
+    blogComments: Array<NexusGenRootTypes['BlogComment'] | null>; // [BlogComment]!
     blogId: number; // Int!
     content: string | null; // String
-    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: number; // Int!
-    published: boolean | null; // Boolean
-    title: string | null; // String
-    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
+    published: boolean; // Boolean!
+    title: string; // String!
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   Profile: { // field return type
-    bio: string | null; // String
-    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    bio: string; // String!
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: number; // Int!
-    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
     user: NexusGenRootTypes['User'] | null; // User
     userId: number; // Int!
   }
@@ -199,14 +199,14 @@ export interface NexusGenFieldTypes {
     userById: NexusGenRootTypes['User'] | null; // User
   }
   User: { // field return type
-    blogComments: NexusGenRootTypes['BlogComment'][] | null; // [BlogComment!]
-    blogPosts: Array<NexusGenRootTypes['BlogPost'] | null> | null; // [BlogPost]
+    blogComments: Array<NexusGenRootTypes['BlogComment'] | null>; // [BlogComment]!
+    blogPosts: Array<NexusGenRootTypes['BlogPost'] | null>; // [BlogPost]!
     blogs: Array<NexusGenRootTypes['Blog'] | null> | null; // [Blog]
-    createdAt: NexusGenScalars['DateTime'] | null; // DateTime
+    createdAt: NexusGenScalars['DateTime']; // DateTime!
     email: string; // String!
     id: number; // Int!
     profile: NexusGenRootTypes['Profile'] | null; // Profile
-    updatedAt: NexusGenScalars['DateTime'] | null; // DateTime
+    updatedAt: NexusGenScalars['DateTime']; // DateTime!
     username: string; // String!
   }
 }

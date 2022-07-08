@@ -5,12 +5,12 @@
 type Blog {
   author: User
   authorId: Int!
-  blogPosts: [BlogPost]
-  createdAt: DateTime
+  blogPosts: [BlogPost]!
+  createdAt: DateTime!
   description: String
   id: Int!
-  name: String
-  updatedAt: DateTime
+  name: String!
+  updatedAt: DateTime!
 }
 
 """Input arguments for quering Blogs by Id"""
@@ -21,15 +21,15 @@ input BlogByIdInput {
 type BlogComment {
   author: User
   authorId: Int!
-  blogComments: [BlogComment]
+  blogComments: [BlogComment]!
   blogPost: BlogPost
   blogPostId: Int!
   content: String
-  createdAt: DateTime
+  createdAt: DateTime!
   id: Int!
   parent: BlogComment
   parentId: Int
-  updatedAt: DateTime
+  updatedAt: DateTime!
 }
 
 """Input arguments for quering Blogs by Id"""
@@ -65,14 +65,14 @@ type BlogPost {
   author: User
   authorId: Int!
   blog: Blog
-  blogComments: [BlogComment]
+  blogComments: [BlogComment]!
   blogId: Int!
   content: String
-  createdAt: DateTime
+  createdAt: DateTime!
   id: Int!
-  published: Boolean
-  title: String
-  updatedAt: DateTime
+  published: Boolean!
+  title: String!
+  updatedAt: DateTime!
 }
 
 """Input arguments for quering BlogPosts by Id"""
@@ -112,10 +112,10 @@ input PostOrderById {
 }
 
 type Profile {
-  bio: String
-  createdAt: DateTime
+  bio: String!
+  createdAt: DateTime!
   id: Int!
-  updatedAt: DateTime
+  updatedAt: DateTime!
   user: User
   userId: Int!
 }
@@ -183,14 +183,14 @@ enum SortOrder {
 }
 
 type User {
-  blogComments: [BlogComment!]
-  blogPosts: [BlogPost]
+  blogComments: [BlogComment]!
+  blogPosts: [BlogPost]!
   blogs: [Blog]
-  createdAt: DateTime
+  createdAt: DateTime!
   email: String!
   id: Int!
   profile: Profile
-  updatedAt: DateTime
+  updatedAt: DateTime!
   username: String!
 }
 
