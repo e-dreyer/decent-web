@@ -14,8 +14,7 @@ function CommentCard(props: CommentCardProps) {
   return (
     <CardWrapper>
       <>
-        <CardContent >
-
+        <CardContent>
           <Stack direction="row" gap={1}>
             <Link href={`/profiles/${props.comment.author?.id}`} passHref>
               <Typography
@@ -27,7 +26,6 @@ function CommentCard(props: CommentCardProps) {
                 {props.comment.author?.username}
               </Typography>
             </Link>
-
           </Stack>
 
           <Typography variant="body1" component="p">
