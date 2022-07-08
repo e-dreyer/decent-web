@@ -4,48 +4,55 @@ import { wrapper } from "../../app/store";
 
 import { Stack } from "@mui/material";
 
-import PostCard from '../../components/PostCard/PostCard';
-import { useGetAllBlogPostsQuery, getAllBlogPosts, getRunningOperationPromises } from '../../services/blogPosts';
+/* BlogPost Imports */
+import BlogPostCard from "../../components/BlogPostCard/BlogPostCard";
+import {
+  useGetAllBlogPostsQuery,
+  getAllBlogPosts,
+  getRunningOperationPromises,
+} from "../../services/blogPosts";
 
-type PageProps = {
-
-}
+type PageProps = {};
 
 const Page: NextPage = (props: PageProps) => {
-  const result = useGetAllBlogPostsQuery()
+  const blogsQueryResult = useGetAllBlogPostsQuery();
 
-  if (result.isLoading) {
-    return <div>Loading Posts...</div>
+  if (blogsQueryResult.isLoading) {
+    return <div>Loading Posts...</div>;
   }
 
-  if (result.error) {
-    return <div>Error Loading Posts...</div>
+  if (blogsQueryResult.error) {
+    return <div>Error Loading Posts...</div>;
   }
-  
-  if (result.data) {
+
+  if (blogsQueryResult.data) {
     return (
-      <Stack direction="column" gap={2} sx={{width: "100%"}}>
-        {
-          result?.data.map((post, postIndex) => {
-            return <PostCard key={`postCard-${postIndex}`} post={post}/>
-          })
-        }
+      <Stack direction="column" gap={2} sx={{ width: "100%" }}>
+        {blogsQueryResult?.data.map((blogPost, blogPostIndex) => {
+          return (
+            <BlogPostCard
+              key={`blogPostCard-${blogPostIndex}`}
+              blogPost={blogPost}
+            />
+          );
+        })}
       </Stack>
-    )
+    );
   }
 
-  return null
-}
+  return null;
+};
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (context) => {
     store.dispatch(getAllBlogPosts.initiate());
+
     await Promise.all(getRunningOperationPromises());
 
     return {
-      props: {}
-    }
+      props: {},
+    };
   }
-)
+);
 
 export default Page;

@@ -4,45 +4,50 @@ import { wrapper } from "../../app/store";
 
 import { Stack } from "@mui/material";
 
-import BlogCard from '../../components/BlogCard/BlogCard';
-import { useGetAllBlogsQuery, getAllBlogs, getRunningOperationPromises } from '../../services/blogs'
+/* Blog Import */
+import BlogCard from "../../components/BlogCard/BlogCard";
+import {
+  useGetAllBlogsQuery,
+  getAllBlogs,
+  getRunningOperationPromises,
+} from "../../services/blogs";
 
 type PageProps = {};
 
 export const Page: NextPage = (props: PageProps) => {
-  const result = useGetAllBlogsQuery();
+  const blogsQueryResult = useGetAllBlogsQuery();
 
-  if (result.isLoading) {
+  if (blogsQueryResult.isLoading) {
     return <div>Loading Blogs...</div>;
   }
 
-  if (result.error) {
+  if (blogsQueryResult.error) {
     return <div>Error Loading Blogs...</div>;
   }
 
-  if (result.data) {
+  if (blogsQueryResult.data) {
     return (
       <Stack direction="column" gap={2} sx={{ width: "100%" }}>
-        {result?.data.map((blog, blogIndex) => {
+        {blogsQueryResult?.data.map((blog, blogIndex) => {
           return <BlogCard key={`blogCard-${blogIndex}`} blog={blog} />;
         })}
       </Stack>
     );
-  
-}
+  }
 
-return null;
-}
+  return null;
+};
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (context) => {
     store.dispatch(getAllBlogs.initiate());
-    await Promise.all(getRunningOperationPromises())
+
+    await Promise.all(getRunningOperationPromises());
 
     return {
-      props: {}
-    }
+      props: {},
+    };
   }
-)
+);
 
-export default Page
+export default Page;

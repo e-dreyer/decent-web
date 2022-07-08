@@ -6,19 +6,27 @@ import { wrapper } from "../../app/store";
 
 import { Stack, Typography, Box } from "@mui/material";
 
-import ProfileCard from "../../components/ProfileCard/ProfilCard";
+/* Profile Imports */
+import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import {
   useGetProfileByIdQuery,
   getProfileById,
   getRunningOperationPromises,
 } from "../../services/profiles";
+
+/* Blog Imports */
 import {
   getBlogsByUserId,
   useGetBlogsByUserIdQuery,
 } from "../../services/blogs";
 import BlogCard from "../../components/BlogCard/BlogCard";
-import { getBlogPostsByUserId, useGetBlogPostsByUserIdQuery } from "../../services/blogPosts";
-import PostCard from "../../components/PostCard/PostCard";
+
+/* BlogPost Imports */
+import {
+  getBlogPostsByUserId,
+  useGetBlogPostsByUserIdQuery,
+} from "../../services/blogPosts";
+import BlogPostCard from "../../components/BlogPostCard/BlogPostCard";
 
 type PageProps = {};
 
@@ -29,21 +37,21 @@ const Page: NextPage = (props: PageProps) => {
 
   /* Query the User's Profile */
   const profileQueryResult = useGetProfileByIdQuery({
-    id: parseInt(id as string, 10),
+    id: id as string,
   });
 
   /* Query the User's Blogs */
   const blogsQueryResult = useGetBlogsByUserIdQuery({
-    id: parseInt(id as string, 10),
+    id: id as string,
   });
 
   /* Query the User's BlogPosts */
   const blogPostsQueryResult = useGetBlogPostsByUserIdQuery({
-    id: parseInt(id as string, 10)
-  })
- 
+    id: id as string,
+  });
+
   /* Get the User's Profile */
-  const profile = () => {
+  const profileSection = () => {
     if (profileQueryResult.isLoading) {
       return <div>Loading Profiles...</div>;
     }
@@ -60,7 +68,7 @@ const Page: NextPage = (props: PageProps) => {
   };
 
   /* Get the User's Blogs */
-  const blogs = () => {
+  const blogsSection = () => {
     if (blogsQueryResult.isLoading) {
       return <div>Loading Blogs...</div>;
     }
@@ -81,66 +89,74 @@ const Page: NextPage = (props: PageProps) => {
   };
 
   /* Get the User's BlogPosts */
-  const posts = () => {
+  const blogPostSection = () => {
     if (blogPostsQueryResult.isLoading) {
-      return <div>Loading Blog Posts...</div>
+      return <div>Loading Blog Posts...</div>;
     }
 
     if (blogPostsQueryResult.error) {
-      return <div>Error Loading Blog Posts...</div>
+      return <div>Error Loading Blog Posts...</div>;
     }
 
     if (blogPostsQueryResult.data) {
       return (
         <Stack direction="column" gap={2}>
           {blogPostsQueryResult.data.map((blogPost, blogPostIndex) => {
-            return <PostCard key={`blogPostCard-${blogPostIndex}`} post={blogPost}/>
+            return (
+              <BlogPostCard
+                key={`blogPostCard-${blogPostIndex}`}
+                blogPost={blogPost}
+              />
+            );
           })}
         </Stack>
-      )
+      );
     }
   };
 
   return (
-    <Box sx={{width: "100%"}}>
-    <Typography variant="h6" component="div">
-      Profile
-    </Typography>
+    <Box sx={{ width: "100%" }}>
+      <Typography variant="h6" component="div">
+        Profile
+      </Typography>
 
-    {profile()}
+      <Box>{profileSection()}</Box>
 
-    <Typography variant="h6" component="div">
-      Blogs
-    </Typography>
-  
-    {blogs()}
+      <Typography variant="h6" component="div">
+        Blogs
+      </Typography>
 
-    <Typography variant="h6" component="div">
-      Posts
-    </Typography>
+      <Box>{blogsSection()}</Box>
 
-    {posts()}
+      <Typography variant="h6" component="div">
+        Blog Posts
+      </Typography>
+
+      <Box>{blogPostSection()}</Box>
     </Box>
-  )
+  );
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (context) => {
+    const id = context.params?.id;
+
+    // TODO: Check whether the profile exists
     store.dispatch(
       getProfileById.initiate({
-        id: parseInt(context.params?.id as string, 10),
+        id: id as string,
       })
     );
 
     store.dispatch(
       getBlogsByUserId.initiate({
-        id: parseInt(context.params?.id as string, 10),
+        id: id as string,
       })
     );
 
     store.dispatch(
       getBlogPostsByUserId.initiate({
-        id: parseInt(context.params?.id as string, 10),
+        id: id as string,
       })
     );
 

@@ -6,64 +6,82 @@ import { wrapper } from "../../app/store";
 
 import { Box, Stack, Typography } from "@mui/material";
 
-import PostCard from "../../components/PostCard/PostCard";
+/* BlogPost Imports */
+import BlogPostCard from "../../components/BlogPostCard/BlogPostCard";
+import {
+  useGetBlogPostByIdQuery,
+  getBlogPostById,
+  getRunningOperationPromises,
+  useGetBlogPostsByUserIdQuery,
+} from "../../services/blogPosts";
 
-import { useGetBlogPostByIdQuery, getBlogPostById, getRunningOperationPromises, useGetBlogPostsByUserIdQuery} from '../../services/blogPosts'
-import { getBlogCommentsByPostId, useGetBlogCommentsByPostIdQuery } from "../../services/blogComments";
-import CommentCard from "../../components/CommentCard/CommentCard";
+/* BlogComment Imports */
+import CommentCard from "../../components/BlogCommentCard/BlogCommentCard";
+import {
+  getBlogCommentsByPostId,
+  useGetBlogCommentsByPostIdQuery,
+} from "../../services/blogComments";
 
-type PageProps = {
-
-}
+type PageProps = {};
 
 const Page: NextPage = (props: PageProps) => {
   /* Get the BlogPost's ID from the router */
-  const router = useRouter()
-  const {id} = router.query
+  const router = useRouter();
+  const { id } = router.query;
 
   /* Query the BlogPost */
   const blogPostsQueryResult = useGetBlogPostByIdQuery({
-    id: parseInt(id as string, 10)
-  })
- 
+    id: id as string,
+  });
+
   /* Query the BlogPost's Comments */
   const blogCommentsQueryResult = useGetBlogCommentsByPostIdQuery({
-    id: parseInt(id as string, 10)
-  })
+    id: id as string,
+  });
 
-  const post = () => {
+  const blogPostsSection = () => {
     if (blogPostsQueryResult.isLoading) {
-      return <div>Loading Blog Posts...</div>
+      return <div>Loading Blog Posts...</div>;
     }
 
     if (blogPostsQueryResult.error) {
-      return <div>Error Loading Blog Posts...</div>
+      return <div>Error Loading Blog Posts...</div>;
     }
 
     if (blogPostsQueryResult.data) {
-      return <PostCard key={`blogPostCard`} post={blogPostsQueryResult.data} />;
+      return (
+        <BlogPostCard
+          key={`blogPostCard`}
+          blogPost={blogPostsQueryResult.data}
+        />
+      );
     }
   };
 
-  const comments = () => {
+  const blogCommentsSection = () => {
     if (blogCommentsQueryResult.isLoading) {
-      return <div>Loading Post Comments...</div>
+      return <div>Loading Post Comments...</div>;
     }
 
     if (blogCommentsQueryResult.error) {
-      return <div>Error Loading Comments...</div>
+      return <div>Error Loading Comments...</div>;
     }
 
     if (blogCommentsQueryResult.data) {
       return (
         <Stack direction="column" gap={2}>
           {blogCommentsQueryResult.data.map((blogComment, blogCommentIndex) => {
-            return <CommentCard key={`blogCommentCard-${blogCommentIndex}`} comment={blogComment}/>
+            return (
+              <CommentCard
+                key={`blogCommentCard-${blogCommentIndex}`}
+                comment={blogComment}
+              />
+            );
           })}
         </Stack>
-      )
+      );
     }
-  }
+  };
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -71,28 +89,33 @@ const Page: NextPage = (props: PageProps) => {
         Post
       </Typography>
 
-      {post()}
+      <Box>{blogPostsSection()}</Box>
 
       <Typography variant="h6" component="div">
         Comments
       </Typography>
 
-      {comments()}
+      <Box>{blogCommentsSection()}</Box>
     </Box>
   );
-}
+};
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (context) => {
+    const id = context.params?.id;
+
+    // TODO: Check whether the BlogPost exists
     store.dispatch(
       getBlogPostById.initiate({
-        id: parseInt(context.params?.id as string, 10)
+        id: id as string,
       })
     );
 
-    store.dispatch(getBlogCommentsByPostId.initiate({
-      id: parseInt(context.params?.id as string, 10)
-    }))
+    store.dispatch(
+      getBlogCommentsByPostId.initiate({
+        id: id as string,
+      })
+    );
     await Promise.all(getRunningOperationPromises());
 
     return {
