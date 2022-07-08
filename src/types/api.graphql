@@ -2,104 +2,172 @@
 ### Do not make changes to this file directly
 
 
+"""
+Represents a topic or group of related BlogPosts. All BlogPosts are stored under a certain Blog
+"""
 type Blog {
+  """The User that created the Blog"""
   author: User
-  authorId: Int!
+
+  """The unique Id of the User that created the Blog"""
+  authorId: String!
+
+  """All BlogPosts that belongs to the Blog"""
   blogPosts: [BlogPost]!
+
+  """Time of creation"""
   createdAt: DateTime!
+
+  """A public human readable and customizable description of the Blog"""
   description: String
-  id: Int!
+
+  """The unique Id of the Blog"""
+  id: String!
+
+  """The unique human readable name of the Blog"""
   name: String!
+
+  """Time of last update"""
   updatedAt: DateTime!
 }
 
-"""Input arguments for quering Blogs by Id"""
+"""Input arguments for querying Blogs by Id"""
 input BlogByIdInput {
-  id: Int!
+  id: String!
 }
 
+"""User created replies to BlogPosts or other BlogComments"""
 type BlogComment {
+  """The User that created the BlogComment"""
   author: User
-  authorId: Int!
+
+  """The Id of the User that created the BlogComment"""
+  authorId: String!
+
+  """The BlogComments that are children of this BlogComment"""
   blogComments: [BlogComment]!
+
+  """The BlogPost that the BlogComment belongs to"""
   blogPost: BlogPost
-  blogPostId: Int!
+
+  """The Id of the BlogPost that the BlogComment belongs to"""
+  blogPostId: String!
+
+  """The User created content of the BlogComment"""
   content: String
+
+  """Time of creation"""
   createdAt: DateTime!
-  id: Int!
+
+  """The unique Id of the BlogComment"""
+  id: String!
+
+  """
+  The Parent BlogComment of the BlogComment. Can be Null if the BlogComment is a direct reply to the BlogPost and not to a BlogComment
+  """
   parent: BlogComment
-  parentId: Int
+
+  """
+  The Id of the Parent BlogComment. Can be Null if the BlogComment has no Parent
+  """
+  parentId: String
+
+  """Time of last update"""
   updatedAt: DateTime!
 }
 
-"""Input arguments for quering Blogs by Id"""
+"""Input arguments for querying Blogs by Id"""
 input BlogCommentByIdInput {
-  id: Int!
+  id: String!
 }
 
 """
-Input arguments for quering BlogComments by their Parent BlogComment Id. Search for the BlogComments that replied to a specific BlogComment
+Input arguments for querying BlogComments by their Parent BlogComment Id. Search for the BlogComments that replied to a specific BlogComment
 """
 input BlogCommentsByParentCommentIdInput {
   """The Id of the Parent BlogComment of the BlogComment to search for"""
-  parentId: Int!
+  id: String!
 }
 
 """
-Input arguments for quering BlogComments by BlogPost Id. Search for the BlogComments of a specific BlogPost
+Input arguments for querying BlogComments by BlogPost Id. Search for the BlogComments of a specific BlogPost
 """
 input BlogCommentsByPostIdInput {
   """The Id of the BlogPost that the BlogComments belongs to"""
-  postId: Int!
+  id: String!
 }
 
 """
-Input arguments for quering BlogComments by User Id. Search for BlogComments of a specific User
+Input arguments for querying BlogComments by User Id. Search for BlogComments of a specific User
 """
 input BlogCommentsByUserIdInput {
   """The Id of the User that the BlogComment belongs to"""
-  userId: Int!
+  id: String!
 }
 
+"""Represents a User created BlogPost that belongs to a User and a Blog"""
 type BlogPost {
+  """The unique User that created the BlogPost"""
   author: User
-  authorId: Int!
+
+  """The unique Id of the User that created the BlogPost"""
+  authorId: String!
+
+  """The Blog that the BlogPost belongs to"""
   blog: Blog
+
+  """All BlogComments that belong to the BlogPost"""
   blogComments: [BlogComment]!
-  blogId: Int!
+
+  """The Id of the Blog that the BlogPost belongs to"""
+  blogId: String!
+
+  """The human readable Content set by the User"""
   content: String
+
+  """Time of creation"""
   createdAt: DateTime!
-  id: Int!
+
+  """The unique Id of the BlogPost"""
+  id: String!
+
+  """
+  Boolean value of whether the User has published the BlogPost and want it to be shown publicly
+  """
   published: Boolean!
+
+  """The human readable Title set by the User"""
   title: String!
+
+  """Time of last update"""
   updatedAt: DateTime!
 }
 
-"""Input arguments for quering BlogPosts by Id"""
+"""Input arguments for querying BlogPosts by Id"""
 input BlogPostByIdInput {
-  id: Int!
+  id: String!
 }
 
-"""Input arguments for quering all BlogPosts for a given Blog id"""
+"""Input arguments for querying all BlogPosts for a given Blog id"""
 input BlogPostsByBlogIdInput {
   """The Id of the Blog that the BlogPost belongs to"""
-  blogId: Int!
+  id: String!
 }
 
 """
-Input arguments for quering BlogPosts by a User Id. Search for the BlogPosts of a specific User
+Input arguments for querying BlogPosts by a User Id. Search for the BlogPosts of a specific User
 """
 input BlogPostsByUserIdInput {
   """The Id of the User that the Post belongs to"""
-  userId: Int!
+  id: String!
 }
 
 """
-Input arguments for quering Blogs by User Id. Search for the Blogs of a specific User
+Input arguments for querying Blogs by User Id. Search for the Blogs of a specific User
 """
 input BlogsByUserIdInput {
   """The Id of the User that the Blogs belongs to"""
-  userId: Int!
+  id: String!
 }
 
 """
@@ -111,18 +179,34 @@ input PostOrderById {
   id: SortOrder
 }
 
+"""
+Stores information regarding a User. Each User can only have one Profile
+"""
 type Profile {
+  """
+  A customizable personal message or description a User can display publicly on their Profile
+  """
   bio: String!
+
+  """Time of creation"""
   createdAt: DateTime!
-  id: Int!
+
+  """Unique Id of the Profile"""
+  id: String!
+
+  """Time of last update"""
   updatedAt: DateTime!
+
+  """The unique User that the Profile belongs to"""
   user: User
-  userId: Int!
+
+  """Unique Id of the User that the Profile belongs to"""
+  userId: String!
 }
 
-"""Input arguments for quering Profiles by Id"""
+"""Input arguments for querying Profiles by Id"""
 input ProfileByIdInput {
-  id: Int!
+  id: String!
 }
 
 type Query {
@@ -142,36 +226,36 @@ type Query {
   allUsers: [User]
 
   """Query for a single Blog by Id"""
-  blogById(blogByIdInput: BlogByIdInput!): Blog
+  blogById(data: BlogByIdInput!): Blog
 
   """Query for a single BlogComment by Id"""
-  blogCommentById(blogCommentByIdInput: BlogCommentByIdInput!): BlogComment
+  blogCommentById(data: BlogCommentByIdInput!): BlogComment
 
   """
   Query for all BlogComments that belong to a specific Parent BlogComment
   """
-  blogCommentsByParentCommentId(blogCommentsByParentCommentIdInput: BlogCommentsByParentCommentIdInput!): [BlogComment]
+  blogCommentsByParentCommentId(data: BlogCommentsByParentCommentIdInput!): [BlogComment]
 
   """Query for all BlogComments that belong to a specific BlogPost"""
-  blogCommentsByPostId(blogCommentsByPostIdInput: BlogCommentsByPostIdInput!): [BlogComment]
+  blogCommentsByPostId(data: BlogCommentsByPostIdInput!): [BlogComment]
 
   """Query for all BlogComments that belong to a specific User"""
-  blogCommentsByUserId(blogCommentsByUserIdInput: BlogCommentsByUserIdInput!): [BlogComment]
+  blogCommentsByUserId(data: BlogCommentsByUserIdInput!): [BlogComment]
 
   """Query for a single BlogPost by Id"""
-  blogPostById(blogPostByIdInput: BlogPostByIdInput!): BlogPost
+  blogPostById(data: BlogPostByIdInput!): BlogPost
 
   """Query for all BlogPosts that belong to a specific Blog"""
-  blogPostsByBlogId(blogPostsByBlogIdInput: BlogPostsByBlogIdInput!): [BlogPost]
+  blogPostsByBlogId(data: BlogPostsByBlogIdInput!): [BlogPost]
 
   """Query for all BlogPosts that belong to a specific User"""
-  blogPostsByUserId(blogPostsByUserIdInput: BlogPostsByUserIdInput!): [BlogPost]
+  blogPostsByUserId(data: BlogPostsByUserIdInput!): [BlogPost]
 
   """Query for all Blogs that belong to a specific User"""
-  blogsByUserId(blogsByUserIdInput: BlogsByUserIdInput!): [Blog]
+  blogsByUserId(data: BlogsByUserIdInput!): [Blog]
 
   """Query for a single Profile by Id"""
-  profileById(profileByIdInput: ProfileByIdInput!): Profile
+  profileById(data: ProfileByIdInput!): Profile
 
   """Query for a single User by Id"""
   userById(userByIdInput: UserByIdInput!): User
@@ -182,19 +266,39 @@ enum SortOrder {
   desc
 }
 
+"""
+Represents a unique User of the App. The User is used as reference of ownership for all other Objects
+"""
 type User {
+  """All BlogComments that the User created and belongs to them"""
   blogComments: [BlogComment]!
+
+  """All BlogPosts that the User created and belongs to them"""
   blogPosts: [BlogPost]!
+
+  """All Blogs that the User created and belongs to them"""
   blogs: [Blog]
+
+  """Time of creation"""
   createdAt: DateTime!
+
+  """Unique email address of the User"""
   email: String!
-  id: Int!
+
+  """Unique Id of the User"""
+  id: String!
+
+  """The Profile that belongs to the User"""
   profile: Profile
+
+  """Time of last update"""
   updatedAt: DateTime!
+
+  """Unique human readable username of the User"""
   username: String!
 }
 
-"""Input arguments for quering Users by Id"""
+"""Input arguments for querying Users by Id"""
 input UserByIdInput {
-  id: Int!
+  id: String!
 }

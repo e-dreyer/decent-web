@@ -30,40 +30,40 @@ declare global {
 
 export interface NexusGenInputs {
   BlogByIdInput: { // input type
-    id: number; // Int!
+    id: string; // String!
   }
   BlogCommentByIdInput: { // input type
-    id: number; // Int!
+    id: string; // String!
   }
   BlogCommentsByParentCommentIdInput: { // input type
-    id: number; // Int!
+    id: string; // String!
   }
   BlogCommentsByPostIdInput: { // input type
-    id: number; // Int!
+    id: string; // String!
   }
   BlogCommentsByUserIdInput: { // input type
-    id: number; // Int!
+    id: string; // String!
   }
   BlogPostByIdInput: { // input type
-    id: number; // Int!
+    id: string; // String!
   }
   BlogPostsByBlogIdInput: { // input type
-    id: number; // Int!
+    id: string; // String!
   }
   BlogPostsByUserIdInput: { // input type
-    id: number; // Int!
+    id: string; // String!
   }
   BlogsByUserIdInput: { // input type
-    id: number; // Int!
+    id: string; // String!
   }
   PostOrderById: { // input type
     id?: NexusGenEnums['SortOrder'] | null; // SortOrder
   }
   ProfileByIdInput: { // input type
-    id: number; // Int!
+    id: string; // String!
   }
   UserByIdInput: { // input type
-    id: number; // Int!
+    id: string; // String!
   }
 }
 
@@ -82,28 +82,28 @@ export interface NexusGenScalars {
 
 export interface NexusGenObjects {
   Blog: { // root type
-    authorId: number; // Int!
+    authorId: string; // String!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     description?: string | null; // String
-    id: number; // Int!
+    id: string; // String!
     name: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   BlogComment: { // root type
-    authorId: number; // Int!
-    blogPostId: number; // Int!
+    authorId: string; // String!
+    blogPostId: string; // String!
     content?: string | null; // String
     createdAt: NexusGenScalars['DateTime']; // DateTime!
-    id: number; // Int!
-    parentId?: number | null; // Int
+    id: string; // String!
+    parentId?: string | null; // String
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   BlogPost: { // root type
-    authorId: number; // Int!
-    blogId: number; // Int!
+    authorId: string; // String!
+    blogId: string; // String!
     content?: string | null; // String
     createdAt: NexusGenScalars['DateTime']; // DateTime!
-    id: number; // Int!
+    id: string; // String!
     published: boolean; // Boolean!
     title: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
@@ -111,15 +111,15 @@ export interface NexusGenObjects {
   Profile: { // root type
     bio: string; // String!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
-    id: number; // Int!
+    id: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
-    userId: number; // Int!
+    userId: string; // String!
   }
   Query: {};
   User: { // root type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     email: string; // String!
-    id: number; // Int!
+    id: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
     username: string; // String!
   }
@@ -138,36 +138,36 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnu
 export interface NexusGenFieldTypes {
   Blog: { // field return type
     author: NexusGenRootTypes['User'] | null; // User
-    authorId: number; // Int!
+    authorId: string; // String!
     blogPosts: Array<NexusGenRootTypes['BlogPost'] | null>; // [BlogPost]!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     description: string | null; // String
-    id: number; // Int!
+    id: string; // String!
     name: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   BlogComment: { // field return type
     author: NexusGenRootTypes['User'] | null; // User
-    authorId: number; // Int!
+    authorId: string; // String!
     blogComments: Array<NexusGenRootTypes['BlogComment'] | null>; // [BlogComment]!
     blogPost: NexusGenRootTypes['BlogPost'] | null; // BlogPost
-    blogPostId: number; // Int!
+    blogPostId: string; // String!
     content: string | null; // String
     createdAt: NexusGenScalars['DateTime']; // DateTime!
-    id: number; // Int!
+    id: string; // String!
     parent: NexusGenRootTypes['BlogComment'] | null; // BlogComment
-    parentId: number | null; // Int
+    parentId: string | null; // String
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
   }
   BlogPost: { // field return type
     author: NexusGenRootTypes['User'] | null; // User
-    authorId: number; // Int!
+    authorId: string; // String!
     blog: NexusGenRootTypes['Blog'] | null; // Blog
     blogComments: Array<NexusGenRootTypes['BlogComment'] | null>; // [BlogComment]!
-    blogId: number; // Int!
+    blogId: string; // String!
     content: string | null; // String
     createdAt: NexusGenScalars['DateTime']; // DateTime!
-    id: number; // Int!
+    id: string; // String!
     published: boolean; // Boolean!
     title: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
@@ -175,10 +175,10 @@ export interface NexusGenFieldTypes {
   Profile: { // field return type
     bio: string; // String!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
-    id: number; // Int!
+    id: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
     user: NexusGenRootTypes['User'] | null; // User
-    userId: number; // Int!
+    userId: string; // String!
   }
   Query: { // field return type
     allBlogComments: Array<NexusGenRootTypes['BlogComment'] | null> | null; // [BlogComment]
@@ -204,7 +204,7 @@ export interface NexusGenFieldTypes {
     blogs: Array<NexusGenRootTypes['Blog'] | null> | null; // [Blog]
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     email: string; // String!
-    id: number; // Int!
+    id: string; // String!
     profile: NexusGenRootTypes['Profile'] | null; // Profile
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
     username: string; // String!
@@ -214,36 +214,36 @@ export interface NexusGenFieldTypes {
 export interface NexusGenFieldTypeNames {
   Blog: { // field return type name
     author: 'User'
-    authorId: 'Int'
+    authorId: 'String'
     blogPosts: 'BlogPost'
     createdAt: 'DateTime'
     description: 'String'
-    id: 'Int'
+    id: 'String'
     name: 'String'
     updatedAt: 'DateTime'
   }
   BlogComment: { // field return type name
     author: 'User'
-    authorId: 'Int'
+    authorId: 'String'
     blogComments: 'BlogComment'
     blogPost: 'BlogPost'
-    blogPostId: 'Int'
+    blogPostId: 'String'
     content: 'String'
     createdAt: 'DateTime'
-    id: 'Int'
+    id: 'String'
     parent: 'BlogComment'
-    parentId: 'Int'
+    parentId: 'String'
     updatedAt: 'DateTime'
   }
   BlogPost: { // field return type name
     author: 'User'
-    authorId: 'Int'
+    authorId: 'String'
     blog: 'Blog'
     blogComments: 'BlogComment'
-    blogId: 'Int'
+    blogId: 'String'
     content: 'String'
     createdAt: 'DateTime'
-    id: 'Int'
+    id: 'String'
     published: 'Boolean'
     title: 'String'
     updatedAt: 'DateTime'
@@ -251,10 +251,10 @@ export interface NexusGenFieldTypeNames {
   Profile: { // field return type name
     bio: 'String'
     createdAt: 'DateTime'
-    id: 'Int'
+    id: 'String'
     updatedAt: 'DateTime'
     user: 'User'
-    userId: 'Int'
+    userId: 'String'
   }
   Query: { // field return type name
     allBlogComments: 'BlogComment'
@@ -280,7 +280,7 @@ export interface NexusGenFieldTypeNames {
     blogs: 'Blog'
     createdAt: 'DateTime'
     email: 'String'
-    id: 'Int'
+    id: 'String'
     profile: 'Profile'
     updatedAt: 'DateTime'
     username: 'String'
