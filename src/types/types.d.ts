@@ -36,25 +36,25 @@ export interface NexusGenInputs {
     id: number; // Int!
   }
   BlogCommentsByParentCommentIdInput: { // input type
-    parentId: number; // Int!
+    id: number; // Int!
   }
   BlogCommentsByPostIdInput: { // input type
-    postId: number; // Int!
+    id: number; // Int!
   }
   BlogCommentsByUserIdInput: { // input type
-    userId: number; // Int!
+    id: number; // Int!
   }
   BlogPostByIdInput: { // input type
     id: number; // Int!
   }
   BlogPostsByBlogIdInput: { // input type
-    blogId: number; // Int!
+    id: number; // Int!
   }
   BlogPostsByUserIdInput: { // input type
-    userId: number; // Int!
+    id: number; // Int!
   }
   BlogsByUserIdInput: { // input type
-    userId: number; // Int!
+    id: number; // Int!
   }
   PostOrderById: { // input type
     id?: NexusGenEnums['SortOrder'] | null; // SortOrder
@@ -290,34 +290,34 @@ export interface NexusGenFieldTypeNames {
 export interface NexusGenArgTypes {
   Query: {
     blogById: { // args
-      blogByIdInput: NexusGenInputs['BlogByIdInput']; // BlogByIdInput!
+      data: NexusGenInputs['BlogByIdInput']; // BlogByIdInput!
     }
     blogCommentById: { // args
-      blogCommentByIdInput: NexusGenInputs['BlogCommentByIdInput']; // BlogCommentByIdInput!
+      data: NexusGenInputs['BlogCommentByIdInput']; // BlogCommentByIdInput!
     }
     blogCommentsByParentCommentId: { // args
-      blogCommentsByParentCommentIdInput: NexusGenInputs['BlogCommentsByParentCommentIdInput']; // BlogCommentsByParentCommentIdInput!
+      data: NexusGenInputs['BlogCommentsByParentCommentIdInput']; // BlogCommentsByParentCommentIdInput!
     }
     blogCommentsByPostId: { // args
-      blogCommentsByPostIdInput: NexusGenInputs['BlogCommentsByPostIdInput']; // BlogCommentsByPostIdInput!
+      data: NexusGenInputs['BlogCommentsByPostIdInput']; // BlogCommentsByPostIdInput!
     }
     blogCommentsByUserId: { // args
-      blogCommentsByUserIdInput: NexusGenInputs['BlogCommentsByUserIdInput']; // BlogCommentsByUserIdInput!
+      data: NexusGenInputs['BlogCommentsByUserIdInput']; // BlogCommentsByUserIdInput!
     }
     blogPostById: { // args
-      blogPostByIdInput: NexusGenInputs['BlogPostByIdInput']; // BlogPostByIdInput!
+      data: NexusGenInputs['BlogPostByIdInput']; // BlogPostByIdInput!
     }
     blogPostsByBlogId: { // args
-      blogPostsByBlogIdInput: NexusGenInputs['BlogPostsByBlogIdInput']; // BlogPostsByBlogIdInput!
+      data: NexusGenInputs['BlogPostsByBlogIdInput']; // BlogPostsByBlogIdInput!
     }
     blogPostsByUserId: { // args
-      blogPostsByUserIdInput: NexusGenInputs['BlogPostsByUserIdInput']; // BlogPostsByUserIdInput!
+      data: NexusGenInputs['BlogPostsByUserIdInput']; // BlogPostsByUserIdInput!
     }
     blogsByUserId: { // args
-      blogsByUserIdInput: NexusGenInputs['BlogsByUserIdInput']; // BlogsByUserIdInput!
+      data: NexusGenInputs['BlogsByUserIdInput']; // BlogsByUserIdInput!
     }
     profileById: { // args
-      profileByIdInput: NexusGenInputs['ProfileByIdInput']; // ProfileByIdInput!
+      data: NexusGenInputs['ProfileByIdInput']; // ProfileByIdInput!
     }
     userById: { // args
       userByIdInput: NexusGenInputs['UserByIdInput']; // UserByIdInput!
