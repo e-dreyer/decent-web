@@ -23,16 +23,16 @@ export const blogCommentApi = createApi({
       NexusGenInputs["BlogCommentByIdInput"]
     >({
       query: (
-        blogCommentByIdInput: NexusGenInputs["BlogCommentByIdInput"]
+        data: NexusGenInputs["BlogCommentByIdInput"]
       ) => ({
         url: "/graphql",
         method: "POST",
         body: {
           query: gql`
             query BlogCommentById(
-              $blogCommentByIdInput: BlogCommentByIdInput!
+              $data: BlogCommentByIdInput!
             ) {
-              blogCommentById(blogCommentByIdInput: $blogCommentByIdInput) {
+              blogCommentById(data: $data) {
                 id
                 createdAt
                 updatedAt
@@ -51,7 +51,7 @@ export const blogCommentApi = createApi({
             }
           `,
           variables: {
-            blogCommentByIdInput,
+            data,
           },
         },
       }),
@@ -74,17 +74,17 @@ export const blogCommentApi = createApi({
       NexusGenInputs["BlogCommentsByPostIdInput"]
     >({
       query: (
-        blogCommentsByPostIdInput: NexusGenInputs["BlogCommentsByPostIdInput"]
+        data: NexusGenInputs["BlogCommentsByPostIdInput"]
       ) => ({
         url: "/graphql",
         method: "POST",
         body: {
           query: gql`
             query BlogCommentsByPostId(
-              $blogCommentsByPostIdInput: BlogCommentsByPostIdInput!
+              $data: BlogCommentsByPostIdInput!
             ) {
               blogCommentsByPostId(
-                blogCommentsByPostIdInput: $blogCommentsByPostIdInput
+                data: $data
               ) {
                 id
                 createdAt
@@ -111,7 +111,7 @@ export const blogCommentApi = createApi({
             }
           `,
           variables: {
-            blogCommentsByPostIdInput,
+            data,
           },
         },
       }),

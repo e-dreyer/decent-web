@@ -22,13 +22,13 @@ export const blogApi = createApi({
       NexusGenFieldTypes["Blog"],
       NexusGenInputs["BlogByIdInput"]
     >({
-      query: (blogByIdInput: NexusGenInputs["BlogByIdInput"]) => ({
+      query: (data: NexusGenInputs["BlogByIdInput"]) => ({
         url: "/graphql",
         method: "POST",
         body: {
           query: gql`
-            query BlogById($blogByIdInput: BlogByIdInput!) {
-              blogById(blogByIdInput: $blogByIdInput) {
+            query BlogById($data: BlogByIdInput!) {
+              blogById(data: $data) {
                 id
                 createdAt
                 updatedAt
@@ -42,7 +42,7 @@ export const blogApi = createApi({
             }
           `,
           variables: {
-            blogByIdInput,
+            data,
           },
         },
       }),
@@ -62,13 +62,13 @@ export const blogApi = createApi({
       NexusGenFieldTypes["Blog"][],
       NexusGenInputs["BlogsByUserIdInput"]
     >({
-      query: (blogsByUserIdInput: NexusGenInputs["BlogsByUserIdInput"]) => ({
+      query: (data: NexusGenInputs["BlogsByUserIdInput"]) => ({
         url: "/graphql",
         method: "POST",
         body: {
           query: gql`
-            query BlogsByUserId($blogsByUserIdInput: BlogsByUserIdInput!) {
-              blogsByUserId(blogsByUserIdInput: $blogsByUserIdInput) {
+            query BlogsByUserId($data: BlogsByUserIdInput!) {
+              blogsByUserId(data: $data) {
                 id
                 createdAt
                 updatedAt
@@ -82,7 +82,7 @@ export const blogApi = createApi({
             }
           `,
           variables: {
-            blogsByUserIdInput,
+            data,
           },
         },
       }),

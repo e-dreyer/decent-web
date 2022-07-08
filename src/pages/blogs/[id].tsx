@@ -29,7 +29,7 @@ const Page: NextPage = (props: PageProps) => {
 
   /* Query the Blog's Posts */
   const blogPostsQueryResult = useGetBlogPostsByBlogIdQuery({
-    blogId: parseInt(id as string, 10)
+    id: parseInt(id as string, 10)
   })
 
   /* Get the Blog */
@@ -94,7 +94,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     );
 
     store.dispatch(getBlogPostsByBlogId.initiate({
-      blogId: parseInt(context.params?.id as string, 10)
+      id: parseInt(context.params?.id as string, 10)
     }))
 
     await Promise.all(getRunningOperationPromises());

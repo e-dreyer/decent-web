@@ -16,12 +16,6 @@ type PageProps = {
 
 }
 
-const getQueryParameters = (id: any) => {
-  return {
-    id: parseInt(id as string, 10)
-  }
-}
-
 const Page: NextPage = (props: PageProps) => {
   /* Get the BlogPost's ID from the router */
   const router = useRouter()
@@ -34,7 +28,7 @@ const Page: NextPage = (props: PageProps) => {
  
   /* Query the BlogPost's Comments */
   const blogCommentsQueryResult = useGetBlogCommentsByPostIdQuery({
-    postId: parseInt(id as string, 10)
+    id: parseInt(id as string, 10)
   })
 
   const post = () => {
@@ -97,7 +91,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     );
 
     store.dispatch(getBlogCommentsByPostId.initiate({
-      postId: parseInt(context.params?.id as string, 10)
+      id: parseInt(context.params?.id as string, 10)
     }))
     await Promise.all(getRunningOperationPromises());
 

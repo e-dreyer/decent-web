@@ -22,13 +22,13 @@ export const profileApi = createApi({
       NexusGenFieldTypes["Profile"],
       NexusGenInputs["ProfileByIdInput"]
     >({
-      query: (profileByIdInput: NexusGenInputs["ProfileByIdInput"]) => ({
+      query: (data: NexusGenInputs["ProfileByIdInput"]) => ({
         url: "/graphql",
         method: "POST",
         body: {
           query: gql`
-            query ProfileById($profileByIdInput: ProfileByIdInput!) {
-              profileById(profileByIdInput: $profileByIdInput) {
+            query ProfileById($data: ProfileByIdInput!) {
+              profileById(data: $data) {
                 id
                 createdAt
                 updatedAt
@@ -41,7 +41,7 @@ export const profileApi = createApi({
             }
           `,
           variables: {
-            profileByIdInput
+            data
           }
         },
       }),

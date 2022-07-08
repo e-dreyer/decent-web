@@ -34,12 +34,12 @@ const Page: NextPage = (props: PageProps) => {
 
   /* Query the User's Blogs */
   const blogsQueryResult = useGetBlogsByUserIdQuery({
-    userId: parseInt(id as string, 10),
+    id: parseInt(id as string, 10),
   });
 
   /* Query the User's BlogPosts */
   const blogPostsQueryResult = useGetBlogPostsByUserIdQuery({
-    userId: parseInt(id as string, 10)
+    id: parseInt(id as string, 10)
   })
  
   /* Get the User's Profile */
@@ -134,13 +134,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
     store.dispatch(
       getBlogsByUserId.initiate({
-        userId: parseInt(context.params?.id as string, 10),
+        id: parseInt(context.params?.id as string, 10),
       })
     );
 
     store.dispatch(
       getBlogPostsByUserId.initiate({
-        userId: parseInt(context.params?.id as string, 10),
+        id: parseInt(context.params?.id as string, 10),
       })
     );
 

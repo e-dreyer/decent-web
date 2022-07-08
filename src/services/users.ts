@@ -19,13 +19,13 @@ export const userApi = createApi({
   endpoints: (builder) => ({
     /* Get User by ID*/
     getUserById: builder.query<NexusGenFieldTypes["User"], NexusGenInputs["UserByIdInput"]>({
-      query: (userByIdInput: NexusGenInputs["UserByIdInput"]) => ({
+      query: (data: NexusGenInputs["UserByIdInput"]) => ({
         url: "/graphql",
         method: "POST",
         body: {
           query: gql`
-            query ($userByIdInput: UserByIdInput!) {
-              userById(userByIdInput: $userByIdInput) {
+            query ($data: UserByIdInput!) {
+              userById(data: $data) {
                 id
                 createdAt
                 updatedAt
@@ -38,16 +38,16 @@ export const userApi = createApi({
             }
           `,
           variables: {
-            userByIdInput
+            data
           }
         },
       }),
       transformResponse: (
-        response: { data: { userByIdInput: NexusGenFieldTypes["User"] } },
+        response: { data: { userById: NexusGenFieldTypes["User"] } },
         meta,
         arg
       ) => {
-        return response.data.userByIdInput;
+        return response.data.userById;
       },
 
       providesTags: ["User"],
