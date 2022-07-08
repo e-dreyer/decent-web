@@ -1,9 +1,15 @@
-import { AppBar, Button, Stack, Toolbar, Typography } from "@mui/material";
-import { Box } from "@mui/system";
 import Link from "next/link";
 import React from "react";
 
+import { Box } from "@mui/system";
+import { AppBar, Button, Stack, Toolbar, Typography } from "@mui/material";
+import LoadingButton from '@mui/lab/LoadingButton';
+
+import { useSession, signIn, signOut } from "next-auth/react"
+
 function Header() {
+  const { data, status } = useSession()
+  
   return (
     <AppBar>
       <Toolbar>
@@ -42,17 +48,34 @@ function Header() {
               <Button color="inherit">Profiles</Button>
             </Link>
 
-            <Link href="/">
-              <Button variant="outlined" color="inherit">
-                Logout
-              </Button>
-            </Link>
-
-            <Link href="/login">
-              <Button variant="outlined" color="inherit">
-                Login
-              </Button>
-            </Link>
+            {status === "unauthenticated" ? (
+              <Link href="/api/auth/signin">
+                <LoadingButton
+                  variant="outlined"
+                  color="inherit"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    signIn();
+                  }}
+                >
+                  Login
+                </LoadingButton>
+              </Link>
+            ) : (
+              <Link href="/api/auth/signout">
+                <LoadingButton
+                  loading={status === "loading"}
+                  variant="outlined"
+                  color="inherit"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    signOut();
+                  }}
+                >
+                  Logout
+                </LoadingButton>
+              </Link>
+            )}
           </Stack>
         </Box>
       </Toolbar>

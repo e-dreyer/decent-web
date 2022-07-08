@@ -2,6 +2,8 @@ import type { ReactElement, ReactNode } from "react";
 import type { NextPage } from "next";
 import type { AppProps } from "next/app";
 
+import { SessionProvider } from "next-auth/react"
+
 import CssBaseline from "@mui/material/CssBaseline";
 
 import Layout from "../components/layout";
@@ -16,14 +18,16 @@ type AppPropsWithLayout = AppProps & {
 
 const { wrapper } = require("../app/store");
 
-export function App({ Component, pageProps }: AppPropsWithLayout) {
+export function App({ Component, pageProps: {session, ...pageProps} }: AppPropsWithLayout) {
 
   return (
     <>
+      <SessionProvider session={session}>
           <CssBaseline />
           <Layout>
             <Component {...pageProps} />
           </Layout>
+      </SessionProvider>
     </>
   );
 }
