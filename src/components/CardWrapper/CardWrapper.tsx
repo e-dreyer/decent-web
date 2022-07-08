@@ -9,7 +9,7 @@ type CardWrapperProps = {
 function CardWrapper(props: CardWrapperProps) {
   return (
   <Paper sx={{width: "100%"}}>
-    <Card>
+    <Card sx={{wdith: "100%"}}>
         {props.children}
     </Card>
   </Paper>

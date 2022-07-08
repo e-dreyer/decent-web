@@ -4,11 +4,13 @@ import { useRouter } from "next/router";
 
 import { wrapper } from "../../app/store";
 
-import { Stack } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 
 import PostCard from "../../components/PostCard/PostCard";
 
-import { useGetBlogPostByIdQuery, getBlogPostById, getRunningOperationPromises} from '../../services/blogPosts'
+import { useGetBlogPostByIdQuery, getBlogPostById, getRunningOperationPromises, useGetBlogPostsByUserIdQuery} from '../../services/blogPosts'
+import { getBlogCommentsByPostId, useGetBlogCommentsByPostIdQuery } from "../../services/blogComments";
+import CommentCard from "../../components/CommentCard/CommentCard";
 
 type PageProps = {
 
@@ -21,33 +23,82 @@ const getQueryParameters = (id: any) => {
 }
 
 const Page: NextPage = (props: PageProps) => {
+  /* Get the BlogPost's ID from the router */
   const router = useRouter()
   const {id} = router.query
 
-  const result = useGetBlogPostByIdQuery(getQueryParameters(id))
+  /* Query the BlogPost */
+  const blogPostsQueryResult = useGetBlogPostByIdQuery({
+    id: parseInt(id as string, 10)
+  })
+ 
+  /* Query the BlogPost's Comments */
+  const blogCommentsQueryResult = useGetBlogCommentsByPostIdQuery({
+    postId: parseInt(id as string, 10)
+  })
 
-  if (result.isLoading) {
-    return <div>Loading Post...</div>
+  const post = () => {
+    if (blogPostsQueryResult.isLoading) {
+      return <div>Loading Blog Posts...</div>
+    }
+
+    if (blogPostsQueryResult.error) {
+      return <div>Error Loading Blog Posts...</div>
+    }
+
+    if (blogPostsQueryResult.data) {
+      return <PostCard key={`blogPostCard`} post={blogPostsQueryResult.data} />;
+    }
+  };
+
+  const comments = () => {
+    if (blogCommentsQueryResult.isLoading) {
+      return <div>Loading Post Comments...</div>
+    }
+
+    if (blogCommentsQueryResult.error) {
+      return <div>Error Loading Comments...</div>
+    }
+
+    if (blogCommentsQueryResult.data) {
+      return (
+        <Stack direction="column" gap={2}>
+          {blogCommentsQueryResult.data.map((blogComment, blogCommentIndex) => {
+            return <CommentCard key={`blogCommentCard-${blogCommentIndex}`} comment={blogComment}/>
+          })}
+        </Stack>
+      )
+    }
   }
 
-  if (result.error) {
-    return <div>Error Loading Post...</div>
-  }
+  return (
+    <Box sx={{ width: "100%" }}>
+      <Typography variant="h6" component="div">
+        Post
+      </Typography>
 
-  if (result.data) {
-    return (
-        <PostCard key={`postCard`} post={result.data}/>
-    )
-  }
+      {post()}
 
-  return null
+      <Typography variant="h6" component="div">
+        Comments
+      </Typography>
+
+      {comments()}
+    </Box>
+  );
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (context) => {
     store.dispatch(
-      getBlogPostById.initiate(getQueryParameters(context.params?.id))
+      getBlogPostById.initiate({
+        id: parseInt(context.params?.id as string, 10)
+      })
     );
+
+    store.dispatch(getBlogCommentsByPostId.initiate({
+      postId: parseInt(context.params?.id as string, 10)
+    }))
     await Promise.all(getRunningOperationPromises());
 
     return {

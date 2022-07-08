@@ -68,6 +68,67 @@ export const blogCommentApi = createApi({
       providesTags: ["BlogComment"],
     }),
 
+    /* Get BlogComments by Post Id */
+    getBlogCommentsByPostId: builder.query<
+      NexusGenFieldTypes["BlogComment"][],
+      NexusGenInputs["BlogCommentsByPostIdInput"]
+    >({
+      query: (
+        blogCommentsByPostIdInput: NexusGenInputs["BlogCommentsByPostIdInput"]
+      ) => ({
+        url: "/graphql",
+        method: "POST",
+        body: {
+          query: gql`
+            query BlogCommentsByPostId(
+              $blogCommentsByPostIdInput: BlogCommentsByPostIdInput!
+            ) {
+              blogCommentsByPostId(
+                blogCommentsByPostIdInput: $blogCommentsByPostIdInput
+              ) {
+                id
+                createdAt
+                updatedAt
+                author {
+                  id
+                  username
+                }
+                blogPost {
+                  id
+                  blog {
+                    id
+                    name
+                  }
+                }
+                content
+                parent {
+                  id
+                }
+                blogComments {
+                  id
+                }
+              }
+            }
+          `,
+          variables: {
+            blogCommentsByPostIdInput,
+          },
+        },
+      }),
+      transformResponse: (
+        response: {
+          data: { blogCommentsByPostId: NexusGenFieldTypes["BlogComment"][] };
+        },
+        meta,
+        arg
+      ) => {
+        return response.data.blogCommentsByPostId;
+      },
+
+      providesTags: ["BlogComment"],
+    }),
+
+    /* Get All BlogComments */
     getAllBlogComments: builder.query<
       NexusGenFieldTypes["BlogComment"][],
       void
@@ -113,5 +174,5 @@ export const blogCommentApi = createApi({
   }),
 });
 
-export const { useGetBlogCommentByIdQuery, useGetAllBlogCommentsQuery, util: {getRunningOperationPromises}} = blogCommentApi;
-export const {getAllBlogComments, getBlogCommentById} = blogCommentApi.endpoints
+export const { useGetBlogCommentByIdQuery, useGetAllBlogCommentsQuery, useGetBlogCommentsByPostIdQuery, util: {getRunningOperationPromises}} = blogCommentApi;
+export const {getAllBlogComments, getBlogCommentById, getBlogCommentsByPostId} = blogCommentApi.endpoints

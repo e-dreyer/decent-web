@@ -64,7 +64,7 @@ export const blogPostApi = createApi({
 
     /* Get BlogPosts by User Id */
     getBlogPostsByUserId: builder.query<
-      NexusGenFieldTypes["BlogPost"],
+      NexusGenFieldTypes["BlogPost"][],
       NexusGenInputs["BlogPostsByUserIdInput"]
     >({
       query: (
@@ -104,12 +104,55 @@ export const blogPostApi = createApi({
       }),
       transformResponse: (
         response: {
-          data: { blogPostsByUserId: NexusGenFieldTypes["BlogPost"] };
+          data: { blogPostsByUserId: NexusGenFieldTypes["BlogPost"][] };
         },
         meta,
         arg
       ) => {
         return response.data.blogPostsByUserId;
+      },
+
+      providesTags: ["BlogPost"],
+    }),
+
+    /* Get BlogPosts by Blog Id */
+    getBlogPostsByBlogId: builder.query<NexusGenFieldTypes["BlogPost"][], NexusGenInputs["BlogPostsByBlogIdInput"]>({
+      query: (blogPostsByBlogIdInput: NexusGenInputs["BlogPostsByBlogIdInput"]) => ({
+        url: "/graphql",
+        method: "POST",
+        body: {
+          query: gql`query BlogPostsByBlogId($blogPostsByBlogIdInput: BlogPostsByBlogIdInput!) {
+            blogPostsByBlogId(blogPostsByBlogIdInput: $blogPostsByBlogIdInput) {
+              id
+              createdAt
+              updatedAt
+              author {
+                id
+                username
+              }
+              title
+              content
+              published
+              blog {
+                id
+                name
+              }
+            }
+          }`,
+          variables: {
+            blogPostsByBlogIdInput
+          }
+        }
+      }),
+      transformResponse: (
+        response: {
+          data: { blogPostsByBlogId: NexusGenFieldTypes["BlogPost"][] };
+        },
+        meta,
+        arg
+      ) => {
+        console.log(response)
+        return response.data.blogPostsByBlogId;
       },
 
       providesTags: ["BlogPost"],
@@ -156,5 +199,5 @@ export const blogPostApi = createApi({
   }),
 });
 
-export const { useGetBlogPostByIdQuery, useGetAllBlogPostsQuery, util: {getRunningOperationPromises} } = blogPostApi;
-export const {getAllBlogPosts, getBlogPostById} = blogPostApi.endpoints
+export const { useGetBlogPostByIdQuery, useGetAllBlogPostsQuery, useGetBlogPostsByUserIdQuery, useGetBlogPostsByBlogIdQuery, util: {getRunningOperationPromises} } = blogPostApi;
+export const {getAllBlogPosts, getBlogPostById, getBlogPostsByUserId, getBlogPostsByBlogId} = blogPostApi.endpoints

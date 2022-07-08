@@ -133,6 +133,6 @@ export const blogApi = createApi({
   }),
 });
 
-export const { useGetBlogByIdQuery, useGetAllBlogsQuery , util: {getRunningOperationPromises}} = blogApi;
-export const {getAllBlogs, getBlogById} = blogApi.endpoints
+export const { useGetBlogByIdQuery, useGetAllBlogsQuery, useGetBlogsByUserIdQuery , util: {getRunningOperationPromises}} = blogApi;
+export const {getAllBlogs, getBlogById, getBlogsByUserId} = blogApi.endpoints
 

@@ -14,7 +14,7 @@ function PostCard(props: PostCardProps) {
   return (
     <CardWrapper>
       <>
-        <CardContent>
+        <CardContent >
           <Box>
             <Link href={`/posts/${props.post.id}`} passHref>
               <Typography

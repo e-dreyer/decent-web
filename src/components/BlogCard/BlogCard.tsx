@@ -14,8 +14,8 @@ function BlogCard(props: BlogCardProps) {
   return (
     <CardWrapper>
       <>
-        <CardContent>
-          <Box>
+        <CardContent >
+          <Box >
             <Link href={`/blogs/${props.blog.id}`} passHref>
               <Typography
                 variant="h6"
