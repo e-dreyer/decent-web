@@ -1,0 +1,117 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Account used by NextAuth
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+// Session used by NextAuth
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// VerificationToken used by NextAuth
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model User {
+  id           String        @id @default(cuid())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  username     String        @unique @db.VarChar(255)
+  email        String        @unique @db.VarChar(255)
+  profile      Profile?
+  blogs        Blog[]
+  blogPosts    BlogPost[]
+  blogComments BlogComment[]
+
+  // Added fields for NextAuth
+  name          String?
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model Profile {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @unique
+  bio       String   @default("") @db.VarChar(1024)
+
+}
+
+model Blog {
+  id          String     @id @default(cuid())
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  author      User       @relation(fields: [authorId], references: [id])
+  authorId    String
+  name        String     @db.VarChar(255)
+  description String?
+  blogPosts   BlogPost[]
+
+}
+
+model BlogPost {
+  id           String        @id @default(cuid())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  author       User          @relation(fields: [authorId], references: [id])
+  authorId     String
+  title        String        @db.VarChar(255)
+  content      String?
+  published    Boolean       @default(false)
+  blog         Blog          @relation(fields: [blogId], references: [id])
+  blogId       String
+  blogComments BlogComment[]
+
+}
+
+model BlogComment {
+  id           String        @id @default(cuid())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  author       User          @relation(fields: [authorId], references: [id])
+  authorId     String
+  blogPost     BlogPost      @relation(fields: [blogPostId], references: [id])
+  blogPostId   String
+  content      String?
+  parentId     String?
+  parent       BlogComment?  @relation("Parent", fields: [parentId], references: [id])
+  blogComments BlogComment[] @relation("Parent")
+
+}
