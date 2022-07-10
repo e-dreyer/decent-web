@@ -3,15 +3,17 @@
  * Do not make changes to this file directly
  */
 
-
-import type { Context } from "./../context"
-import type { core } from "nexus"
+import type { Context } from './../context';
+import type { core } from 'nexus';
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
     /**
      * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
      */
-    DateTime<FieldName extends string>(fieldName: FieldName, opts?: core.CommonInputFieldConfig<TypeName, FieldName>): void // "DateTime";
+    DateTime<FieldName extends string>(
+      fieldName: FieldName,
+      opts?: core.CommonInputFieldConfig<TypeName, FieldName>
+    ): void; // "DateTime";
   }
 }
 declare global {
@@ -19,77 +21,93 @@ declare global {
     /**
      * A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
      */
-    DateTime<FieldName extends string>(fieldName: FieldName, ...opts: core.ScalarOutSpread<TypeName, FieldName>): void // "DateTime";
+    DateTime<FieldName extends string>(
+      fieldName: FieldName,
+      ...opts: core.ScalarOutSpread<TypeName, FieldName>
+    ): void; // "DateTime";
   }
 }
-
 
 declare global {
   interface NexusGen extends NexusGenTypes {}
 }
 
 export interface NexusGenInputs {
-  BlogByIdInput: { // input type
+  BlogByIdInput: {
+    // input type
     id: string; // String!
-  }
-  BlogCommentByIdInput: { // input type
+  };
+  BlogCommentByIdInput: {
+    // input type
     id: string; // String!
-  }
-  BlogCommentsByParentCommentIdInput: { // input type
+  };
+  BlogCommentsByParentCommentIdInput: {
+    // input type
     id: string; // String!
-  }
-  BlogCommentsByPostIdInput: { // input type
+  };
+  BlogCommentsByPostIdInput: {
+    // input type
     id: string; // String!
-  }
-  BlogCommentsByUserIdInput: { // input type
+  };
+  BlogCommentsByUserIdInput: {
+    // input type
     id: string; // String!
-  }
-  BlogPostByIdInput: { // input type
+  };
+  BlogPostByIdInput: {
+    // input type
     id: string; // String!
-  }
-  BlogPostsByBlogIdInput: { // input type
+  };
+  BlogPostsByBlogIdInput: {
+    // input type
     id: string; // String!
-  }
-  BlogPostsByUserIdInput: { // input type
+  };
+  BlogPostsByUserIdInput: {
+    // input type
     id: string; // String!
-  }
-  BlogsByUserIdInput: { // input type
+  };
+  BlogsByUserIdInput: {
+    // input type
     id: string; // String!
-  }
-  PostOrderById: { // input type
+  };
+  PostOrderById: {
+    // input type
     id?: NexusGenEnums['SortOrder'] | null; // SortOrder
-  }
-  ProfileByIdInput: { // input type
+  };
+  ProfileByIdInput: {
+    // input type
     id: string; // String!
-  }
-  UserByIdInput: { // input type
+  };
+  UserByIdInput: {
+    // input type
     id: string; // String!
-  }
+  };
 }
 
 export interface NexusGenEnums {
-  SortOrder: "asc" | "desc"
+  SortOrder: 'asc' | 'desc';
 }
 
 export interface NexusGenScalars {
-  String: string
-  Int: number
-  Float: number
-  Boolean: boolean
-  ID: string
-  DateTime: any
+  String: string;
+  Int: number;
+  Float: number;
+  Boolean: boolean;
+  ID: string;
+  DateTime: any;
 }
 
 export interface NexusGenObjects {
-  Blog: { // root type
+  Blog: {
+    // root type
     authorId: string; // String!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     description?: string | null; // String
     id: string; // String!
     name: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
-  }
-  BlogComment: { // root type
+  };
+  BlogComment: {
+    // root type
     authorId: string; // String!
     blogPostId: string; // String!
     content?: string | null; // String
@@ -97,8 +115,9 @@ export interface NexusGenObjects {
     id: string; // String!
     parentId?: string | null; // String
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
-  }
-  BlogPost: { // root type
+  };
+  BlogPost: {
+    // root type
     authorId: string; // String!
     blogId: string; // String!
     content?: string | null; // String
@@ -107,36 +126,37 @@ export interface NexusGenObjects {
     published: boolean; // Boolean!
     title: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
-  }
-  Profile: { // root type
+  };
+  Profile: {
+    // root type
     bio: string; // String!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
     userId: string; // String!
-  }
+  };
   Query: {};
-  User: { // root type
+  User: {
+    // root type
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     email: string; // String!
     id: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
-    username: string; // String!
-  }
+    username?: string | null; // String
+  };
 }
 
-export interface NexusGenInterfaces {
-}
+export interface NexusGenInterfaces {}
 
-export interface NexusGenUnions {
-}
+export interface NexusGenUnions {}
 
-export type NexusGenRootTypes = NexusGenObjects
+export type NexusGenRootTypes = NexusGenObjects;
 
-export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums
+export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars & NexusGenEnums;
 
 export interface NexusGenFieldTypes {
-  Blog: { // field return type
+  Blog: {
+    // field return type
     author: NexusGenRootTypes['User'] | null; // User
     authorId: string; // String!
     blogPosts: Array<NexusGenRootTypes['BlogPost'] | null>; // [BlogPost]!
@@ -145,8 +165,9 @@ export interface NexusGenFieldTypes {
     id: string; // String!
     name: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
-  }
-  BlogComment: { // field return type
+  };
+  BlogComment: {
+    // field return type
     author: NexusGenRootTypes['User'] | null; // User
     authorId: string; // String!
     blogComments: Array<NexusGenRootTypes['BlogComment'] | null>; // [BlogComment]!
@@ -158,8 +179,9 @@ export interface NexusGenFieldTypes {
     parent: NexusGenRootTypes['BlogComment'] | null; // BlogComment
     parentId: string | null; // String
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
-  }
-  BlogPost: { // field return type
+  };
+  BlogPost: {
+    // field return type
     author: NexusGenRootTypes['User'] | null; // User
     authorId: string; // String!
     blog: NexusGenRootTypes['Blog'] | null; // Blog
@@ -171,16 +193,18 @@ export interface NexusGenFieldTypes {
     published: boolean; // Boolean!
     title: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
-  }
-  Profile: { // field return type
+  };
+  Profile: {
+    // field return type
     bio: string; // String!
     createdAt: NexusGenScalars['DateTime']; // DateTime!
     id: string; // String!
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
     user: NexusGenRootTypes['User'] | null; // User
     userId: string; // String!
-  }
-  Query: { // field return type
+  };
+  Query: {
+    // field return type
     allBlogComments: Array<NexusGenRootTypes['BlogComment'] | null> | null; // [BlogComment]
     allBlogPosts: Array<NexusGenRootTypes['BlogPost'] | null> | null; // [BlogPost]
     allBlogs: Array<NexusGenRootTypes['Blog'] | null> | null; // [Blog]
@@ -197,8 +221,9 @@ export interface NexusGenFieldTypes {
     blogsByUserId: Array<NexusGenRootTypes['Blog'] | null> | null; // [Blog]
     profileById: NexusGenRootTypes['Profile'] | null; // Profile
     userById: NexusGenRootTypes['User'] | null; // User
-  }
-  User: { // field return type
+  };
+  User: {
+    // field return type
     blogComments: Array<NexusGenRootTypes['BlogComment'] | null>; // [BlogComment]!
     blogPosts: Array<NexusGenRootTypes['BlogPost'] | null>; // [BlogPost]!
     blogs: Array<NexusGenRootTypes['Blog'] | null> | null; // [Blog]
@@ -207,129 +232,144 @@ export interface NexusGenFieldTypes {
     id: string; // String!
     profile: NexusGenRootTypes['Profile'] | null; // Profile
     updatedAt: NexusGenScalars['DateTime']; // DateTime!
-    username: string; // String!
-  }
+    username: string | null; // String
+  };
 }
 
 export interface NexusGenFieldTypeNames {
-  Blog: { // field return type name
-    author: 'User'
-    authorId: 'String'
-    blogPosts: 'BlogPost'
-    createdAt: 'DateTime'
-    description: 'String'
-    id: 'String'
-    name: 'String'
-    updatedAt: 'DateTime'
-  }
-  BlogComment: { // field return type name
-    author: 'User'
-    authorId: 'String'
-    blogComments: 'BlogComment'
-    blogPost: 'BlogPost'
-    blogPostId: 'String'
-    content: 'String'
-    createdAt: 'DateTime'
-    id: 'String'
-    parent: 'BlogComment'
-    parentId: 'String'
-    updatedAt: 'DateTime'
-  }
-  BlogPost: { // field return type name
-    author: 'User'
-    authorId: 'String'
-    blog: 'Blog'
-    blogComments: 'BlogComment'
-    blogId: 'String'
-    content: 'String'
-    createdAt: 'DateTime'
-    id: 'String'
-    published: 'Boolean'
-    title: 'String'
-    updatedAt: 'DateTime'
-  }
-  Profile: { // field return type name
-    bio: 'String'
-    createdAt: 'DateTime'
-    id: 'String'
-    updatedAt: 'DateTime'
-    user: 'User'
-    userId: 'String'
-  }
-  Query: { // field return type name
-    allBlogComments: 'BlogComment'
-    allBlogPosts: 'BlogPost'
-    allBlogs: 'Blog'
-    allProfiles: 'Profile'
-    allUsers: 'User'
-    blogById: 'Blog'
-    blogCommentById: 'BlogComment'
-    blogCommentsByParentCommentId: 'BlogComment'
-    blogCommentsByPostId: 'BlogComment'
-    blogCommentsByUserId: 'BlogComment'
-    blogPostById: 'BlogPost'
-    blogPostsByBlogId: 'BlogPost'
-    blogPostsByUserId: 'BlogPost'
-    blogsByUserId: 'Blog'
-    profileById: 'Profile'
-    userById: 'User'
-  }
-  User: { // field return type name
-    blogComments: 'BlogComment'
-    blogPosts: 'BlogPost'
-    blogs: 'Blog'
-    createdAt: 'DateTime'
-    email: 'String'
-    id: 'String'
-    profile: 'Profile'
-    updatedAt: 'DateTime'
-    username: 'String'
-  }
+  Blog: {
+    // field return type name
+    author: 'User';
+    authorId: 'String';
+    blogPosts: 'BlogPost';
+    createdAt: 'DateTime';
+    description: 'String';
+    id: 'String';
+    name: 'String';
+    updatedAt: 'DateTime';
+  };
+  BlogComment: {
+    // field return type name
+    author: 'User';
+    authorId: 'String';
+    blogComments: 'BlogComment';
+    blogPost: 'BlogPost';
+    blogPostId: 'String';
+    content: 'String';
+    createdAt: 'DateTime';
+    id: 'String';
+    parent: 'BlogComment';
+    parentId: 'String';
+    updatedAt: 'DateTime';
+  };
+  BlogPost: {
+    // field return type name
+    author: 'User';
+    authorId: 'String';
+    blog: 'Blog';
+    blogComments: 'BlogComment';
+    blogId: 'String';
+    content: 'String';
+    createdAt: 'DateTime';
+    id: 'String';
+    published: 'Boolean';
+    title: 'String';
+    updatedAt: 'DateTime';
+  };
+  Profile: {
+    // field return type name
+    bio: 'String';
+    createdAt: 'DateTime';
+    id: 'String';
+    updatedAt: 'DateTime';
+    user: 'User';
+    userId: 'String';
+  };
+  Query: {
+    // field return type name
+    allBlogComments: 'BlogComment';
+    allBlogPosts: 'BlogPost';
+    allBlogs: 'Blog';
+    allProfiles: 'Profile';
+    allUsers: 'User';
+    blogById: 'Blog';
+    blogCommentById: 'BlogComment';
+    blogCommentsByParentCommentId: 'BlogComment';
+    blogCommentsByPostId: 'BlogComment';
+    blogCommentsByUserId: 'BlogComment';
+    blogPostById: 'BlogPost';
+    blogPostsByBlogId: 'BlogPost';
+    blogPostsByUserId: 'BlogPost';
+    blogsByUserId: 'Blog';
+    profileById: 'Profile';
+    userById: 'User';
+  };
+  User: {
+    // field return type name
+    blogComments: 'BlogComment';
+    blogPosts: 'BlogPost';
+    blogs: 'Blog';
+    createdAt: 'DateTime';
+    email: 'String';
+    id: 'String';
+    profile: 'Profile';
+    updatedAt: 'DateTime';
+    username: 'String';
+  };
 }
 
 export interface NexusGenArgTypes {
   Query: {
-    blogById: { // args
+    blogById: {
+      // args
       data: NexusGenInputs['BlogByIdInput']; // BlogByIdInput!
-    }
-    blogCommentById: { // args
+    };
+    blogCommentById: {
+      // args
       data: NexusGenInputs['BlogCommentByIdInput']; // BlogCommentByIdInput!
-    }
-    blogCommentsByParentCommentId: { // args
+    };
+    blogCommentsByParentCommentId: {
+      // args
       data: NexusGenInputs['BlogCommentsByParentCommentIdInput']; // BlogCommentsByParentCommentIdInput!
-    }
-    blogCommentsByPostId: { // args
+    };
+    blogCommentsByPostId: {
+      // args
       data: NexusGenInputs['BlogCommentsByPostIdInput']; // BlogCommentsByPostIdInput!
-    }
-    blogCommentsByUserId: { // args
+    };
+    blogCommentsByUserId: {
+      // args
       data: NexusGenInputs['BlogCommentsByUserIdInput']; // BlogCommentsByUserIdInput!
-    }
-    blogPostById: { // args
+    };
+    blogPostById: {
+      // args
       data: NexusGenInputs['BlogPostByIdInput']; // BlogPostByIdInput!
-    }
-    blogPostsByBlogId: { // args
+    };
+    blogPostsByBlogId: {
+      // args
       data: NexusGenInputs['BlogPostsByBlogIdInput']; // BlogPostsByBlogIdInput!
-    }
-    blogPostsByUserId: { // args
+    };
+    blogPostsByUserId: {
+      // args
       data: NexusGenInputs['BlogPostsByUserIdInput']; // BlogPostsByUserIdInput!
-    }
-    blogsByUserId: { // args
+    };
+    blogsByUserId: {
+      // args
       data: NexusGenInputs['BlogsByUserIdInput']; // BlogsByUserIdInput!
-    }
-    profileById: { // args
+    };
+    profileById: {
+      // args
       data: NexusGenInputs['ProfileByIdInput']; // ProfileByIdInput!
-    }
-    userById: { // args
+    };
+    userById: {
+      // args
       userByIdInput: NexusGenInputs['UserByIdInput']; // UserByIdInput!
-    }
-  }
+    };
+  };
 }
 
-export interface NexusGenAbstractTypeMembers {
-}
+export interface NexusGenAbstractTypeMembers {}
 
-export interface NexusGenTypeInterfaces {
-}
+export interface NexusGenTypeInterfaces {}
 
 export type NexusGenObjectNames = keyof NexusGenObjects;
 
@@ -349,11 +389,11 @@ export type NexusGenAbstractsUsingStrategyResolveType = never;
 
 export type NexusGenFeaturesConfig = {
   abstractTypeStrategies: {
-    isTypeOf: false
-    resolveType: true
-    __typename: false
-  }
-}
+    isTypeOf: false;
+    resolveType: true;
+    __typename: false;
+  };
+};
 
 export interface NexusGenTypes {
   context: Context;
@@ -371,9 +411,17 @@ export interface NexusGenTypes {
   interfaceNames: NexusGenInterfaceNames;
   scalarNames: NexusGenScalarNames;
   unionNames: NexusGenUnionNames;
-  allInputTypes: NexusGenTypes['inputNames'] | NexusGenTypes['enumNames'] | NexusGenTypes['scalarNames'];
-  allOutputTypes: NexusGenTypes['objectNames'] | NexusGenTypes['enumNames'] | NexusGenTypes['unionNames'] | NexusGenTypes['interfaceNames'] | NexusGenTypes['scalarNames'];
-  allNamedTypes: NexusGenTypes['allInputTypes'] | NexusGenTypes['allOutputTypes']
+  allInputTypes:
+    | NexusGenTypes['inputNames']
+    | NexusGenTypes['enumNames']
+    | NexusGenTypes['scalarNames'];
+  allOutputTypes:
+    | NexusGenTypes['objectNames']
+    | NexusGenTypes['enumNames']
+    | NexusGenTypes['unionNames']
+    | NexusGenTypes['interfaceNames']
+    | NexusGenTypes['scalarNames'];
+  allNamedTypes: NexusGenTypes['allInputTypes'] | NexusGenTypes['allOutputTypes'];
   abstractTypes: NexusGenTypes['interfaceNames'] | NexusGenTypes['unionNames'];
   abstractTypeMembers: NexusGenAbstractTypeMembers;
   objectsUsingAbstractStrategyIsTypeOf: NexusGenObjectsUsingAbstractStrategyIsTypeOf;
@@ -381,18 +429,11 @@ export interface NexusGenTypes {
   features: NexusGenFeaturesConfig;
 }
 
-
 declare global {
-  interface NexusGenPluginTypeConfig<TypeName extends string> {
-  }
-  interface NexusGenPluginInputTypeConfig<TypeName extends string> {
-  }
-  interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {
-  }
-  interface NexusGenPluginInputFieldConfig<TypeName extends string, FieldName extends string> {
-  }
-  interface NexusGenPluginSchemaConfig {
-  }
-  interface NexusGenPluginArgConfig {
-  }
+  interface NexusGenPluginTypeConfig<TypeName extends string> {}
+  interface NexusGenPluginInputTypeConfig<TypeName extends string> {}
+  interface NexusGenPluginFieldConfig<TypeName extends string, FieldName extends string> {}
+  interface NexusGenPluginInputFieldConfig<TypeName extends string, FieldName extends string> {}
+  interface NexusGenPluginSchemaConfig {}
+  interface NexusGenPluginArgConfig {}
 }
