@@ -11,8 +11,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . && next lint",
-    "lint:fix": "eslint --fix",
-    "format": "prettier --write './**/.{js,jsx,tsx,tsx,css,md,json}' --config ./.prettierrc"
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --config .prettierrc.json --write ."
   },
   "dependencies": {
     "@apollo/client": "^3.6.9",
