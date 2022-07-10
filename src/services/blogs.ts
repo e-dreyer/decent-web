@@ -1,12 +1,12 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { gql } from "graphql-request";
-import {HYDRATE} from 'next-redux-wrapper'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { gql } from 'graphql-request';
+import { HYDRATE } from 'next-redux-wrapper';
 
-import { NexusGenFieldTypes, NexusGenInputs} from "../types/types";
+import { NexusGenFieldTypes, NexusGenInputs } from '../types/types';
 
 /* API for Blog related queries and Mutations*/
 export const blogApi = createApi({
-  reducerPath: "blogApi",
+  reducerPath: 'blogApi',
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_GRAPHQL_DATABASE,
   }),
@@ -15,16 +15,13 @@ export const blogApi = createApi({
       return action.payload[reducerPath];
     }
   },
-  tagTypes: ["Blog"],
+  tagTypes: ['Blog'],
   endpoints: (builder) => ({
     /* Get Blog by ID*/
-    getBlogById: builder.query<
-      NexusGenFieldTypes["Blog"],
-      NexusGenInputs["BlogByIdInput"]
-    >({
-      query: (data: NexusGenInputs["BlogByIdInput"]) => ({
-        url: "/graphql",
-        method: "POST",
+    getBlogById: builder.query<NexusGenFieldTypes['Blog'], NexusGenInputs['BlogByIdInput']>({
+      query: (data: NexusGenInputs['BlogByIdInput']) => ({
+        url: '/graphql',
+        method: 'POST',
         body: {
           query: gql`
             query BlogById($data: BlogByIdInput!) {
@@ -47,24 +44,24 @@ export const blogApi = createApi({
         },
       }),
       transformResponse: (
-        response: { data: { blogById: NexusGenFieldTypes["Blog"] } },
+        response: { data: { blogById: NexusGenFieldTypes['Blog'] } },
         meta,
         arg
       ) => {
         return response.data.blogById;
       },
 
-      providesTags: ["Blog"],
+      providesTags: ['Blog'],
     }),
 
     /* Get All Blogs for a specific User Id */
     getBlogsByUserId: builder.query<
-      NexusGenFieldTypes["Blog"][],
-      NexusGenInputs["BlogsByUserIdInput"]
+      NexusGenFieldTypes['Blog'][],
+      NexusGenInputs['BlogsByUserIdInput']
     >({
-      query: (data: NexusGenInputs["BlogsByUserIdInput"]) => ({
-        url: "/graphql",
-        method: "POST",
+      query: (data: NexusGenInputs['BlogsByUserIdInput']) => ({
+        url: '/graphql',
+        method: 'POST',
         body: {
           query: gql`
             query BlogsByUserId($data: BlogsByUserIdInput!) {
@@ -87,21 +84,21 @@ export const blogApi = createApi({
         },
       }),
       transformResponse: (
-        response: { data: { blogsByUserId: NexusGenFieldTypes["Blog"][] } },
+        response: { data: { blogsByUserId: NexusGenFieldTypes['Blog'][] } },
         meta,
         arg
       ) => {
         return response.data.blogsByUserId;
       },
 
-      providesTags: ["Blog"],
+      providesTags: ['Blog'],
     }),
 
     /* Get All Blogs */
-    getAllBlogs: builder.query<NexusGenFieldTypes["Blog"][], void>({
+    getAllBlogs: builder.query<NexusGenFieldTypes['Blog'][], void>({
       query: () => ({
-        url: "/graphql",
-        method: "POST",
+        url: '/graphql',
+        method: 'POST',
         body: {
           query: gql`
             query {
@@ -121,18 +118,22 @@ export const blogApi = createApi({
         },
       }),
       transformResponse: (
-        response: { data: { allBlogs: NexusGenFieldTypes["Blog"][] } },
+        response: { data: { allBlogs: NexusGenFieldTypes['Blog'][] } },
         meta,
         arg
       ) => {
         return response.data.allBlogs;
       },
 
-      providesTags: ["Blog"],
+      providesTags: ['Blog'],
     }),
   }),
 });
 
-export const { useGetBlogByIdQuery, useGetAllBlogsQuery, useGetBlogsByUserIdQuery , util: {getRunningOperationPromises}} = blogApi;
-export const {getAllBlogs, getBlogById, getBlogsByUserId} = blogApi.endpoints
-
+export const {
+  useGetBlogByIdQuery,
+  useGetAllBlogsQuery,
+  useGetBlogsByUserIdQuery,
+  util: { getRunningOperationPromises },
+} = blogApi;
+export const { getAllBlogs, getBlogById, getBlogsByUserId } = blogApi.endpoints;

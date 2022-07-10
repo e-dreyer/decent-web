@@ -1,12 +1,12 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { gql } from "graphql-request";
-import { HYDRATE } from "next-redux-wrapper";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { gql } from 'graphql-request';
+import { HYDRATE } from 'next-redux-wrapper';
 
-import { NexusGenFieldTypes, NexusGenInputs} from "../types/types";
+import { NexusGenFieldTypes, NexusGenInputs } from '../types/types';
 
 /* API for User related queries and Mutations*/
 export const userApi = createApi({
-  reducerPath: "userApi",
+  reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_GRAPHQL_DATABASE,
   }),
@@ -15,13 +15,13 @@ export const userApi = createApi({
       return action.payload[reducerPath];
     }
   },
-  tagTypes: ["User"],
+  tagTypes: ['User'],
   endpoints: (builder) => ({
     /* Get User by ID*/
-    getUserById: builder.query<NexusGenFieldTypes["User"], NexusGenInputs["UserByIdInput"]>({
-      query: (data: NexusGenInputs["UserByIdInput"]) => ({
-        url: "/graphql",
-        method: "POST",
+    getUserById: builder.query<NexusGenFieldTypes['User'], NexusGenInputs['UserByIdInput']>({
+      query: (data: NexusGenInputs['UserByIdInput']) => ({
+        url: '/graphql',
+        method: 'POST',
         body: {
           query: gql`
             query ($data: UserByIdInput!) {
@@ -38,26 +38,26 @@ export const userApi = createApi({
             }
           `,
           variables: {
-            data
-          }
+            data,
+          },
         },
       }),
       transformResponse: (
-        response: { data: { userById: NexusGenFieldTypes["User"] } },
+        response: { data: { userById: NexusGenFieldTypes['User'] } },
         meta,
         arg
       ) => {
         return response.data.userById;
       },
 
-      providesTags: ["User"],
+      providesTags: ['User'],
     }),
 
     /* Get All Users */
-    getAllUsers: builder.query<NexusGenFieldTypes["User"][], void>({
+    getAllUsers: builder.query<NexusGenFieldTypes['User'][], void>({
       query: () => ({
-        url: "/graphql",
-        method: "POST",
+        url: '/graphql',
+        method: 'POST',
         body: {
           query: gql`
             query {
@@ -75,14 +75,14 @@ export const userApi = createApi({
         },
       }),
       transformResponse: (
-        response: { data: { allUsers: NexusGenFieldTypes["User"][] } },
+        response: { data: { allUsers: NexusGenFieldTypes['User'][] } },
         meta,
         arg
       ) => {
         return response.data.allUsers;
       },
 
-      providesTags: ["User"],
+      providesTags: ['User'],
     }),
   }),
 });

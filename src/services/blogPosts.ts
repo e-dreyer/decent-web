@@ -1,12 +1,12 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { gql } from "graphql-request";
-import {HYDRATE} from 'next-redux-wrapper'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { gql } from 'graphql-request';
+import { HYDRATE } from 'next-redux-wrapper';
 
-import { NexusGenFieldTypes, NexusGenInputs} from "../types/types";
+import { NexusGenFieldTypes, NexusGenInputs } from '../types/types';
 
 /* API for BlogPost related queries and Mutations*/
 export const blogPostApi = createApi({
-  reducerPath: "blogPostApi",
+  reducerPath: 'blogPostApi',
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_GRAPHQL_DATABASE,
   }),
@@ -15,16 +15,16 @@ export const blogPostApi = createApi({
       return action.payload[reducerPath];
     }
   },
-  tagTypes: ["BlogPost"],
+  tagTypes: ['BlogPost'],
   endpoints: (builder) => ({
     /* Get BlogPost by ID*/
     getBlogPostById: builder.query<
-      NexusGenFieldTypes["BlogPost"],
-      NexusGenInputs["BlogPostByIdInput"]
+      NexusGenFieldTypes['BlogPost'],
+      NexusGenInputs['BlogPostByIdInput']
     >({
-      query: (data: NexusGenInputs["BlogPostByIdInput"]) => ({
-        url: "/graphql",
-        method: "POST",
+      query: (data: NexusGenInputs['BlogPostByIdInput']) => ({
+        url: '/graphql',
+        method: 'POST',
         body: {
           query: gql`
             query BlogPostById($data: BlogPostByIdInput!) {
@@ -52,34 +52,28 @@ export const blogPostApi = createApi({
         },
       }),
       transformResponse: (
-        response: { data: { blogPostById: NexusGenFieldTypes["BlogPost"] } },
+        response: { data: { blogPostById: NexusGenFieldTypes['BlogPost'] } },
         meta,
         arg
       ) => {
         return response.data.blogPostById;
       },
 
-      providesTags: ["BlogPost"],
+      providesTags: ['BlogPost'],
     }),
 
     /* Get BlogPosts by User Id */
     getBlogPostsByUserId: builder.query<
-      NexusGenFieldTypes["BlogPost"][],
-      NexusGenInputs["BlogPostsByUserIdInput"]
+      NexusGenFieldTypes['BlogPost'][],
+      NexusGenInputs['BlogPostsByUserIdInput']
     >({
-      query: (
-        data: NexusGenInputs["BlogPostsByUserIdInput"]
-      ) => ({
-        url: "/graphql",
-        method: "POST",
+      query: (data: NexusGenInputs['BlogPostsByUserIdInput']) => ({
+        url: '/graphql',
+        method: 'POST',
         body: {
           query: gql`
-            query BlogPostsByUserId(
-              $data: BlogPostsByUserIdInput!
-            ) {
-              blogPostsByUserId(
-                data: $data
-              ) {
+            query BlogPostsByUserId($data: BlogPostsByUserIdInput!) {
+              blogPostsByUserId(data: $data) {
                 id
                 createdAt
                 updatedAt
@@ -104,7 +98,7 @@ export const blogPostApi = createApi({
       }),
       transformResponse: (
         response: {
-          data: { blogPostsByUserId: NexusGenFieldTypes["BlogPost"][] };
+          data: { blogPostsByUserId: NexusGenFieldTypes['BlogPost'][] };
         },
         meta,
         arg
@@ -112,41 +106,46 @@ export const blogPostApi = createApi({
         return response.data.blogPostsByUserId;
       },
 
-      providesTags: ["BlogPost"],
+      providesTags: ['BlogPost'],
     }),
 
     /* Get BlogPosts by Blog Id */
-    getBlogPostsByBlogId: builder.query<NexusGenFieldTypes["BlogPost"][], NexusGenInputs["BlogPostsByBlogIdInput"]>({
-      query: (data: NexusGenInputs["BlogPostsByBlogIdInput"]) => ({
-        url: "/graphql",
-        method: "POST",
+    getBlogPostsByBlogId: builder.query<
+      NexusGenFieldTypes['BlogPost'][],
+      NexusGenInputs['BlogPostsByBlogIdInput']
+    >({
+      query: (data: NexusGenInputs['BlogPostsByBlogIdInput']) => ({
+        url: '/graphql',
+        method: 'POST',
         body: {
-          query: gql`query BlogPostsByBlogId($data: BlogPostsByBlogIdInput!) {
-            blogPostsByBlogId(data: $data) {
-              id
-              createdAt
-              updatedAt
-              author {
+          query: gql`
+            query BlogPostsByBlogId($data: BlogPostsByBlogIdInput!) {
+              blogPostsByBlogId(data: $data) {
                 id
-                username
-              }
-              title
-              content
-              published
-              blog {
-                id
-                name
+                createdAt
+                updatedAt
+                author {
+                  id
+                  username
+                }
+                title
+                content
+                published
+                blog {
+                  id
+                  name
+                }
               }
             }
-          }`,
+          `,
           variables: {
-            data
-          }
-        }
+            data,
+          },
+        },
       }),
       transformResponse: (
         response: {
-          data: { blogPostsByBlogId: NexusGenFieldTypes["BlogPost"][] };
+          data: { blogPostsByBlogId: NexusGenFieldTypes['BlogPost'][] };
         },
         meta,
         arg
@@ -154,14 +153,14 @@ export const blogPostApi = createApi({
         return response.data.blogPostsByBlogId;
       },
 
-      providesTags: ["BlogPost"],
+      providesTags: ['BlogPost'],
     }),
 
     /* Get All BlogPosts */
-    getAllBlogPosts: builder.query<NexusGenFieldTypes["BlogPost"][], void>({
+    getAllBlogPosts: builder.query<NexusGenFieldTypes['BlogPost'][], void>({
       query: () => ({
-        url: "/graphql",
-        method: "POST",
+        url: '/graphql',
+        method: 'POST',
         body: {
           query: gql`
             query {
@@ -186,17 +185,24 @@ export const blogPostApi = createApi({
         },
       }),
       transformResponse: (
-        response: { data: { allBlogPosts: NexusGenFieldTypes["BlogPost"][] } },
+        response: { data: { allBlogPosts: NexusGenFieldTypes['BlogPost'][] } },
         meta,
         arg
       ) => {
         return response.data.allBlogPosts;
       },
 
-      providesTags: ["BlogPost"],
+      providesTags: ['BlogPost'],
     }),
   }),
 });
 
-export const { useGetBlogPostByIdQuery, useGetAllBlogPostsQuery, useGetBlogPostsByUserIdQuery, useGetBlogPostsByBlogIdQuery, util: {getRunningOperationPromises} } = blogPostApi;
-export const {getAllBlogPosts, getBlogPostById, getBlogPostsByUserId, getBlogPostsByBlogId} = blogPostApi.endpoints
+export const {
+  useGetBlogPostByIdQuery,
+  useGetAllBlogPostsQuery,
+  useGetBlogPostsByUserIdQuery,
+  useGetBlogPostsByBlogIdQuery,
+  util: { getRunningOperationPromises },
+} = blogPostApi;
+export const { getAllBlogPosts, getBlogPostById, getBlogPostsByUserId, getBlogPostsByBlogId } =
+  blogPostApi.endpoints;

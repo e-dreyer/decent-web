@@ -1,12 +1,12 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { gql } from "graphql-request";
-import {HYDRATE} from 'next-redux-wrapper'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { gql } from 'graphql-request';
+import { HYDRATE } from 'next-redux-wrapper';
 
-import { NexusGenFieldTypes, NexusGenInputs} from "../types/types";
+import { NexusGenFieldTypes, NexusGenInputs } from '../types/types';
 
 /* API for Profile related queries and Mutations*/
 export const profileApi = createApi({
-  reducerPath: "profileApi",
+  reducerPath: 'profileApi',
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_GRAPHQL_DATABASE,
   }),
@@ -15,16 +15,16 @@ export const profileApi = createApi({
       return action.payload[reducerPath];
     }
   },
-  tagTypes: ["Profile"],
+  tagTypes: ['Profile'],
   endpoints: (builder) => ({
     /* Get Profile by ID*/
     getProfileById: builder.query<
-      NexusGenFieldTypes["Profile"],
-      NexusGenInputs["ProfileByIdInput"]
+      NexusGenFieldTypes['Profile'],
+      NexusGenInputs['ProfileByIdInput']
     >({
-      query: (data: NexusGenInputs["ProfileByIdInput"]) => ({
-        url: "/graphql",
-        method: "POST",
+      query: (data: NexusGenInputs['ProfileByIdInput']) => ({
+        url: '/graphql',
+        method: 'POST',
         body: {
           query: gql`
             query ProfileById($data: ProfileByIdInput!) {
@@ -41,26 +41,26 @@ export const profileApi = createApi({
             }
           `,
           variables: {
-            data
-          }
+            data,
+          },
         },
       }),
       transformResponse: (
-        response: { data: { profileById: NexusGenFieldTypes["Profile"] } },
+        response: { data: { profileById: NexusGenFieldTypes['Profile'] } },
         meta,
         arg
       ) => {
         return response.data.profileById;
       },
 
-      providesTags: ["Profile"],
+      providesTags: ['Profile'],
     }),
 
     /* Get All Profiles */
-    getAllProfiles: builder.query<NexusGenFieldTypes["Profile"][], void>({
+    getAllProfiles: builder.query<NexusGenFieldTypes['Profile'][], void>({
       query: () => ({
-        url: "/graphql",
-        method: "POST",
+        url: '/graphql',
+        method: 'POST',
         body: {
           query: gql`
             query {
@@ -79,18 +79,21 @@ export const profileApi = createApi({
         },
       }),
       transformResponse: (
-        response: { data: { allProfiles: NexusGenFieldTypes["Profile"][] } },
+        response: { data: { allProfiles: NexusGenFieldTypes['Profile'][] } },
         meta,
         arg
       ) => {
         return response.data.allProfiles;
       },
 
-      providesTags: ["Profile"],
+      providesTags: ['Profile'],
     }),
   }),
 });
 
-
-export const { useGetProfileByIdQuery, useGetAllProfilesQuery, util: {getRunningOperationPromises} } = profileApi;
-export const {getAllProfiles, getProfileById} = profileApi.endpoints
+export const {
+  useGetProfileByIdQuery,
+  useGetAllProfilesQuery,
+  util: { getRunningOperationPromises },
+} = profileApi;
+export const { getAllProfiles, getProfileById } = profileApi.endpoints;
