@@ -12,7 +12,12 @@
     "start": "next start",
     "lint": "eslint . && next lint",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --config .prettierrc.json --write ."
+    "format": "prettier --config .prettierrc.json --write \"**/*.+(js|jsx|json|yml|ymal|css|md|vue)*"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint:fix && npm run format"
+    }
   },
   "dependencies": {
     "@apollo/client": "^3.6.9",
@@ -58,6 +63,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.30.1",
+    "husky": "^8.0.1",
     "prisma": "^4.0.0",
     "typescript": "4.7.4"
   },
