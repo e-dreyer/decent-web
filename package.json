@@ -12,7 +12,7 @@
     "start": "next start",
     "lint": "eslint . && next lint",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --config .prettierrc.json --write \"**/*.+(js|jsx|json|yml|ymal|css|md|vue)*"
+    "format": "prettier --config .prettierrc.json --write \"**/*.+(js|jsx|json|yml|ymal|css|md|vue)*\""
   },
   "husky": {
     "hooks": {
