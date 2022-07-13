@@ -63,10 +63,48 @@ export interface NexusGenInputs {
     // input type
     id: string // String!
   }
-  UpdateUserByEmailInput: {
+  CreateBlogCommentInput: {
     // input type
-    email: string // String!
-    username?: string | null // String
+    authorId: string // String!
+    blogPostId: string // String!
+    content: string // String!
+    parentId?: string | null // String
+  }
+  CreateBlogInput: {
+    // input type
+    authorId: string // String!
+    description: string // String!
+    name: string // String!
+  }
+  CreateBlogPostInput: {
+    // input type
+    authorId: string // String!
+    blogId: string // String!
+    content: string // String!
+    published: boolean // Boolean!
+    title: string // String!
+  }
+  UpdateBlogCommentInput: {
+    // input type
+    content: string // String!
+    id: string // String!
+  }
+  UpdateBlogInput: {
+    // input type
+    description: string // String!
+    id: string // String!
+  }
+  UpdateBlogPostInput: {
+    // input type
+    content?: string | null // String
+    id: string // String!
+    published?: boolean | null // Boolean
+    title?: string | null // String
+  }
+  UpdateUserInput: {
+    // input type
+    bio: string // String!
+    id: string // String!
   }
   UserByEmailInput: {
     // input type
@@ -75,6 +113,10 @@ export interface NexusGenInputs {
   UserByIdInput: {
     // input type
     id: string // String!
+  }
+  UserByUsernameInput: {
+    // input type
+    username?: string | null // String
   }
 }
 
@@ -148,6 +190,7 @@ export interface NexusGenObjects {
   User: {
     // root type
     accounts?: Array<NexusGenRootTypes['Account'] | null> | null // [Account]
+    bio?: string | null // String
     createdAt?: NexusGenScalars['DateTime'] | null // DateTime
     email?: string | null // String
     emailVerified?: NexusGenScalars['DateTime'] | null // DateTime
@@ -232,7 +275,13 @@ export interface NexusGenFieldTypes {
   }
   Mutation: {
     // field return type
-    editUser: NexusGenRootTypes['User'] | null // User
+    UpdateBlogCommentInput: NexusGenRootTypes['BlogComment'] | null // BlogComment
+    createBlog: NexusGenRootTypes['Blog'] | null // Blog
+    createBlogComment: NexusGenRootTypes['BlogComment'] | null // BlogComment
+    createBlogPost: NexusGenRootTypes['Blog'] | null // Blog
+    updateBlog: NexusGenRootTypes['Blog'] | null // Blog
+    updateBlogPost: NexusGenRootTypes['Blog'] | null // Blog
+    updateUser: NexusGenRootTypes['User'] | null // User
   }
   Query: {
     // field return type
@@ -251,6 +300,7 @@ export interface NexusGenFieldTypes {
     blogsByUserId: Array<NexusGenRootTypes['Blog'] | null> // [Blog]!
     userByEmail: NexusGenRootTypes['User'] | null // User
     userById: NexusGenRootTypes['User'] | null // User
+    userByUsername: NexusGenRootTypes['User'] | null // User
   }
   Session: {
     // field return type
@@ -263,6 +313,7 @@ export interface NexusGenFieldTypes {
   User: {
     // field return type
     accounts: Array<NexusGenRootTypes['Account'] | null> | null // [Account]
+    bio: string | null // String
     blogComments: Array<NexusGenRootTypes['BlogComment'] | null> | null // [BlogComment]
     blogPosts: Array<NexusGenRootTypes['BlogPost'] | null> | null // [BlogPost]
     blogs: Array<NexusGenRootTypes['Blog'] | null> | null // [Blog]
@@ -342,7 +393,13 @@ export interface NexusGenFieldTypeNames {
   }
   Mutation: {
     // field return type name
-    editUser: 'User'
+    UpdateBlogCommentInput: 'BlogComment'
+    createBlog: 'Blog'
+    createBlogComment: 'BlogComment'
+    createBlogPost: 'Blog'
+    updateBlog: 'Blog'
+    updateBlogPost: 'Blog'
+    updateUser: 'User'
   }
   Query: {
     // field return type name
@@ -361,6 +418,7 @@ export interface NexusGenFieldTypeNames {
     blogsByUserId: 'Blog'
     userByEmail: 'User'
     userById: 'User'
+    userByUsername: 'User'
   }
   Session: {
     // field return type name
@@ -373,6 +431,7 @@ export interface NexusGenFieldTypeNames {
   User: {
     // field return type name
     accounts: 'Account'
+    bio: 'String'
     blogComments: 'BlogComment'
     blogPosts: 'BlogPost'
     blogs: 'Blog'
@@ -396,9 +455,33 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Mutation: {
-    editUser: {
+    UpdateBlogCommentInput: {
       // args
-      data: NexusGenInputs['UpdateUserByEmailInput'] // UpdateUserByEmailInput!
+      data: NexusGenInputs['UpdateBlogCommentInput'] // UpdateBlogCommentInput!
+    }
+    createBlog: {
+      // args
+      data: NexusGenInputs['CreateBlogInput'] // CreateBlogInput!
+    }
+    createBlogComment: {
+      // args
+      data: NexusGenInputs['CreateBlogCommentInput'] // CreateBlogCommentInput!
+    }
+    createBlogPost: {
+      // args
+      data: NexusGenInputs['CreateBlogPostInput'] // CreateBlogPostInput!
+    }
+    updateBlog: {
+      // args
+      data: NexusGenInputs['UpdateBlogInput'] // UpdateBlogInput!
+    }
+    updateBlogPost: {
+      // args
+      data: NexusGenInputs['UpdateBlogPostInput'] // UpdateBlogPostInput!
+    }
+    updateUser: {
+      // args
+      data: NexusGenInputs['UpdateUserInput'] // UpdateUserInput!
     }
   }
   Query: {
@@ -445,6 +528,10 @@ export interface NexusGenArgTypes {
     userById: {
       // args
       data: NexusGenInputs['UserByIdInput'] // UserByIdInput!
+    }
+    userByUsername: {
+      // args
+      data?: NexusGenInputs['UserByUsernameInput'] | null // UserByUsernameInput
     }
   }
 }

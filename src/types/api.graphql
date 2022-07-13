@@ -318,15 +318,120 @@ input BlogsByUserIdInput {
 }
 
 """
+Create a new BlogComment as a User
+"""
+input CreateBlogCommentInput {
+  """
+  The Id of the User to create the BlogComment as
+  """
+  authorId: String!
+
+  """
+  The Id of the BlogPost that the BlogComment belongs to
+  """
+  blogPostId: String!
+
+  """
+  The content of the new BlogComment to create
+  """
+  content: String!
+
+  """
+  The parentId of the new BlogComment to create
+  """
+  parentId: String
+}
+
+"""
+Create a new Blog as a User
+"""
+input CreateBlogInput {
+  """
+  The Id of the User to create the Blog as
+  """
+  authorId: String!
+
+  """
+  The description of the new Blog to create
+  """
+  description: String!
+
+  """
+  The name of the new Blog to create
+  """
+  name: String!
+}
+
+"""
+Create a new BlogPost as a User
+"""
+input CreateBlogPostInput {
+  """
+  The Id of the User to create the BlogPost as
+  """
+  authorId: String!
+
+  """
+  The Id of the Blog to post the BlogPost under
+  """
+  blogId: String!
+
+  """
+  The content of the new BlogPost to create
+  """
+  content: String!
+
+  """
+  Whether the BlogPost should be immeadiatly visible to other users
+  """
+  published: Boolean!
+
+  """
+  The title of the new BlogPost to create
+  """
+  title: String!
+}
+
+"""
 A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
 """
 scalar DateTime
 
 type Mutation {
   """
-  Mutation for updating the User
+  Mutation for updating an existing BlogComment as a User
   """
-  editUser(data: UpdateUserByEmailInput!): User
+  UpdateBlogCommentInput(data: UpdateBlogCommentInput!): BlogComment
+
+  """
+  Mutation for creating a new Blog as a User
+  """
+  createBlog(data: CreateBlogInput!): Blog
+
+  """
+  Mutation for creating a new BlogComment as a User
+  """
+  createBlogComment(data: CreateBlogCommentInput!): BlogComment
+
+  """
+  Mutation for creating a new BlogPost as a User
+  """
+  createBlogPost(data: CreateBlogPostInput!): Blog
+
+  """
+  Mutation for updating an existing Blog as a User
+  """
+  updateBlog(data: UpdateBlogInput!): Blog
+
+  """
+  Mutation for updating an existing BlogPost as a User
+  """
+  updateBlogPost(data: UpdateBlogPostInput!): Blog
+
+  """
+  Mutation for updating a User
+  """
+  updateUser(data: UpdateUserInput!): User
 }
 
 type Query {
@@ -404,6 +509,11 @@ type Query {
   Query for a single User by Id
   """
   userById(data: UserByIdInput!): User
+
+  """
+  Query for a single User by Username
+  """
+  userByUsername(data: UserByUsernameInput): User
 }
 
 """
@@ -437,11 +547,66 @@ type Session {
 }
 
 """
-Input arguments for mutation a User by referencing it by Email
+Update an existing BlogComment's information
 """
-input UpdateUserByEmailInput {
-  email: String!
-  username: String
+input UpdateBlogCommentInput {
+  """
+  The new content of the BlogComment
+  """
+  content: String!
+
+  """
+  The Id of the BlogComment to update
+  """
+  id: String!
+}
+
+"""
+Update an existing Blog's information
+"""
+input UpdateBlogInput {
+  """
+  The new description of the Blog
+  """
+  description: String!
+
+  """
+  The Id of the Blog to update
+  """
+  id: String!
+}
+
+"""
+Update an existing BlogPost's information
+"""
+input UpdateBlogPostInput {
+  """
+  The new content of the BlogPost
+  """
+  content: String
+
+  """
+  The Id of the BlogPost to update
+  """
+  id: String!
+
+  """
+  Whether the BlogPost should be visible to other Users
+  """
+  published: Boolean
+
+  """
+  The new title of the BlogPost
+  """
+  title: String
+}
+
+"""
+Input arguments for mutation a User
+"""
+input UpdateUserInput {
+  bio: String!
+  id: String!
 }
 
 """
@@ -452,6 +617,11 @@ type User {
   Accounts of the User. Relational fields used by both Prisma and NextAuth
   """
   accounts: [Account]
+
+  """
+  User customizable and human readable bio of the User
+  """
+  bio: String
 
   """
   References to all the BlogComments created by the User. This is a relational field created by Prisma
@@ -526,6 +696,13 @@ Input arguments for querying Users by Id
 """
 input UserByIdInput {
   id: String!
+}
+
+"""
+Input arguments for querying Users by Username
+"""
+input UserByUsernameInput {
+  username: String
 }
 
 """

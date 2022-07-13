@@ -54,6 +54,7 @@ model User {
   blogs        Blog[]
   blogPosts    BlogPost[]
   blogComments BlogComment[]
+  bio          String        @default("")
 
   // Added fields for NextAuth
   name          String?
