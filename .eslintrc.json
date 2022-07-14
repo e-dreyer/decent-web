@@ -29,5 +29,5 @@
       "version": "detect"
     }
   },
-  "ignorePatterns": [".env", "next-env.d.ts", "next.config.js"]
+  "ignorePatterns": [".env", "next-env.d.ts", "next.config.js", "src/types/types.d.ts"]
 }
