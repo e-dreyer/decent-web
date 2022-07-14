@@ -1,86 +1,72 @@
-import React from "react";
-import { NextPage } from "next";
-import { useRouter } from "next/router";
+import React from 'react'
+import { NextPage } from 'next'
+import { useRouter } from 'next/router'
 
-import { wrapper } from "../../app/store";
+import { wrapper } from '../../app/store'
 
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from '@mui/material'
 
 /* Blog Import */
-import BlogCard from "../../components/BlogCard/BlogCard";
-import {
-  useGetBlogByIdQuery,
-  getBlogById,
-  getRunningOperationPromises,
-} from "../../services/blogs";
+import BlogCard from '../../components/BlogCard/BlogCard'
+import { useGetBlogByIdQuery, getBlogById, getRunningOperationPromises } from '../../services/blogs'
 
 /* BlogPost Import */
-import BlogPostCard from "../../components/BlogPostCard/BlogPostCard";
-import {
-  getBlogPostsByBlogId,
-  useGetBlogPostsByBlogIdQuery,
-} from "../../services/blogPosts";
+import BlogPostCard from '../../components/BlogPostCard/BlogPostCard'
+import { getBlogPostsByBlogId, useGetBlogPostsByBlogIdQuery } from '../../services/blogPosts'
 
-type PageProps = {};
-
-const Page: NextPage = (props: PageProps) => {
+const Page: NextPage = () => {
   /* Get the Blog's Id from the router */
-  const router = useRouter();
-  const { id } = router.query;
+  const router = useRouter()
+  const { id } = router.query
 
   /* Query the Blog by Id */
   const blogsQueryResult = useGetBlogByIdQuery({
     id: id as string,
-  });
+  })
 
   /* Query the Blog's Posts */
   const blogPostsQueryResult = useGetBlogPostsByBlogIdQuery({
     id: id as string,
-  });
+  })
 
   /* Get the Blog */
   const blogSection = () => {
     if (blogsQueryResult.isLoading) {
-      return <div>Loading Blog...</div>;
+      return <div>Loading Blog...</div>
     }
 
     if (blogsQueryResult.error) {
-      return <div>Error Loading Blog...</div>;
+      return <div>Error Loading Blog...</div>
     }
 
     if (blogsQueryResult.data) {
-      return <BlogCard key={`blogCard`} blog={blogsQueryResult.data} />;
+      return <BlogCard key={`blogCard`} blog={blogsQueryResult.data} />
     }
-  };
+  }
 
   /* Get the Blog's Posts */
   const blogPostsSection = () => {
     if (blogPostsQueryResult.isLoading) {
-      return <div>Loading Posts...</div>;
+      return <div>Loading Posts...</div>
     }
 
     if (blogPostsQueryResult.error) {
-      return <div>Error Loading Posts...</div>;
+      return <div>Error Loading Posts...</div>
     }
 
     if (blogPostsQueryResult.data) {
       return (
         <Stack direction="column" gap={2}>
           {blogPostsQueryResult.data.map((blogPost, blogPostIndex) => {
-            return (
-              <BlogPostCard
-                key={`blogPostCard-${blogPostIndex}`}
-                blogPost={blogPost}
-              />
-            );
+            return <BlogPostCard key={`blogPostCard-${blogPostIndex}`} blogPost={blogPost} />
           })}
         </Stack>
-      );
+      )
     }
-  };
+  }
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={{ width: '100%' }}>
       <Typography variant="h6" component="div">
         Blog
       </Typography>
@@ -93,31 +79,29 @@ const Page: NextPage = (props: PageProps) => {
 
       <Box>{blogPostsSection()}</Box>
     </Box>
-  );
-};
+  )
+}
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async (context) => {
-    const id = context.params?.id;
+export const getServerSideProps = wrapper.getServerSideProps((store) => async (context) => {
+  const id = context.params?.id
 
-    store.dispatch(
-      getBlogById.initiate({
-        id: id as string,
-      })
-    );
+  store.dispatch(
+    getBlogById.initiate({
+      id: id as string,
+    })
+  )
 
-    store.dispatch(
-      getBlogPostsByBlogId.initiate({
-        id: id as string,
-      })
-    );
+  store.dispatch(
+    getBlogPostsByBlogId.initiate({
+      id: id as string,
+    })
+  )
 
-    await Promise.all(getRunningOperationPromises());
+  await Promise.all(getRunningOperationPromises())
 
-    return {
-      props: {},
-    };
+  return {
+    props: {},
   }
-);
+})
 
-export default Page;
+export default Page

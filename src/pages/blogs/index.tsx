@@ -1,53 +1,46 @@
-import React from "react";
-import { NextPage } from "next";
-import { wrapper } from "../../app/store";
+import React from 'react'
+import { NextPage } from 'next'
+import { wrapper } from '../../app/store'
 
-import { Stack } from "@mui/material";
+import { Stack } from '@mui/material'
 
 /* Blog Import */
-import BlogCard from "../../components/BlogCard/BlogCard";
-import {
-  useGetAllBlogsQuery,
-  getAllBlogs,
-  getRunningOperationPromises,
-} from "../../services/blogs";
+import BlogCard from '../../components/BlogCard/BlogCard'
+import { useGetAllBlogsQuery, getAllBlogs, getRunningOperationPromises } from '../../services/blogs'
 
-type PageProps = {};
-
-export const Page: NextPage = (props: PageProps) => {
-  const blogsQueryResult = useGetAllBlogsQuery();
+export const Page: NextPage = () => {
+  const blogsQueryResult = useGetAllBlogsQuery()
 
   if (blogsQueryResult.isLoading) {
-    return <div>Loading Blogs...</div>;
+    return <div>Loading Blogs...</div>
   }
 
   if (blogsQueryResult.error) {
-    return <div>Error Loading Blogs...</div>;
+    return <div>Error Loading Blogs...</div>
   }
 
   if (blogsQueryResult.data) {
     return (
-      <Stack direction="column" gap={2} sx={{ width: "100%" }}>
+      <Stack direction="column" gap={2} sx={{ width: '100%' }}>
         {blogsQueryResult?.data.map((blog, blogIndex) => {
-          return <BlogCard key={`blogCard-${blogIndex}`} blog={blog} />;
+          return <BlogCard key={`blogCard-${blogIndex}`} blog={blog} />
         })}
       </Stack>
-    );
+    )
   }
 
-  return null;
-};
+  return null
+}
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async (context) => {
-    store.dispatch(getAllBlogs.initiate());
+// removed context as a prop as it is unused
+export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
+  store.dispatch(getAllBlogs.initiate())
 
-    await Promise.all(getRunningOperationPromises());
+  await Promise.all(getRunningOperationPromises())
 
-    return {
-      props: {},
-    };
+  return {
+    props: {},
   }
-);
+})
 
-export default Page;
+export default Page

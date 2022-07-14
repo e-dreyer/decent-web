@@ -1,27 +1,24 @@
-import type { ReactElement, ReactNode } from "react";
-import type { NextPage } from "next";
-import type { AppProps } from "next/app";
+import type { ReactElement, ReactNode } from 'react'
+import type { NextPage } from 'next'
+import type { AppProps } from 'next/app'
 
-import { SessionProvider } from "next-auth/react";
+import { SessionProvider } from 'next-auth/react'
 
-import CssBaseline from "@mui/material/CssBaseline";
+import CssBaseline from '@mui/material/CssBaseline'
 
-import Layout from "../components/layout";
+import Layout from '../components/layout'
 
 type NextPageWithLayout = NextPage & {
-  getLayout?: (page: ReactElement) => ReactNode;
-};
+  getLayout?: (page: ReactElement) => ReactNode
+}
 
 type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout;
-};
+  Component: NextPageWithLayout
+}
 
-const { wrapper } = require("../app/store");
+import { wrapper } from '../app/store'
 
-export function App({
-  Component,
-  pageProps: { session, ...pageProps },
-}: AppPropsWithLayout) {
+export function App({ Component, pageProps: { session, ...pageProps } }: AppPropsWithLayout) {
   return (
     <>
       <SessionProvider session={session}>
@@ -31,7 +28,7 @@ export function App({
         </Layout>
       </SessionProvider>
     </>
-  );
+  )
 }
 
-export default wrapper.withRedux(App);
+export default wrapper.withRedux(App)

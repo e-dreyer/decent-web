@@ -1,10 +1,7 @@
-import type { NextPage } from "next";
-import { useGetAllUsersQuery } from "../services/users";
+import type { NextPage } from 'next'
 
 const Home: NextPage = () => {
-  const usersQuery = useGetAllUsersQuery();
+  return <>Home Page</>
+}
 
-  return <>Home Page</>;
-};
-
-export default Home;
+export default Home
