@@ -7,25 +7,25 @@ import { NexusGenFieldTypes } from '../../types/types'
 
 import Link from 'next/link'
 
-type ProfileCardProps = {
-  profile: NexusGenFieldTypes['Profile']
+type UserCardProps = {
+  user: NexusGenFieldTypes['User']
 }
 
-function ProfileCard(props: ProfileCardProps) {
+function UserCard(props: UserCardProps) {
   return (
     <CardWrapper>
       <>
         <CardContent>
           <Box>
-            <Link href={`/profiles/${props.profile.id}`} passHref>
+            <Link href={`/users/${props.user.id}`} passHref>
               <Typography variant="h6" component="a" sx={{ textDecoration: 'none' }}>
-                {props.profile.user?.username}
+                {props.user.name}
               </Typography>
             </Link>
           </Box>
 
           <Typography variant="body1" component="p">
-            {props.profile.bio}
+            {props.user.bio}
           </Typography>
         </CardContent>
       </>
@@ -33,4 +33,4 @@ function ProfileCard(props: ProfileCardProps) {
   )
 }
 
-export default ProfileCard
+export default UserCard
