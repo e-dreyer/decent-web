@@ -96,10 +96,10 @@ export interface NexusGenInputs {
   }
   UpdateBlogPostInput: {
     // input type
-    content?: string | null // String
+    content: string // String!
     id: string // String!
-    published?: boolean | null // Boolean
-    title?: string | null // String
+    published: boolean // Boolean!
+    title: string // String!
   }
   UpdateUserInput: {
     // input type

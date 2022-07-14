@@ -583,7 +583,7 @@ input UpdateBlogPostInput {
   """
   The new content of the BlogPost
   """
-  content: String
+  content: String!
 
   """
   The Id of the BlogPost to update
@@ -593,12 +593,12 @@ input UpdateBlogPostInput {
   """
   Whether the BlogPost should be visible to other Users
   """
-  published: Boolean
+  published: Boolean!
 
   """
   The new title of the BlogPost
   """
-  title: String
+  title: String!
 }
 
 """
