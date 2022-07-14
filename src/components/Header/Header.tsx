@@ -9,7 +9,61 @@ import { useSession, signIn, signOut } from 'next-auth/react'
 
 function Header() {
   // removed data because it is unused
-  const { status } = useSession()
+  const { data: session, status } = useSession()
+
+  const logInButton = () => {
+    if (status === 'unauthenticated') {
+      return (
+        <Link href="/api/auth/signin">
+          <LoadingButton
+            variant="outlined"
+            color="inherit"
+            onClick={(e) => {
+              e.preventDefault()
+              signIn()
+            }}>
+            Login
+          </LoadingButton>
+        </Link>
+      )
+    }
+    return null
+  }
+
+  const logOutButton = () => {
+    if (status !== 'unauthenticated') {
+      return (
+        <Link href="/api/auth/signout">
+          <LoadingButton
+            loading={status === 'loading'}
+            variant="outlined"
+            color="inherit"
+            onClick={(e) => {
+              e.preventDefault()
+              signOut()
+            }}>
+            Logout
+          </LoadingButton>
+        </Link>
+      )
+    }
+    return null
+  }
+
+  const profileButton = () => {
+    // @ts-expect-error id not defined on user
+    if (status === 'authenticated' && session.user.id) {
+      return (
+        // @ts-expect-error id not defined on user
+        <Link href={`/users/${session.user.id}`}>
+          <Button variant="outlined" color="inherit">
+            Profile
+          </Button>
+        </Link>
+      )
+    }
+    return null
+  }
 
   return (
     <AppBar>
@@ -47,44 +101,11 @@ function Header() {
             <Link href="/users">
               <Button color="inherit">Users</Button>
             </Link>
+            {logInButton()}
 
-            {status === 'unauthenticated' ? (
-              // User not Logged In
-              <Link href="/api/auth/signin">
-                <LoadingButton
-                  variant="outlined"
-                  color="inherit"
-                  onClick={(e) => {
-                    e.preventDefault()
-                    signIn()
-                  }}>
-                  Login
-                </LoadingButton>
-              </Link>
-            ) : (
-              // User Logged In
-              // LogOut Button
-              <>
-                <Link href="/users/me">
-                  <Button variant="outlined" color="inherit">
-                    Profile
-                  </Button>
-                </Link>
+            {logOutButton()}
 
-                <Link href="/api/auth/signout">
-                  <LoadingButton
-                    loading={status === 'loading'}
-                    variant="outlined"
-                    color="inherit"
-                    onClick={(e) => {
-                      e.preventDefault()
-                      signOut()
-                    }}>
-                    Logout
-                  </LoadingButton>
-                </Link>
-              </>
-            )}
+            {profileButton()}
           </Stack>
         </Box>
       </Toolbar>
