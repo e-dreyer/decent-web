@@ -1,14 +1,14 @@
-import React from "react";
-import { Box, CardContent, Typography } from "@mui/material";
+import React from 'react'
+import { Box, CardContent, Typography } from '@mui/material'
 
-import CardWrapper from "../CardWrapper/CardWrapper";
+import CardWrapper from '../CardWrapper/CardWrapper'
 
-import { NexusGenFieldTypes } from "../../types/types";
-import Link from "next/link";
+import { NexusGenFieldTypes } from '../../types/types'
+import Link from 'next/link'
 
 type BlogCardProps = {
-  blog: NexusGenFieldTypes["Blog"];
-};
+  blog: NexusGenFieldTypes['Blog']
+}
 
 function BlogCard(props: BlogCardProps) {
   return (
@@ -17,11 +17,7 @@ function BlogCard(props: BlogCardProps) {
         <CardContent>
           <Box>
             <Link href={`/blogs/${props.blog.id}`} passHref>
-              <Typography
-                variant="h6"
-                component="a"
-                sx={{ textDecoration: "none" }}
-              >
+              <Typography variant="h6" component="a" sx={{ textDecoration: 'none' }}>
                 {props.blog.name}
               </Typography>
             </Link>
@@ -31,9 +27,8 @@ function BlogCard(props: BlogCardProps) {
             <Typography
               variant="subtitle2"
               component="a"
-              color={"primary"}
-              sx={{ textDecoration: "none" }}
-            >
+              color={'primary'}
+              sx={{ textDecoration: 'none' }}>
               {props.blog.author?.username}
             </Typography>
           </Link>
@@ -44,7 +39,7 @@ function BlogCard(props: BlogCardProps) {
         </CardContent>
       </>
     </CardWrapper>
-  );
+  )
 }
 
-export default BlogCard;
+export default BlogCard

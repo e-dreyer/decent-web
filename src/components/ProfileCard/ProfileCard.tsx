@@ -1,15 +1,15 @@
-import React from "react";
-import { Box, CardContent, Typography } from "@mui/material";
+import React from 'react'
+import { Box, CardContent, Typography } from '@mui/material'
 
-import CardWrapper from "../CardWrapper/CardWrapper";
+import CardWrapper from '../CardWrapper/CardWrapper'
 
-import { NexusGenFieldTypes } from "../../types/types";
+import { NexusGenFieldTypes } from '../../types/types'
 
-import Link from "next/link";
+import Link from 'next/link'
 
 type ProfileCardProps = {
-  profile: NexusGenFieldTypes["Profile"];
-};
+  profile: NexusGenFieldTypes['Profile']
+}
 
 function ProfileCard(props: ProfileCardProps) {
   return (
@@ -18,11 +18,7 @@ function ProfileCard(props: ProfileCardProps) {
         <CardContent>
           <Box>
             <Link href={`/profiles/${props.profile.id}`} passHref>
-              <Typography
-                variant="h6"
-                component="a"
-                sx={{ textDecoration: "none" }}
-              >
+              <Typography variant="h6" component="a" sx={{ textDecoration: 'none' }}>
                 {props.profile.user?.username}
               </Typography>
             </Link>
@@ -34,7 +30,7 @@ function ProfileCard(props: ProfileCardProps) {
         </CardContent>
       </>
     </CardWrapper>
-  );
+  )
 }
 
-export default ProfileCard;
+export default ProfileCard

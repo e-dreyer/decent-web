@@ -1,14 +1,14 @@
-import React from "react";
-import { Box, CardContent, Typography, Stack } from "@mui/material";
+import React from 'react'
+import { Box, CardContent, Typography, Stack } from '@mui/material'
 
-import CardWrapper from "../CardWrapper/CardWrapper";
+import CardWrapper from '../CardWrapper/CardWrapper'
 
-import { NexusGenFieldTypes } from "../../types/types";
-import Link from "next/link";
+import { NexusGenFieldTypes } from '../../types/types'
+import Link from 'next/link'
 
 type BlogPostCardProps = {
-  blogPost: NexusGenFieldTypes["BlogPost"];
-};
+  blogPost: NexusGenFieldTypes['BlogPost']
+}
 
 function BlogPostCard(props: BlogPostCardProps) {
   return (
@@ -17,11 +17,7 @@ function BlogPostCard(props: BlogPostCardProps) {
         <CardContent>
           <Box>
             <Link href={`/posts/${props.blogPost.id}`} passHref>
-              <Typography
-                variant="h6"
-                component="a"
-                sx={{ textDecoration: "none" }}
-              >
+              <Typography variant="h6" component="a" sx={{ textDecoration: 'none' }}>
                 {props.blogPost.title}
               </Typography>
             </Link>
@@ -32,9 +28,8 @@ function BlogPostCard(props: BlogPostCardProps) {
               <Typography
                 variant="subtitle2"
                 component="a"
-                color={"primary"}
-                sx={{ textDecoration: "none" }}
-              >
+                color={'primary'}
+                sx={{ textDecoration: 'none' }}>
                 {props.blogPost.author?.username}
               </Typography>
             </Link>
@@ -43,9 +38,8 @@ function BlogPostCard(props: BlogPostCardProps) {
               <Typography
                 variant="subtitle2"
                 component="a"
-                color={"primary"}
-                sx={{ textDecoration: "none" }}
-              >
+                color={'primary'}
+                sx={{ textDecoration: 'none' }}>
                 {props.blogPost.blog?.name}
               </Typography>
             </Link>
@@ -57,7 +51,7 @@ function BlogPostCard(props: BlogPostCardProps) {
         </CardContent>
       </>
     </CardWrapper>
-  );
+  )
 }
 
-export default BlogPostCard;
+export default BlogPostCard

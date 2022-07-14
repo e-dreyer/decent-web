@@ -1,14 +1,14 @@
-import React from "react";
-import { Box, CardContent, Typography, Stack } from "@mui/material";
+import React from 'react'
+import { CardContent, Typography, Stack } from '@mui/material'
 
-import CardWrapper from "../CardWrapper/CardWrapper";
+import CardWrapper from '../CardWrapper/CardWrapper'
 
-import { NexusGenFieldTypes } from "../../types/types";
-import Link from "next/link";
+import { NexusGenFieldTypes } from '../../types/types'
+import Link from 'next/link'
 
 type CommentCardProps = {
-  comment: NexusGenFieldTypes["BlogComment"];
-};
+  comment: NexusGenFieldTypes['BlogComment']
+}
 
 function CommentCard(props: CommentCardProps) {
   return (
@@ -20,9 +20,8 @@ function CommentCard(props: CommentCardProps) {
               <Typography
                 variant="subtitle2"
                 component="a"
-                color={"primary"}
-                sx={{ textDecoration: "none" }}
-              >
+                color={'primary'}
+                sx={{ textDecoration: 'none' }}>
                 {props.comment.author?.username}
               </Typography>
             </Link>
@@ -34,7 +33,7 @@ function CommentCard(props: CommentCardProps) {
         </CardContent>
       </>
     </CardWrapper>
-  );
+  )
 }
 
-export default CommentCard;
+export default CommentCard
