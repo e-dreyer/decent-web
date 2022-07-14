@@ -6,7 +6,11 @@ import { Stack } from '@mui/material'
 
 /* UserCard Imports */
 import UserCard from '../../components/UserCard/UserCard'
-import { getAllUsersBasic, useGetAllUsersBasicQuery, getRunningOperationPromises } from '../../services/users'
+import {
+  getAllUsersBasic,
+  useGetAllUsersBasicQuery,
+  getRunningOperationPromises,
+} from '../../services/users'
 
 const Page: NextPage = () => {
   const usersQueryResult = useGetAllUsersBasicQuery()

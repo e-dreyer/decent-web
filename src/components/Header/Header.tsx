@@ -44,8 +44,8 @@ function Header() {
               <Button color="inherit">Posts</Button>
             </Link>
 
-            <Link href="/profiles">
-              <Button color="inherit">Profiles</Button>
+            <Link href="/users">
+              <Button color="inherit">Users</Button>
             </Link>
 
             {status === 'unauthenticated' ? (
@@ -65,7 +65,7 @@ function Header() {
               // User Logged In
               // LogOut Button
               <>
-                <Link href="/profiles/me">
+                <Link href="/users/me">
                   <Button variant="outlined" color="inherit">
                     Profile
                   </Button>
