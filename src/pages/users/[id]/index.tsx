@@ -1,29 +1,29 @@
 import React from 'react'
 import { NextPage } from 'next'
-import { wrapper } from '../../app/store'
+import { wrapper } from '../../../app/store'
 import { useRouter } from 'next/router'
 
 import { Stack, Typography } from '@mui/material'
 
 /* UserCard Imports */
-import UserCard from '../../components/UserCard/UserCard'
+import UserCard from '../../../components/UserCard/UserCard'
 import {
   getUserById,
-  useGetAllUsersBasicQuery,
+  useGetUserByIdQuery,
   getRunningOperationPromises,
-} from '../../services/users'
+} from '../../../services/users'
 
-import BlogCard from '../../components/BlogCard/BlogCard'
-import { getBlogsByUserId, useGetBlogsByUserIdQuery } from '../../services/blogs'
+import BlogCard from '../../../components/BlogCard/BlogCard'
+import { getBlogsByUserId, useGetBlogsByUserIdQuery } from '../../../services/blogs'
 
-import BlogPostCard from '../../components/BlogPostCard/BlogPostCard'
-import { getBlogPostsByUserId, useGetBlogPostsByUserIdQuery } from '../../services/blogPosts'
+import BlogPostCard from '../../../components/BlogPostCard/BlogPostCard'
+import { getBlogPostsByUserId, useGetBlogPostsByUserIdQuery } from '../../../services/blogPosts'
 
 const Page: NextPage = () => {
   const router = useRouter()
   const { id } = router.query
 
-  const usersQueryResult = useGetAllUsersBasicQuery()
+  const usersQueryResult = useGetUserByIdQuery({ id: id as string })
   const blogsQueryResult = useGetBlogsByUserIdQuery({ id: id as string })
   const blogPostsQueryResult = useGetBlogPostsByUserIdQuery({ id: id as string })
 
@@ -37,13 +37,7 @@ const Page: NextPage = () => {
     }
 
     if (usersQueryResult.data) {
-      return (
-        <Stack direction="column" gap={2} sx={{ width: '100%' }}>
-          {usersQueryResult?.data.map((user, userIndex) => {
-            return <UserCard key={`userCard-${userIndex}`} user={user} />
-          })}
-        </Stack>
-      )
+      return <UserCard key={`userCard`} user={usersQueryResult.data} />
     }
   }
 
@@ -89,19 +83,19 @@ const Page: NextPage = () => {
 
   return (
     <>
-      <Typography variant="h6" component="div">
+      <Typography variant="h6" component="div" sx={{ mr: 'auto' }}>
         Profile
       </Typography>
 
       {userData()}
 
-      <Typography variant="h6" component="div">
+      <Typography variant="h6" component="div" sx={{ mr: 'auto' }}>
         Blogs
       </Typography>
 
       {blogsData()}
 
-      <Typography variant="h6" component="div">
+      <Typography variant="h6" component="div" sx={{ mr: 'auto' }}>
         Blog Posts
       </Typography>
 
