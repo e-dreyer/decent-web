@@ -5,13 +5,15 @@ import { useRouter } from 'next/router'
 
 import { Avatar, Typography } from '@mui/material'
 
-/* UserCard Imports */
-import UserCard from '../../../components/UserCard/UserCard'
 import {
   getUserById,
   useGetUserByIdQuery,
   getRunningOperationPromises,
 } from '../../../services/users'
+
+import { getBlogsByUserId } from '../../../services/blogs'
+
+import { getBlogPostsByUserId } from '../../../services/blogPosts'
 
 const Page: NextPage = () => {
   const router = useRouter()
@@ -57,11 +59,7 @@ const Page: NextPage = () => {
     }
   }
 
-  return (
-    <>
-      {formData()}
-    </>
-  )
+  return <> {formData()} </>
 }
 
 // removed context as a prop as it is unused
