@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 
 const Home: NextPage = () => {
-  return <>Home Page</>
+  return <>Another hotreload test</>
 }
 
 export default Home
