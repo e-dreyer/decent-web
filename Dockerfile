@@ -1,6 +1,6 @@
 # Dockerfile
 
-FROM node:16
+FROM node:16-alpine
 
 # Create the working directory
 RUN mkdir -p /app
