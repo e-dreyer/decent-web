@@ -7,6 +7,10 @@ const nextConfig = {
     }
     return config
   },
+  env: {
+    GITHUB_ID: process.env.GITHUB_ID,
+    GITHUB_SECRET: process.env.GITHUB_SECRET,
+  },
 
   reactStrictMode: true,
 }
