@@ -7,10 +7,14 @@ module.exports = {
     config.watchOptions = {
       poll: 1000,
       aggregateTimeout: 300,
-    },
-    config.plugins = [
+    }
+    return config
+  },
+
+  webpack: (config) => {
+    config.plugins.push(
       new webpack.EnvironmentPlugin(process.env)
-    ]
+    )
 
     return config
   },
