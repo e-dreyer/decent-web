@@ -36,5 +36,8 @@ yarn-error.log*
 .env
 package-lock.json
 
+# nextjs
+.swc
+
 # Docker
 Dockerfile
