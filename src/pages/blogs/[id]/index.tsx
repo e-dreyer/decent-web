@@ -2,17 +2,17 @@ import React from 'react'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
-import { wrapper } from '../../app/store'
+import { wrapper } from '../../../app/store'
 
 import { Box, Stack, Typography } from '@mui/material'
 
 /* Blog Import */
-import BlogCard from '../../components/BlogCard/BlogCard'
-import { useGetBlogByIdQuery, getBlogById, getRunningOperationPromises } from '../../services/blogs'
+import BlogCard from '../../../components/BlogCard/BlogCard'
+import { useGetBlogByIdQuery, getBlogById, getRunningOperationPromises } from '../../../services/blogs'
 
 /* BlogPost Import */
-import BlogPostCard from '../../components/BlogPostCard/BlogPostCard'
-import { getBlogPostsByBlogId, useGetBlogPostsByBlogIdQuery } from '../../services/blogPosts'
+import BlogPostCard from '../../../components/BlogPostCard/BlogPostCard'
+import { getBlogPostsByBlogId, useGetBlogPostsByBlogIdQuery } from '../../../services/blogPosts'
 
 const Page: NextPage = () => {
   /* Get the Blog's Id from the router */

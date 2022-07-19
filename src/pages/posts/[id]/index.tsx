@@ -2,24 +2,24 @@ import React from 'react'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
-import { wrapper } from '../../app/store'
+import { wrapper } from '../../../app/store'
 
 import { Box, Stack, Typography } from '@mui/material'
 
 /* BlogPost Imports */
-import BlogPostCard from '../../components/BlogPostCard/BlogPostCard'
+import BlogPostCard from '../../../components/BlogPostCard/BlogPostCard'
 import {
   useGetBlogPostByIdQuery,
   getBlogPostById,
   getRunningOperationPromises,
-} from '../../services/blogPosts'
+} from '../../../services/blogPosts'
 
 /* BlogComment Imports */
-import CommentCard from '../../components/BlogCommentCard/BlogCommentCard'
+import CommentCard from '../../../components/BlogCommentCard/BlogCommentCard'
 import {
   getBlogCommentsByPostId,
   useGetBlogCommentsByPostIdQuery,
-} from '../../services/blogComments'
+} from '../../../services/blogComments'
 
 const Page: NextPage = () => {
   /* Get the BlogPost's ID from the router */
