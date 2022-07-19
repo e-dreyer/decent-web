@@ -1,13 +1,16 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+require('dotenv').config()
+const webpack = require('webpack')
+
+module.exports = {
   webpackDevMiddleware: config => {
     config.watchOptions = {
       poll: 1000,
       aggregateTimeout: 300,
     },
-    config.plugins.push(
+    config.plugins = [
       new webpack.EnvironmentPlugin(process.env)
-    )
+    ]
 
     return config
   },
@@ -15,4 +18,3 @@ const nextConfig = {
   reactStrictMode: true,
 }
 
-module.exports = nextConfig
