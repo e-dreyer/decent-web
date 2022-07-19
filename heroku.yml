@@ -1,3 +1,5 @@
 build:
   docker:
-    web: Dockerfile
+    web: Dockerfile_production
+run:
+  web: yarn start

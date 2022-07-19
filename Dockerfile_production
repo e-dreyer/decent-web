@@ -23,4 +23,4 @@ RUN yarn prisma generate
 RUN yarn format
 RUN yarn lint:fix
 
-CMD ["yarn", "dev"]
+CMD ["yarn", "start"]
