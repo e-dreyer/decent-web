@@ -22,6 +22,5 @@ ENV PORT 3000
 RUN yarn prisma generate
 RUN yarn format
 RUN yarn lint:fix
-RUN yarn build
 
-CMD ["yarn", "start"]
+CMD ["yarn", "dev"]

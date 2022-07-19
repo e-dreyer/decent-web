@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
-require('dotenv').config()
-const webpack = require('webpack')
-
 module.exports = {
-  webpackDevMiddleware: config => {
+  webpackDevMiddleware: (config) => {
     config.watchOptions = {
       poll: 1000,
       aggregateTimeout: 300,
@@ -11,14 +8,5 @@ module.exports = {
     return config
   },
 
-  webpack: (config) => {
-    config.plugins.push(
-      new webpack.EnvironmentPlugin(process.env)
-    )
-
-    return config
-  },
-
   reactStrictMode: true,
 }
-
