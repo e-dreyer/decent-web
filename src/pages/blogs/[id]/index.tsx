@@ -8,7 +8,11 @@ import { Box, Stack, Typography } from '@mui/material'
 
 /* Blog Import */
 import BlogCard from '../../../components/BlogCard/BlogCard'
-import { useGetBlogByIdQuery, getBlogById, getRunningOperationPromises } from '../../../services/blogs'
+import {
+  useGetBlogByIdQuery,
+  getBlogById,
+  getRunningOperationPromises,
+} from '../../../services/blogs'
 
 /* BlogPost Import */
 import BlogPostCard from '../../../components/BlogPostCard/BlogPostCard'
