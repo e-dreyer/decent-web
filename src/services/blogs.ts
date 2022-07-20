@@ -125,10 +125,7 @@ export const blogApi = createApi({
     }),
 
     /* Create a new Blog as a User*/
-    createNewBlog: builder.mutation<
-      NexusGenFieldTypes['Blog'][],
-      NexusGenInputs['CreateBlogInput']
-    >({
+    createNewBlog: builder.mutation<NexusGenFieldTypes['Blog'], NexusGenInputs['CreateBlogInput']>({
       query: (data: NexusGenInputs['CreateBlogInput']) => ({
         url: '/graphql',
 
