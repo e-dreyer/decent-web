@@ -123,6 +123,51 @@ export const blogApi = createApi({
 
       providesTags: ['Blog'],
     }),
+
+    /* Create a new Blog as a User*/
+    createNewBlog: builder.mutation<
+      NexusGenFieldTypes['Blog'][],
+      NexusGenInputs['CreateBlogInput']
+    >({
+      query: (data: NexusGenInputs['CreateBlogInput']) => ({
+        url: '/graphql',
+
+        method: 'POST',
+
+        body: {
+          query: gql`
+            mutation CreateBlog($data: CreateBlogInput!) {
+              createBlog(data: $data) {
+                id
+                createdAt
+                updatedAt
+                authorId
+                name
+                description
+
+                author {
+                  id
+                  username
+                  email
+                  name
+                }
+              }
+            }
+          `,
+
+          variables: {
+            data,
+          },
+        },
+      }),
+
+      transformResponse: (response: { data: { createBlog: NexusGenFieldTypes['Blog'] } }) => {
+        console.log(response)
+        return response.data.createBlog
+      },
+
+      invalidatesTags: ['Blog'],
+    }),
   }),
 })
 
@@ -130,7 +175,8 @@ export const {
   useGetBlogByIdQuery,
   useGetAllBlogsQuery,
   useGetBlogsByUserIdQuery,
+  useCreateNewBlogMutation,
   util: { getRunningOperationPromises },
 } = blogApi
 
-export const { getAllBlogs, getBlogById, getBlogsByUserId } = blogApi.endpoints
+export const { getAllBlogs, getBlogById, getBlogsByUserId, createNewBlog } = blogApi.endpoints
