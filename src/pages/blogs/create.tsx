@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react'
 
 import { useForm, SubmitHandler } from 'react-hook-form'
 
-import { TextField, Stack, Button } from '@mui/material'
+import { TextField, Stack } from '@mui/material'
 import SaveIcon from '@mui/icons-material/Save'
 import LoadingButton from '@mui/lab/LoadingButton'
 
