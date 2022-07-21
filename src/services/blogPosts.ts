@@ -269,5 +269,10 @@ export const {
   util: { getRunningOperationPromises },
 } = blogPostApi
 
-export const { getAllBlogPosts, getBlogPostById, getBlogPostsByUserId, getBlogPostsByBlogId, createNewBlogPost } =
-  blogPostApi.endpoints
+export const {
+  getAllBlogPosts,
+  getBlogPostById,
+  getBlogPostsByUserId,
+  getBlogPostsByBlogId,
+  createNewBlogPost,
+} = blogPostApi.endpoints
