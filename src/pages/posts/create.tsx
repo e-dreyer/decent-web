@@ -90,8 +90,8 @@ export const Page: NextPage = () => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack direction="column" gap={2} sx={{ width: '100%' }}>
         {
-          // @ts-expect-error id not defined on user
           session.data && session.data.user && (
+            // @ts-expect-error id not defined on user
             <BlogAutocomplete userId={session.data.user.id} parentCallback={setBlogCallback} />
           )
         }
