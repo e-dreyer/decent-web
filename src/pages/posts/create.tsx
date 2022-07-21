@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { NextPage } from 'next'
 
 import { useSession } from 'next-auth/react'
 
 import { useForm, SubmitHandler } from 'react-hook-form'
 
-import { TextField, Stack, Autocomplete } from '@mui/material'
+import { TextField, Stack } from '@mui/material'
 import SaveIcon from '@mui/icons-material/Save'
 import LoadingButton from '@mui/lab/LoadingButton'
 
@@ -27,8 +27,8 @@ export const Page: NextPage = () => {
   const session = useSession()
 
   const [selectedBlog, setSelectedBlog] = useState<string>('')
-  const setBlogCallback =(data: any) => {
-    setSelectedBlog(data)
+  const setBlogCallback = (blogId: string) => {
+    setSelectedBlog(blogId)
   }
 
   /* React-hook-from */
@@ -86,45 +86,46 @@ export const Page: NextPage = () => {
     return false
   }
 
-    return (
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Stack direction="column" gap={2} sx={{ width: '100%' }}>
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Stack direction="column" gap={2} sx={{ width: '100%' }}>
+        {
+          // @ts-expect-error id not defined on user
+          session.data && session.data.user && (
+            <BlogAutocomplete userId={session.data.user.id} parentCallback={setBlogCallback} />
+          )
+        }
 
-          {
-            // @ts-expect-error id not defined on user
-            session.data && session.data.user && <BlogAutocomplete userId={session.data.user.id} parentCallback={setBlogCallback}/>
-          }
+        {selectedBlog === '' ? <span>Must select a blog</span> : null}
 
-          {
-            selectedBlog === '' ? <span>Must select a blog</span> : null
-          }
-          
-          <TextField
-            id="create-blogPost-title"
-            label="title"
-            variant="outlined"
-            {...register('title', { required: true })}
-          />
-          {errors.title && <span>Title of the Blog Post cannot be empty</span>}
+        <TextField
+          id="create-blogPost-title"
+          label="title"
+          variant="outlined"
+          {...register('title', { required: true })}
+        />
+        {errors.title && <span>Title of the Blog Post cannot be empty</span>}
 
-          <TextField id="create-blogPost-content" label="content"
-            variant="outlined"
-            {...register('content', { required: true })}
-          />
-          {errors.content && <span>Content of the Blog Post cannot be empty</span>}
+        <TextField
+          id="create-blogPost-content"
+          label="content"
+          variant="outlined"
+          {...register('content', { required: true })}
+        />
+        {errors.content && <span>Content of the Blog Post cannot be empty</span>}
 
-          <LoadingButton
-            loading={getButtonLoadingStatus()}
-            disabled={getButtonDisabledStatus()}
-            loadingPosition="start"
-            startIcon={<SaveIcon />}
-            variant="outlined"
-            type="submit">
-            Create Blog Post
-          </LoadingButton>
-        </Stack>
-      </form>
-    )
+        <LoadingButton
+          loading={getButtonLoadingStatus()}
+          disabled={getButtonDisabledStatus()}
+          loadingPosition="start"
+          startIcon={<SaveIcon />}
+          variant="outlined"
+          type="submit">
+          Create Blog Post
+        </LoadingButton>
+      </Stack>
+    </form>
+  )
 }
 
 export default Page
